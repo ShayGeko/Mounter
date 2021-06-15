@@ -3,8 +3,8 @@
 ## Contributors
 
 ### Team Dollar Initiative
-- Heorhii Shramko
-- Jonathan Peral Gort
+- ♻️Heorhii Shramko
+- ♻️Jonathan Peral Gort
 -
 -
 

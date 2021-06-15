@@ -4,7 +4,7 @@
 
 ### Team Dollar Initiative
 - Heorhii Shramko
-- 
+- Jonathan Peral Gort
 -
 -
 

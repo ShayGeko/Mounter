@@ -1,20 +1,22 @@
 package com.example.mounter.ui.login
 
 import android.app.Activity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.mounter.directions.DirectionsActivity
+import com.example.mounter.R
 import com.example.mounter.databinding.ActivityLoginBinding
 
-import com.example.mounter.R
 
 class LoginActivity : AppCompatActivity() {
 
@@ -32,8 +34,14 @@ class LoginActivity : AppCompatActivity() {
         val login = binding.login
         val loading = binding.loading
 
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
+        println("binding:$binding")
+
+
+        var temp = ViewModelProvider(this, LoginViewModelFactory())
                 .get(LoginViewModel::class.java)
+        println("new view:$temp")
+
+        loginViewModel = temp;
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
@@ -57,12 +65,16 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
+                println("----------------SUCCESS-------------")
                 updateUiWithUser(loginResult.success)
             }
             setResult(Activity.RESULT_OK)
 
             //Complete and destroy login activity once successful
-            finish()
+             finish()
+
+            val myIntent = Intent(this@LoginActivity, DirectionsActivity::class.java)
+            this@LoginActivity.startActivity(myIntent)
         })
 
         username.afterTextChanged {

@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_weight="4"
         android:visibility="visible"
-        tools:context=".directions.DirectionsActivity" />
+        tools:context=".directions.MyRideActivity" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

@@ -13,7 +13,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.mounter.directions.DirectionsActivity
+import com.example.mounter.directions.MyRideActivity
 import com.example.mounter.R
 import com.example.mounter.databinding.ActivityLoginBinding
 
@@ -37,11 +37,11 @@ class LoginActivity : AppCompatActivity() {
         println("binding:$binding")
 
 
-        var temp = ViewModelProvider(this, LoginViewModelFactory())
+        val temp = ViewModelProvider(this, LoginViewModelFactory())
                 .get(LoginViewModel::class.java)
         println("new view:$temp")
 
-        loginViewModel = temp;
+        loginViewModel = temp
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
             //Complete and destroy login activity once successful
              finish()
 
-            val myIntent = Intent(this@LoginActivity, DirectionsActivity::class.java)
+            val myIntent = Intent(this@LoginActivity, MyRideActivity::class.java)
             this@LoginActivity.startActivity(myIntent)
         })
 

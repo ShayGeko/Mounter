@@ -5,7 +5,7 @@
 ### Team Dollar Initiative
 - ♻️Heorhii Shramko
 - ♻️Jonathan Peral Gort
--
+- ♻️Shengyu Jia
 -
 
 ## Workflow

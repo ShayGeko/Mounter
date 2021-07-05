@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MounteR">
-
+        <activity android:name=".ui.createListings.CreateListings"></activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login">
@@ -39,7 +39,7 @@
 
         <activity
             android:name=".directions.MyRideActivity"
-            android:label="@string/title_activity_directions"></activity>
+            android:label="@string/title_activity_directions" />
     </application>
 
 </manifest>

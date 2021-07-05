@@ -28,6 +28,7 @@ public class CreateListings extends AppCompatActivity {
         ImageButton passenger = findViewById(R.id.passenger_imgButton);
         ImageButton driver = findViewById(R.id.driver_imgButton);
 
+
         passenger.setOnClickListener(new View.OnClickListener() {
 
             @Override

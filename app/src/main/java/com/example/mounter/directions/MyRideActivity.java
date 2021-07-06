@@ -83,15 +83,15 @@ public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallb
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
-                    JSONObject data = null;
+                    JSONObject data;
                     try {
                         data = new JSONObject(response);
-                    String encodedPoints = data.getJSONArray("routes")
+                        String encodedPoints = data.getJSONArray("routes")
                             .getJSONObject(0)
                             .getJSONObject("overview_polyline")
                             .getString("points");
-                    List<LatLng> latlngs = PolyUtil.decode(encodedPoints);
-                    googleMap.addPolyline(new PolylineOptions()
+                        List<LatLng> latlngs = PolyUtil.decode(encodedPoints);
+                        googleMap.addPolyline(new PolylineOptions()
                             .addAll(latlngs)
                             .width(5F)
                             .color(Color.RED));

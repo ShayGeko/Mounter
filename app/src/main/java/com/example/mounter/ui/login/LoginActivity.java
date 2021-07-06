@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.mounter.R;
 import com.example.mounter.databinding.ActivityLoginBinding;
 import com.example.mounter.directions.MyRideActivity;
+import com.example.mounter.ridesearch.RideSearchActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -72,9 +73,9 @@ public class LoginActivity extends AppCompatActivity {
             //Complete and destroy login activity once successful
             finish();
 
-            Intent openMyRideIntent = new Intent(this, MyRideActivity.class);
+            Intent intent = new Intent(this, RideSearchActivity.class);
 
-            startActivity(openMyRideIntent);
+            startActivity(intent);
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {

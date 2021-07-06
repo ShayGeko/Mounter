@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.example.mounter.R;
 import com.example.mounter.databinding.ActivityLoginBinding;
-import com.example.mounter.ui.createListings.CreateListings;
+import com.example.mounter.ui.createListings.ChooseListing;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
             //Complete and destroy login activity once successful
             finish();
 
-            Intent openMyRideIntent = new Intent(this, CreateListings.class);
+            Intent openMyRideIntent = new Intent(this, ChooseListing.class);
 
             startActivity(openMyRideIntent);
         });

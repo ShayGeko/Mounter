@@ -8,21 +8,25 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mounter.R;
-import com.example.mounter.ridesearch.placeholder.PlaceholderContent;
+import com.example.mounter.data.model.RidePostingModel;
+
+import io.realm.RealmList;
+
 
 /**
  * A fragment representing a list of Items.
  */
 public class RidePostingFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+
+    private RealmList<RidePostingModel> ridePostingModels;
     private int mColumnCount = 1;
 
     /**
@@ -55,7 +59,6 @@ public class RidePostingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
-
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -65,8 +68,10 @@ public class RidePostingFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyRidePostingRecyclerViewAdapter(PlaceholderContent.ITEMS));
-        }
+
+            recyclerView.setAdapter(new RidePostingRecyclerViewAdapter(ridePostingModels));
+       }
+        Log.d("RidePostingFragment", "onCreateView: ");
         return view;
     }
 }

@@ -72,10 +72,6 @@ public class LoginActivity extends AppCompatActivity {
 
             //Complete and destroy login activity once successful
             finish();
-
-            Intent intent = new Intent(this, RideSearchActivity.class);
-
-            startActivity(intent);
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {

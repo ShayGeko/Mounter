@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".ui.createListings.ListingCreatorDriver"
-            android:label="CreateListing">
+            android:label="Create Listing">
         </activity>
         <activity
             android:name=".ui.createListings.ChooseListing"

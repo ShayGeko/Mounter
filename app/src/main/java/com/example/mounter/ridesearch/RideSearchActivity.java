@@ -32,12 +32,14 @@ import static com.example.mounter.Mounter.mounter;
 
 public class RideSearchActivity extends AppCompatActivity {
     private User user;
-    private Realm mRealm;
+    private Realm mRealm = null;
+    private boolean realmSetUpPrompted = false;
     private ActivityRideSearchBinding binding;
     private RecyclerView recyclerView;
     private RidePostingRecyclerViewAdapter adapter;
 
     protected void onStart(){
+        Log.d("RideSearchActivity", "onStart Fired");
         super.onStart();
 
         try {
@@ -47,49 +49,46 @@ public class RideSearchActivity extends AppCompatActivity {
 
         }
         if (user == null) {
+            Log.d("RideSearchActivity", "User not authorized, prompting login");
             // if no user is currently logged in, start the login activity so the user can authenticate
             startActivity(new Intent(this, LoginActivity.class));
         }
         else{
-            String partitionValue = "1";
-
-            SyncConfiguration config = new SyncConfiguration.Builder(
-                    user,
-                    partitionValue)
-                    .build();
-
-            Realm.setDefaultConfiguration(config);
-
-            Realm.getInstanceAsync(config, new Realm.Callback() {
-               @Override
-               public void onSuccess(@NotNull Realm realm) {
-                   Log.i("RideSearchActivity", "ui thread realm instance acquired");
-                   mRealm = realm;
-                   setUpRecyclerView(realm);
-                }
-                @Override
-                public void onError(@NonNull Throwable exception) {
-                    super.onError(exception);
-                    exception.printStackTrace();
-                }
-            });
+            setUpRealm(user);
        }
+    }
+
+    protected void onResume(){
+        Log.d("RideSearchActivity", "onResumeFired");
+        super.onResume();
+//        try {
+//            user = mounter.currentUser();
+//        }
+//        catch (IllegalStateException e) {
+//
+//        }
+//        if(user != null && !realmSetUpPrompted){
+//            setUpRealm(user);
+//        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.d("RideSearchActivity", "On create fired");
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ride_search);
 
-        binding = ActivityRideSearchBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        mRealm = Realm.getDefaultInstance();
+        recyclerView = findViewById(R.id.ridePosting_list);
 
+//        Toolbar toolbar = binding.toolbar;
+//        setSupportActionBar(toolbar);
+//        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
+//        toolBarLayout.setTitle(getTitle());
 
-        Toolbar toolbar = binding.toolbar;
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
-        toolBarLayout.setTitle(getTitle());
-
-        FloatingActionButton fab = binding.fab;
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
+            Log.d("RideSearchActivity", "Creating a ride");
             RidePostingModel ridePosting = new RidePostingModel(user);
             ridePosting.setDestinationAddress("SFU Burnaby campus");
             ridePosting.setOriginAddress("SFU Surrey campus");
@@ -100,7 +99,7 @@ public class RideSearchActivity extends AppCompatActivity {
             ridePosting.setOriginLatLng(new LatLng(49.188680, -122.839940));
             ridePosting.setDescription("test");
             mRealm.executeTransactionAsync(r -> {
-                r.insert(ridePosting);
+                r.delete(RidePostingModel.class);
             });
         });
     }
@@ -118,12 +117,43 @@ public class RideSearchActivity extends AppCompatActivity {
         });
     }
     private void setUpRecyclerView(Realm realm){
-        Log.i("RideSearchActivity", "setUpRecyclerView: adapter set up");
-        RecyclerView recyclerView = findViewById(R.id.ridePosting_list);
-        RidePostingRecyclerViewAdapter adapter = new RidePostingRecyclerViewAdapter(realm.where(RidePostingModel.class).findAll());
+        Log.d("RideSearchActivity", "setUpRecyclerView: adapter set up");
+        recyclerView = findViewById(R.id.ridePosting_list);
+        adapter = new RidePostingRecyclerViewAdapter(realm.where(RidePostingModel.class).findAll());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+    }
+
+    private void setUpRealm(User user){
+        Log.d("RideSearchActivity", "settingUpRealm");
+        realmSetUpPrompted = true;
+        String partitionValue = "1";
+
+        SyncConfiguration config = new SyncConfiguration.Builder(user, partitionValue)
+                .waitForInitialRemoteData()
+                .build();
+
+        Realm.setDefaultConfiguration(config);
+
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(@NotNull Realm realm) {
+                Log.d("RideSearchActivity", "ui thread realm instance acquired");
+                mRealm = realm;
+                setUpRecyclerView(realm);
+
+
+            }
+            @Override
+            public void onError(@NonNull Throwable exception) {
+                super.onError(exception);
+                Log.e("RideSearchActivity", "failed to get the ui thread realm instance");
+                exception.printStackTrace();
+            }
+        });
+
+
     }
 }

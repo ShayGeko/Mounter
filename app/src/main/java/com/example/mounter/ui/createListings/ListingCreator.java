@@ -26,7 +26,7 @@ public class ListingCreator extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Log.i("MyApp", "Clicked on submit");
-                intent = new Intent(getApplicationContext(), );
+                intent = new Intent(getApplicationContext(), ChooseListing.class);
                 startActivity(intent);
                 finish();
             }

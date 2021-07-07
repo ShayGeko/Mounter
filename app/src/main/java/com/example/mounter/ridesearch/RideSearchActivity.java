@@ -83,19 +83,7 @@ public class RideSearchActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            RidePostingModel ridePosting = new RidePostingModel(user);
-            ridePosting.setDestinationAddress("SFU Burnaby campus");
-            ridePosting.setOriginAddress("SFU Surrey campus");
-            ridePosting.setDepartureTime(new Date(System.currentTimeMillis()).toString());
-            // SFU Burnaby coordinates
-            ridePosting.setDestinationLatLng(new LatLng(49.276765, -122.917957));
-            // SFU Surrey coordinates
-            ridePosting.setOriginLatLng(new LatLng(49.188680, -122.839940));
-            ridePosting.setDescription("test");
             startActivity(new Intent(getApplicationContext(), ChooseListing.class));
-            mRealm.executeTransactionAsync(r -> {
-                r.insert(ridePosting);
-            });
         });
     }
 
@@ -103,9 +91,9 @@ public class RideSearchActivity extends AppCompatActivity {
     protected  void onDestroy(){
         super.onDestroy();
         Log.d("RideSearchActivity", "onDestroyFired");
-        recyclerView.setAdapter(null);
+//        recyclerView.setAdapter(null);
         mRealm.close();
-        mounter.currentUser().logOutAsync(result -> {
+        user.logOutAsync(result -> {
             if (result.isSuccess()) {
             } else {
             }

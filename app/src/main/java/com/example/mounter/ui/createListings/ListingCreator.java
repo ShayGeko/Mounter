@@ -10,12 +10,18 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
+
+import com.example.mounter.Mounter;
 import com.example.mounter.data.model.RidePostingModel;
 
 import com.example.mounter.R;
 import com.example.mounter.ridesearch.RideSearchActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+
+import org.jetbrains.annotations.NotNull;
+
+import io.realm.Realm;
 
 public class ListingCreator extends AppCompatActivity {
 
@@ -26,6 +32,7 @@ public class ListingCreator extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing_creator);
+        ridePostingModel = new RidePostingModel(Mounter.mounter.currentUser());
 
         TextInputEditText fillTo = findViewById(R.id.fillTo);
         TextInputEditText fillFrom = findViewById(R.id.fillFrom);
@@ -60,12 +67,30 @@ public class ListingCreator extends AppCompatActivity {
             ridePostingModel.setDepartureTime(hourOfDeparture.toString());
             ridePostingModel.setEstimatedPrice(estimatedPrice.toString());
 
+            //Inputs the collected data into the database
+            @NotNull
+            Realm realm = Realm.getDefaultInstance();
 
+            realm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm bgRealm) {
+                    bgRealm.insert(ridePostingModel);
+                }
+            }, new Realm.Transaction.OnSuccess(){
+                @Override
+                public void onSuccess() {
+                    realm.close();
+                }
+            }, new Realm.Transaction.OnError(){
+                @Override
+                public void onError(Throwable error){
+                    //TODO: Transaction failed, do something!
+                }
 
-            intent = new Intent(getApplicationContext(), RideSearchActivity.class);
-            startActivity(intent);
+            });
             finish();
         });
+
 
         back.setOnClickListener(view -> {
             Log.i("MyApp", "Clicked on BACK");
@@ -73,6 +98,7 @@ public class ListingCreator extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
     }
 
     private static void hideKeyboard(Activity activity) {

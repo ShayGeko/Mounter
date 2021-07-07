@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.example.mounter.R;
 import com.example.mounter.data.model.RidePostingModel;
-import com.example.mounter.databinding.ActivityRideSearchBinding;
+import com.example.mounter.ui.createListings.ChooseListing;
 import com.example.mounter.ui.login.LoginActivity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -33,7 +33,6 @@ import static com.example.mounter.Mounter.mounter;
 public class RideSearchActivity extends AppCompatActivity {
     private User user;
     private Realm mRealm;
-    private ActivityRideSearchBinding binding;
     private RecyclerView recyclerView;
     private RidePostingRecyclerViewAdapter adapter;
 
@@ -78,27 +77,22 @@ public class RideSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ride_search);
+        mRealm = Realm.getDefaultInstance();
+        recyclerView = findViewById(R.id.ridePosting_list);
 
-        binding = ActivityRideSearchBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-
-        Toolbar toolbar = binding.toolbar;
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
-        toolBarLayout.setTitle(getTitle());
-
-        FloatingActionButton fab = binding.fab;
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             RidePostingModel ridePosting = new RidePostingModel(user);
             ridePosting.setDestinationAddress("SFU Burnaby campus");
             ridePosting.setOriginAddress("SFU Surrey campus");
-            ridePosting.setDepartureTime(new Date(System.currentTimeMillis()));
+            ridePosting.setDepartureTime(new Date(System.currentTimeMillis()).toString());
             // SFU Burnaby coordinates
             ridePosting.setDestinationLatLng(new LatLng(49.276765, -122.917957));
             // SFU Surrey coordinates
             ridePosting.setOriginLatLng(new LatLng(49.188680, -122.839940));
             ridePosting.setDescription("test");
+            startActivity(new Intent(getApplicationContext(), ChooseListing.class));
             mRealm.executeTransactionAsync(r -> {
                 r.insert(ridePosting);
             });

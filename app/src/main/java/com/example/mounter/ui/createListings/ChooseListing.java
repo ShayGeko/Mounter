@@ -32,6 +32,7 @@ public class ChooseListing extends AppCompatActivity {
                 Log.i("MyApp", "Passenger image button is working!");
                 intent = new Intent(getApplicationContext(), ListingCreator.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -45,6 +46,7 @@ public class ChooseListing extends AppCompatActivity {
                 }
                 intent = new Intent(getApplicationContext(), ListingCreator.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

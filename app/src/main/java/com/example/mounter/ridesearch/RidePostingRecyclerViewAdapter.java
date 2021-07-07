@@ -37,7 +37,7 @@ public class RidePostingRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = getItem(position);
         holder.mIdView.setText(holder.mItem.getDestinationAddress());
-        Date departureDate = holder.mItem.getDepartureTime();
+        String departureDate = holder.mItem.getDepartureTime().toString();
         if(departureDate == null) holder.mContentView.setText("");
         else holder.mContentView.setText(departureDate.toString());
     }

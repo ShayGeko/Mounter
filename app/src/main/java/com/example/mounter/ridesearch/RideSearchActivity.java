@@ -6,15 +6,12 @@ import android.util.Log;
 
 import com.example.mounter.R;
 import com.example.mounter.data.model.RidePostingModel;
-import com.example.mounter.databinding.ActivityRideSearchBinding;
+import com.example.mounter.ui.createListings.ChooseListing;
 import com.example.mounter.ui.login.LoginActivity;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.mongodb.User;
@@ -33,8 +29,6 @@ import static com.example.mounter.Mounter.mounter;
 public class RideSearchActivity extends AppCompatActivity {
     private User user;
     private Realm mRealm = null;
-    private boolean realmSetUpPrompted = false;
-    private ActivityRideSearchBinding binding;
     private RecyclerView recyclerView;
     private RidePostingRecyclerViewAdapter adapter;
 
@@ -57,50 +51,17 @@ public class RideSearchActivity extends AppCompatActivity {
             setUpRealm(user);
        }
     }
-
-    protected void onResume(){
-        Log.d("RideSearchActivity", "onResumeFired");
-        super.onResume();
-//        try {
-//            user = mounter.currentUser();
-//        }
-//        catch (IllegalStateException e) {
-//
-//        }
-//        if(user != null && !realmSetUpPrompted){
-//            setUpRealm(user);
-//        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         Log.d("RideSearchActivity", "On create fired");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_search);
-
         mRealm = Realm.getDefaultInstance();
         recyclerView = findViewById(R.id.ridePosting_list);
 
-//        Toolbar toolbar = binding.toolbar;
-//        setSupportActionBar(toolbar);
-//        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
-//        toolBarLayout.setTitle(getTitle());
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            Log.d("RideSearchActivity", "Creating a ride");
-            RidePostingModel ridePosting = new RidePostingModel(user);
-            ridePosting.setDestinationAddress("SFU Burnaby campus");
-            ridePosting.setOriginAddress("SFU Surrey campus");
-            ridePosting.setDepartureTime(new Date(System.currentTimeMillis()));
-            // SFU Burnaby coordinates
-            ridePosting.setDestinationLatLng(new LatLng(49.276765, -122.917957));
-            // SFU Surrey coordinates
-            ridePosting.setOriginLatLng(new LatLng(49.188680, -122.839940));
-            ridePosting.setDescription("test");
-            mRealm.executeTransactionAsync(r -> {
-                r.delete(RidePostingModel.class);
-            });
+            startActivity(new Intent(getApplicationContext(), ChooseListing.class));
         });
     }
 
@@ -108,9 +69,9 @@ public class RideSearchActivity extends AppCompatActivity {
     protected  void onDestroy(){
         super.onDestroy();
         Log.d("RideSearchActivity", "onDestroyFired");
-        recyclerView.setAdapter(null);
+//        recyclerView.setAdapter(null);
         mRealm.close();
-        mounter.currentUser().logOutAsync(result -> {
+        user.logOutAsync(result -> {
             if (result.isSuccess()) {
             } else {
             }
@@ -128,7 +89,6 @@ public class RideSearchActivity extends AppCompatActivity {
 
     private void setUpRealm(User user){
         Log.d("RideSearchActivity", "settingUpRealm");
-        realmSetUpPrompted = true;
         String partitionValue = "1";
 
         SyncConfiguration config = new SyncConfiguration.Builder(user, partitionValue)

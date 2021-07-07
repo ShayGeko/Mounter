@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton8">
+        app:layout_constraintTop_toBottomOf="@+id/back">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fillTo"
@@ -41,25 +41,35 @@
             android:layout_height="wrap_content"
             android:hint="Estimated Price" />
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fillEstimatedPrice4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:textAlignment="viewStart" />
+
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/imageButton7"
+        android:id="@+id/submit"
         android:layout_width="39dp"
         android:layout_height="39dp"
         android:background="#00FFFFFF"
+        android:backgroundTint="#00FFFFFF"
         android:scaleX="0.7"
         android:scaleY="0.7"
+        android:tint="#3F96E3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.005"
-        app:srcCompat="@drawable/checkmark_foreground" />
+        app:srcCompat="@drawable/checkmark_foreground"
+        tools:srcCompat="@drawable/checkmark_foreground" />
 
     <ImageButton
-        android:id="@+id/imageButton8"
+        android:id="@+id/back"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"

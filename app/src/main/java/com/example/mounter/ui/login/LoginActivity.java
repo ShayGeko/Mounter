@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -21,7 +22,6 @@ import android.widget.Toast;
 
 import com.example.mounter.R;
 import com.example.mounter.databinding.ActivityLoginBinding;
-import com.example.mounter.directions.MyRideActivity;
 import com.example.mounter.ridesearch.RideSearchActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.i("MyApp", "Successfully started");
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -72,6 +73,10 @@ public class LoginActivity extends AppCompatActivity {
 
             //Complete and destroy login activity once successful
             finish();
+
+            Intent intent = new Intent(this, RideSearchActivity.class);
+
+            startActivity(intent);
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {

@@ -23,7 +23,18 @@ public class RidePostingModel extends RealmObject {
     private String _partition = "1";
     private String originAddress;
     private String destinationAddress;
-    private Date departureTime;
+    private String departureTime;
+
+
+    public String getEstimatedPrice() {
+        return estimatedPrice;
+    }
+
+    public void setEstimatedPrice(String estimatedPrice) {
+        this.estimatedPrice = estimatedPrice;
+    }
+
+    private String estimatedPrice;
     @Required
     private RealmList<Double> destinationLatLng = new RealmList<>();
     @Required
@@ -36,6 +47,7 @@ public class RidePostingModel extends RealmObject {
     public RidePostingModel(User user){
         _driverId = new ObjectId(user.getId());
     }
+
     public ObjectId get_id(){
         return _id;
     }
@@ -55,6 +67,7 @@ public class RidePostingModel extends RealmObject {
     }
 
     public String getDestinationAddress() {
+
         return destinationAddress;
     }
 
@@ -62,11 +75,11 @@ public class RidePostingModel extends RealmObject {
         this.destinationAddress = destinationAddress;
     }
 
-    public Date getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(Date departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 

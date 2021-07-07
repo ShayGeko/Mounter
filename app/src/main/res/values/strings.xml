@@ -10,6 +10,8 @@
     <string name="invalid_password">Invalid password</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_directions">My scheduled ride</string>
+    <string name="chooseTypeOfListing">Choose Type of Listing</string>
+    <string name="createListing">Create Listing</string>
     <string name="title_activity_login">MounteR Login</string>
     <string name="title_activity_ride_search">Available rides</string>
     <string name="action_settings">Settings</string>

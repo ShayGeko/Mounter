@@ -17,6 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MounteR">
         <activity
+            android:name=".ui.createListings.ListingCreator"
+            android:label="@string/createListing">
+        </activity>
+        <activity
+            android:name=".ui.createListings.ListingCreatorDriver"
+            android:label="CreateListing">
+        </activity>
+        <activity
+            android:name=".ui.createListings.ChooseListing"
+            android:label="@string/chooseTypeOfListing" />
+        <activity
             android:name=".ridesearch.RideSearchActivity"
             android:label="@string/title_activity_ride_search"
             android:theme="@style/Theme.MounteR.NoActionBar">

@@ -1,19 +1,24 @@
 package com.example.mounter.data.model;
 
+import org.bson.types.ObjectId;
+
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
-public class LoggedInUser {
+public class LoggedInUserModel {
 
-    private String userId;
+    @PrimaryKey
+    private ObjectId userId;
     private String displayName;
 
-    public LoggedInUser(String userId, String displayName) {
+    public LoggedInUserModel(ObjectId userId, String displayName) {
         this.userId = userId;
         this.displayName = displayName;
     }
 
-    public String getUserId() {
+    public ObjectId getUserId() {
         return userId;
     }
 

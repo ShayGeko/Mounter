@@ -6,7 +6,7 @@
 - ♻️Heorhii Shramko
 - ♻️Jonathan Peral Gort
 - ♻️Shengyu Jia
--
+- ♻️Alex Samohel
 
 ## Workflow
 

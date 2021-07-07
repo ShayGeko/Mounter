@@ -1,5 +1,6 @@
 package com.example.mounter.directions;
 
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mounter.R;
@@ -25,7 +24,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.maps.android.PolyUtil;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -83,15 +81,15 @@ public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallb
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
-                    JSONObject data = null;
+                    JSONObject data;
                     try {
                         data = new JSONObject(response);
-                    String encodedPoints = data.getJSONArray("routes")
+                        String encodedPoints = data.getJSONArray("routes")
                             .getJSONObject(0)
                             .getJSONObject("overview_polyline")
                             .getString("points");
-                    List<LatLng> latlngs = PolyUtil.decode(encodedPoints);
-                    googleMap.addPolyline(new PolylineOptions()
+                        List<LatLng> latlngs = PolyUtil.decode(encodedPoints);
+                        googleMap.addPolyline(new PolylineOptions()
                             .addAll(latlngs)
                             .width(5F)
                             .color(Color.RED));

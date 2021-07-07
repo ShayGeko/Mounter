@@ -36,6 +36,12 @@
             android:hint="Hour of Departure" />
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/fillEstimatedPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Estimated Price" />
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fillDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

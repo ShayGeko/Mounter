@@ -21,6 +21,10 @@
             android:label="@string/createListing">
         </activity>
         <activity
+            android:name=".ui.createListings.ListingCreatorDriver"
+            android:label="CreateListing">
+        </activity>
+        <activity
             android:name=".ui.createListings.ChooseListing"
             android:label="@string/chooseTypeOfListing" />
         <activity

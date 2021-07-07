@@ -21,7 +21,7 @@ public class ChooseListing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_listing);
 
-        userIsDriver = false;
+        userIsDriver = true;
         ImageButton passenger = findViewById(R.id.passenger_imgButton);
         ImageButton driver = findViewById(R.id.driver_imgButton);
 
@@ -44,7 +44,7 @@ public class ChooseListing extends AppCompatActivity {
                             "\nbefore making a Driver's listing.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
                 }
-                intent = new Intent(getApplicationContext(), ListingCreator.class);
+                intent = new Intent(getApplicationContext(), ListingCreatorDriver.class);
                 startActivity(intent);
                 finish();
             }

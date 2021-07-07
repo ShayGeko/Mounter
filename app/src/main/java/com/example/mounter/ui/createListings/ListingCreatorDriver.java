@@ -1,21 +1,18 @@
 package com.example.mounter.ui.createListings;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 
-import com.example.mounter.Mounter;
-import com.example.mounter.data.model.RidePostingModel;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mounter.Mounter;
 import com.example.mounter.R;
-import com.example.mounter.ridesearch.RideSearchActivity;
+import com.example.mounter.data.model.RidePostingModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -23,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import io.realm.Realm;
 
-public class ListingCreator extends AppCompatActivity {
+public class ListingCreatorDriver extends AppCompatActivity {
 
     private Intent intent;
     private RidePostingModel ridePostingModel;
@@ -31,12 +28,13 @@ public class ListingCreator extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listing_creator);
+        setContentView(R.layout.activity_listing_creator_driver);
         ridePostingModel = new RidePostingModel(Mounter.mounter.currentUser());
 
         TextInputEditText fillTo = findViewById(R.id.fillTo);
         TextInputEditText fillFrom = findViewById(R.id.fillFrom);
         TextInputEditText fillHourOfDeparture = findViewById(R.id.fillHourOfDeparture);
+        TextInputEditText fillEstimatedPrice = findViewById(R.id.fillEstimatedPrice);
         TextInputEditText fillDescription = findViewById(R.id.fillDescription);
         ImageButton submit = findViewById(R.id.submit);
         ImageButton back = findViewById(R.id.back);
@@ -46,6 +44,7 @@ public class ListingCreator extends AppCompatActivity {
             CharSequence to = fillTo.getText();
             CharSequence from = fillFrom.getText();
             CharSequence hourOfDeparture = fillHourOfDeparture.getText();
+            CharSequence estimatedPrice = fillEstimatedPrice.getText();
             CharSequence description = fillDescription.getText();
             if(to.length() == 0 || from.length() == 0 || fillHourOfDeparture.length() == 0){
                 hideKeyboard(this);
@@ -53,6 +52,7 @@ public class ListingCreator extends AppCompatActivity {
                 fillTo.setText("");
                 fillFrom.setText("");
                 fillHourOfDeparture.setText("");
+                fillEstimatedPrice.setText("");
                 fillDescription.setText("");
                 Snackbar.make(view, "Please make sure to fill in all key components.",
                         Snackbar.LENGTH_SHORT).setAction("Action", null).show();
@@ -62,6 +62,7 @@ public class ListingCreator extends AppCompatActivity {
             ridePostingModel.setDestinationAddress(to.toString());
             ridePostingModel.setOriginAddress(from.toString());
             ridePostingModel.setDepartureTime(hourOfDeparture.toString());
+            ridePostingModel.setEstimatedPrice(estimatedPrice.toString());
 
             //Inputs the collected data into the database
             @NotNull

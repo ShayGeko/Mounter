@@ -8,8 +8,19 @@ import android.util.Patterns;
 
 import com.example.mounter.data.LoginRepository;
 import com.example.mounter.data.Result;
-import com.example.mounter.data.model.LoggedInUser;
+import com.example.mounter.data.model.LoggedInUserModel;
 import com.example.mounter.R;
+
+import org.bson.types.ObjectId;
+
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
+
+import io.realm.RealmAsyncTask;
+import io.realm.mongodb.Credentials;
+import io.realm.mongodb.User;
+
+import static com.example.mounter.Mounter.mounter;
 
 public class LoginViewModel extends ViewModel {
 
@@ -29,14 +40,24 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password) {
-        // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+    public void login(String email, String password) {
+        try {
+            Credentials emailPasswordCredentials = Credentials.emailPassword(email, password);
 
-        if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
-        } else {
+            AtomicReference<User> user = new AtomicReference<>();
+            RealmAsyncTask loginTask = mounter.loginAsync(emailPasswordCredentials, it -> {
+                if(it.isSuccess()){
+                    user.set(mounter.currentUser());
+
+                    loginResult.setValue(new LoginResult(new LoggedInUserView(email)));
+                }
+                else{
+                    System.out.println(it.getError());
+                    loginResult.setValue(new LoginResult(R.string.login_failed));
+                }
+            });
+
+        } catch (Exception e) {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }
     }

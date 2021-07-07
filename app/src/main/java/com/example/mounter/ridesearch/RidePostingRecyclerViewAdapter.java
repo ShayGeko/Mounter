@@ -6,21 +6,26 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.mounter.data.model.RidePostingModel;
 import com.example.mounter.databinding.FragmentItemBinding;
 import com.example.mounter.ridesearch.placeholder.PlaceholderContent.PlaceholderItem;
 
-import java.util.List;
+import java.util.Date;
+
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyRidePostingRecyclerViewAdapter extends RecyclerView.Adapter<MyRidePostingRecyclerViewAdapter.ViewHolder> {
+public class RidePostingRecyclerViewAdapter extends
+        RealmRecyclerViewAdapter<RidePostingModel, RidePostingRecyclerViewAdapter.ViewHolder>{
 
-    private final List<PlaceholderItem> mValues;
+    private OrderedRealmCollection<RidePostingModel> ridePostings;
 
-    public MyRidePostingRecyclerViewAdapter(List<PlaceholderItem> items) {
-        mValues = items;
+    public RidePostingRecyclerViewAdapter(OrderedRealmCollection<RidePostingModel> ridePostings) {
+        super(ridePostings, true);
     }
 
     @Override
@@ -29,23 +34,19 @@ public class MyRidePostingRecyclerViewAdapter extends RecyclerView.Adapter<MyRid
         return new ViewHolder(FragmentItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
 
     }
-
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mValues.size();
+        holder.mItem = getItem(position);
+        holder.mIdView.setText(holder.mItem.getDestinationAddress());
+        Date departureDate = holder.mItem.getDepartureTime();
+        if(departureDate == null) holder.mContentView.setText("");
+        else holder.mContentView.setText(departureDate.toString());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mIdView;
         public final TextView mContentView;
-        public PlaceholderItem mItem;
+        public RidePostingModel mItem;
 
         public ViewHolder(FragmentItemBinding binding) {
             super(binding.getRoot());

@@ -29,8 +29,7 @@
             android:label="@string/chooseTypeOfListing" />
         <activity
             android:name=".ridesearch.RideSearchActivity"
-            android:label="@string/title_activity_ride_search"
-            android:theme="@style/Theme.MounteR.NoActionBar">
+            android:label="@string/title_activity_ride_search">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,13 +8,10 @@ import com.example.mounter.R;
 import com.example.mounter.data.model.RidePostingModel;
 import com.example.mounter.ui.createListings.ChooseListing;
 import com.example.mounter.ui.login.LoginActivity;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.mongodb.User;
@@ -32,11 +28,12 @@ import static com.example.mounter.Mounter.mounter;
 
 public class RideSearchActivity extends AppCompatActivity {
     private User user;
-    private Realm mRealm;
+    private Realm mRealm = null;
     private RecyclerView recyclerView;
     private RidePostingRecyclerViewAdapter adapter;
 
     protected void onStart(){
+        Log.d("RideSearchActivity", "onStart Fired");
         super.onStart();
 
         try {
@@ -46,36 +43,17 @@ public class RideSearchActivity extends AppCompatActivity {
 
         }
         if (user == null) {
+            Log.d("RideSearchActivity", "User not authorized, prompting login");
             // if no user is currently logged in, start the login activity so the user can authenticate
             startActivity(new Intent(this, LoginActivity.class));
         }
         else{
-            String partitionValue = "1";
-
-            SyncConfiguration config = new SyncConfiguration.Builder(
-                    user,
-                    partitionValue)
-                    .build();
-
-            Realm.setDefaultConfiguration(config);
-
-            Realm.getInstanceAsync(config, new Realm.Callback() {
-               @Override
-               public void onSuccess(@NotNull Realm realm) {
-                   Log.i("RideSearchActivity", "ui thread realm instance acquired");
-                   mRealm = realm;
-                   setUpRecyclerView(realm);
-                }
-                @Override
-                public void onError(@NonNull Throwable exception) {
-                    super.onError(exception);
-                    exception.printStackTrace();
-                }
-            });
+            setUpRealm(user);
        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("RideSearchActivity", "On create fired");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_search);
         mRealm = Realm.getDefaultInstance();
@@ -100,12 +78,42 @@ public class RideSearchActivity extends AppCompatActivity {
         });
     }
     private void setUpRecyclerView(Realm realm){
-        Log.i("RideSearchActivity", "setUpRecyclerView: adapter set up");
-        RecyclerView recyclerView = findViewById(R.id.ridePosting_list);
-        RidePostingRecyclerViewAdapter adapter = new RidePostingRecyclerViewAdapter(realm.where(RidePostingModel.class).findAll());
+        Log.d("RideSearchActivity", "setUpRecyclerView: adapter set up");
+        recyclerView = findViewById(R.id.ridePosting_list);
+        adapter = new RidePostingRecyclerViewAdapter(realm.where(RidePostingModel.class).findAll());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+    }
+
+    private void setUpRealm(User user){
+        Log.d("RideSearchActivity", "settingUpRealm");
+        String partitionValue = "1";
+
+        SyncConfiguration config = new SyncConfiguration.Builder(user, partitionValue)
+                .waitForInitialRemoteData()
+                .build();
+
+        Realm.setDefaultConfiguration(config);
+
+        Realm.getInstanceAsync(config, new Realm.Callback() {
+            @Override
+            public void onSuccess(@NotNull Realm realm) {
+                Log.d("RideSearchActivity", "ui thread realm instance acquired");
+                mRealm = realm;
+                setUpRecyclerView(realm);
+
+
+            }
+            @Override
+            public void onError(@NonNull Throwable exception) {
+                super.onError(exception);
+                Log.e("RideSearchActivity", "failed to get the ui thread realm instance");
+                exception.printStackTrace();
+            }
+        });
+
+
     }
 }

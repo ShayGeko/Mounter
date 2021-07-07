@@ -15,22 +15,18 @@ import android.view.ViewGroup;
 
 import com.example.mounter.R;
 import com.example.mounter.data.model.RidePostingModel;
-import com.example.mounter.ridesearch.placeholder.PlaceholderContent;
 
 import io.realm.RealmList;
 
-import static com.example.mounter.Mounter.mounter;
 
 /**
  * A fragment representing a list of Items.
  */
 public class RidePostingFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
 
     private RealmList<RidePostingModel> ridePostingModels;
-    // TODO: Customize parameters
     private int mColumnCount = 1;
 
     /**

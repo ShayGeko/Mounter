@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.example.mounter.data.model.RidePostingModel;
 import com.example.mounter.databinding.FragmentItemBinding;
-import com.example.mounter.ridesearch.placeholder.PlaceholderContent.PlaceholderItem;
 
 import java.util.Date;
 
@@ -16,7 +15,7 @@ import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
+ * {@link RecyclerView.Adapter} that can display a {@link RidePostingModel}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class RidePostingRecyclerViewAdapter extends

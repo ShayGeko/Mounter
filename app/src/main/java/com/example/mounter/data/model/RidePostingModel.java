@@ -25,6 +25,7 @@ public class RidePostingModel extends RealmObject {
     private String destinationAddress;
     private String departureTime;
 
+
     public String getEstimatedPrice() {
         return estimatedPrice;
     }

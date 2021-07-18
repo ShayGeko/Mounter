@@ -81,6 +81,7 @@ public class ListingCreator extends AppCompatActivity {
                 @Override
                 public void onError(Throwable error){
                     //TODO: Transaction failed, do something!
+                    realm.close();
                 }
 
             });

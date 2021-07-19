@@ -15,4 +15,8 @@
     <string name="title_activity_login">MounteR Login</string>
     <string name="title_activity_ride_search">Available rides</string>
     <string name="action_settings">Settings</string>
+    <string name="my_ride_companion_label_text">My ride companion:</string>
+    <string name="my_scheduled_ride_label_text">My scheduled ride:</string>
+    <string name="is_in_good_standing">Is in good standing</string>
+    <string name="john_doe">John Doe</string>
 </resources>

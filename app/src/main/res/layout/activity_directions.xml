@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -34,11 +34,11 @@
 
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/my_ride_companion_label"
                     android:layout_width="168dp"
                     android:layout_height="35dp"
-                    android:text="My ride companion:"
-                    android:textSize="16dp"
+                    android:text="@string/my_ride_companion_label_text"
+                    android:textSize="16sp"
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="1.0"
@@ -47,11 +47,11 @@
                     map:layout_constraintVertical_bias="0.074" />
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/my_scheduled_ride_label"
                     android:layout_width="228dp"
                     android:layout_height="34dp"
-                    android:text="My scheduled ride:"
-                    android:textSize="16dp"
+                    android:text="@string/my_scheduled_ride_label_text"
+                    android:textSize="16sp"
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="0.038"
@@ -60,10 +60,10 @@
                     map:layout_constraintVertical_bias="0.081" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/ride_details_origin_address_textView"
                     android:layout_width="254dp"
                     android:layout_height="26dp"
-                    android:text="Departing from: SFU Surrey"
+                    android:text="From: "
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="0.025"
@@ -72,11 +72,11 @@
                     map:layout_constraintVertical_bias="0.36" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/ride_details_destination_address_textView"
                     android:layout_width="249dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="16dp"
-                    android:text="Destination: SFU Burnaby"
+                    android:text="To: "
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="0.023"
@@ -85,11 +85,11 @@
                     map:layout_constraintVertical_bias="0.455" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/ride_details_departure_time"
                     android:layout_width="199dp"
                     android:layout_height="27dp"
                     android:layout_marginTop="16dp"
-                    android:text="Departure time: 10:30 am"
+                    android:text="Starts: "
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="0.019"
@@ -98,10 +98,10 @@
                     map:layout_constraintVertical_bias="0.623" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/ride_details_companion_rating"
                     android:layout_width="94dp"
                     android:layout_height="21dp"
-                    android:text="Is in good standing"
+                    android:text="@string/is_in_good_standing"
                     android:textSize="10dp"
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
@@ -111,12 +111,12 @@
                     map:layout_constraintVertical_bias="0.63" />
 
                 <EditText
-                    android:id="@+id/editTextTextPersonName2"
+                    android:id="@+id/ride_details_companion_name"
                     android:layout_width="87dp"
                     android:layout_height="36dp"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="John Doe"
+                    android:text="@string/john_doe"
                     android:textSize="12dp"
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
@@ -135,7 +135,7 @@
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="0.1"
-                    map:layout_constraintStart_toEndOf="@+id/editTextTextPersonName2"
+                    map:layout_constraintStart_toEndOf="@+id/ride_details_companion_name"
                     map:layout_constraintTop_toTopOf="parent"
                     map:layout_constraintVertical_bias="0.4"
                     map:srcCompat="@drawable/person" />

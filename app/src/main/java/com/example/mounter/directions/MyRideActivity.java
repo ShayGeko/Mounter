@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mounter.R;
+import com.example.mounter.data.model.RidePostingModel;
 import com.example.mounter.databinding.ActivityDirectionsBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,17 +27,29 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.maps.android.PolyUtil;
 
+import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.mongodb.User;
+
+import static com.example.mounter.Mounter.mounter;
+
 public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private User user;
+    private Realm mRealm;
+    private RidePostingModel ridePosting;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,11 +58,32 @@ public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallb
         com.example.mounter.databinding.ActivityDirectionsBinding binding = ActivityDirectionsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        mRealm = Realm.getDefaultInstance();
+        user = mounter.currentUser();
+
+        ObjectId rideId = (ObjectId) getIntent().getSerializableExtra("ridePostingId");
+        ridePosting = mRealm.where(RidePostingModel.class).equalTo("_id", rideId).findFirst();
+
+        TextView originAddressTextView = findViewById(R.id.ride_details_origin_address_textView);
+        TextView destinationAddressTextView = findViewById(R.id.ride_details_destination_address_textView);
+        TextView departureTimeTextView = findViewById(R.id.ride_details_departure_time);
+
+        originAddressTextView.append(ridePosting.getOriginAddress());
+        destinationAddressTextView.append(ridePosting.getDestinationAddress());
+        departureTimeTextView.append(ridePosting.getDepartureTime());
+
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this::onMapReady);
+    }
+
+    @Override
+    public void onDestroy(){
+        mRealm.close();
+        super.onDestroy();
     }
     /**
      * Manipulates the map once available.
@@ -61,18 +97,26 @@ public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallb
         googleMap.setMinZoomPreference(10.0f);
         googleMap.setMaxZoomPreference(20.0f);
         // Add a marker in SFU and move the camera
-        LatLng sfu_burnaby = new LatLng(49.276765, -122.917957);
-        LatLng sfu_surrey =  new LatLng(49.188680, -122.839940);
+        LatLng originLatLng = ridePosting.getOriginActualLatLng();
+        LatLng destinationLatLng = ridePosting.getDestinationActualLatLng();
+
+        // SFU Burnaby as default
+        if(originLatLng == null) originLatLng = new LatLng(49.276765, -122.917957);
+        // SFU Surrey as default
+        if(destinationLatLng == null) destinationLatLng = new LatLng(49.188680, -122.839940);
 
 
-        googleMap.addMarker(new MarkerOptions().position(sfu_burnaby).title("Marker on Burnaby Campus"));
-        googleMap.addMarker(new MarkerOptions().position(sfu_surrey).title("Marker on Surrey Campus"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sfu_surrey));
+        Toast toast = Toast.makeText(getApplicationContext(), ridePosting.getDestinationAddress(), Toast.LENGTH_LONG);
+        toast.show();
+
+        googleMap.addMarker(new MarkerOptions().position(originLatLng).title("Marker on Burnaby Campus"));
+        googleMap.addMarker(new MarkerOptions().position(destinationLatLng).title("Marker on Surrey Campus"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(destinationLatLng));
 
         String directionMode = "driving";
 
 
-        GetAndDisplayDirections(googleMap, sfu_burnaby, sfu_surrey, directionMode);
+        GetAndDisplayDirections(googleMap, originLatLng, destinationLatLng, directionMode);
     }
 
     private void GetAndDisplayDirections(GoogleMap googleMap, LatLng source, LatLng destination, String directionMode) {
@@ -83,6 +127,8 @@ public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallb
                 response -> {
                     JSONObject data;
                     try {
+                        Log.i("rideDetails", "directions request success");
+                        Log.d("rideDetails", response);
                         data = new JSONObject(response);
                         String encodedPoints = data.getJSONArray("routes")
                             .getJSONObject(0)
@@ -95,6 +141,7 @@ public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallb
                             .color(Color.RED));
                     }
                      catch (Exception e) {
+                        Log.e("rideDetails", e.getMessage());
                         e.printStackTrace();
                     }
             }, error -> {

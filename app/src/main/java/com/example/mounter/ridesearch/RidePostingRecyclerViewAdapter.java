@@ -2,12 +2,17 @@ package com.example.mounter.ridesearch;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.mounter.data.model.RidePostingModel;
 import com.example.mounter.databinding.FragmentItemBinding;
+import com.example.mounter.directions.MyRideActivity;
 
 import java.util.Date;
 
@@ -42,17 +47,30 @@ public class RidePostingRecyclerViewAdapter extends
         else holder.mContentView.setText(departureDate.toString());
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView mIdView;
         public final TextView mContentView;
         public RidePostingModel mItem;
 
         public ViewHolder(FragmentItemBinding binding) {
             super(binding.getRoot());
+            View view = binding.getRoot();
+            view.setOnClickListener(this);
             mIdView = binding.itemNumber;
+
             mContentView = binding.content;
         }
 
+        @Override
+        public void onClick(View v){
+            Log.d("ViewHolder", "onClick fired");
+            Context context = mIdView.getContext();
+            Intent rideDetailsIntent = new Intent(context, MyRideActivity.class);
+            rideDetailsIntent.putExtra("ridePostingId", mItem.get_id());
+
+            context.startActivity(rideDetailsIntent);
+
+        }
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";

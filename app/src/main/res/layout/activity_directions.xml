@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 map:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="-31dp">
+                tools:layout_editor_absoluteX="-31dp"
+                android:background="@color/sfu_dark_red">
 
 
                 <TextView
@@ -39,6 +40,7 @@
                     android:layout_height="35dp"
                     android:text="@string/my_ride_companion_label_text"
                     android:textSize="16sp"
+                    android:textColor="@color/white"
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="1.0"
@@ -52,6 +54,7 @@
                     android:layout_height="34dp"
                     android:text="@string/my_scheduled_ride_label_text"
                     android:textSize="16sp"
+                    android:textColor="@color/white"
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="0.038"
@@ -64,6 +67,7 @@
                     android:layout_width="254dp"
                     android:layout_height="26dp"
                     android:text="From: "
+                    android:textColor="@color/white"
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="0.025"
@@ -77,6 +81,7 @@
                     android:layout_height="25dp"
                     android:layout_marginTop="16dp"
                     android:text="To: "
+                    android:textColor="@color/white"
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="0.023"
@@ -90,6 +95,7 @@
                     android:layout_height="27dp"
                     android:layout_marginTop="16dp"
                     android:text="Starts: "
+                    android:textColor="@color/white"
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="0.019"
@@ -103,6 +109,7 @@
                     android:layout_height="21dp"
                     android:text="@string/is_in_good_standing"
                     android:textSize="10dp"
+                    android:textColor="@color/white"
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="0.786"
@@ -110,14 +117,15 @@
                     map:layout_constraintTop_toTopOf="parent"
                     map:layout_constraintVertical_bias="0.63" />
 
-                <EditText
+                <TextView
                     android:id="@+id/ride_details_companion_name"
                     android:layout_width="87dp"
-                    android:layout_height="36dp"
+                    android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:text="@string/john_doe"
                     android:textSize="12dp"
+                    android:textColor="@color/white"
                     map:layout_constraintBottom_toBottomOf="parent"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintHorizontal_bias="0.782"

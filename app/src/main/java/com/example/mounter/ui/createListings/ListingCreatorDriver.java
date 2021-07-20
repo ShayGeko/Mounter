@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,7 +38,7 @@ public class ListingCreatorDriver extends AppCompatActivity {
         TextInputEditText fillHourOfDeparture = findViewById(R.id.fillHourOfDeparture);
         TextInputEditText fillEstimatedPrice = findViewById(R.id.fillEstimatedPrice);
         TextInputEditText fillDescription = findViewById(R.id.fillDescription);
-        ImageButton submit = findViewById(R.id.submit);
+        Button submit = findViewById(R.id.submit);
         ImageButton back = findViewById(R.id.back);
 
         submit.setOnClickListener(view -> {

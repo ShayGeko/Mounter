@@ -9,7 +9,9 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.mounter.Mounter;
 import com.example.mounter.data.model.RidePostingModel;
@@ -38,7 +40,7 @@ public class ListingCreator extends AppCompatActivity {
         TextInputEditText fillFrom = findViewById(R.id.fillFrom);
         TextInputEditText fillHourOfDeparture = findViewById(R.id.fillHourOfDeparture);
         TextInputEditText fillDescription = findViewById(R.id.fillDescription);
-        ImageButton submit = findViewById(R.id.submit);
+        Button submit = findViewById(R.id.submit);
         ImageButton back = findViewById(R.id.back);
 
         submit.setOnClickListener(view -> {

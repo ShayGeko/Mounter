@@ -82,8 +82,8 @@ public class ListingCreatorDriver extends AppCompatActivity {
                 @Override
                 public void onError(Throwable error){
                     //TODO: Transaction failed, do something!
+                    realm.close();
                 }
-
             });
             finish();
         });

@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
 
+import java.util.concurrent.TimeUnit;
+
 import io.realm.Realm;
 import io.realm.mongodb.User;
 import io.realm.mongodb.sync.SyncConfiguration;
@@ -36,8 +38,10 @@ public class RideSearchActivity extends AppCompatActivity {
         Log.d("RideSearchActivity", "onStart Fired");
         super.onStart();
 
+
         try {
             user = mounter.currentUser();
+
         }
         catch (IllegalStateException e) {
 
@@ -48,34 +52,39 @@ public class RideSearchActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
         }
         else{
-            setUpRealm(user);
-       }
+            if(mRealm == null || mRealm.isClosed()) {
+                setUpRealm(user);
+            }
+        }
+    }
+
+    protected void onResume(){
+        super.onResume();
+        Log.d("RideSearchActivity", "onResume fired");
+        if(mRealm != null){
+            setUpRecyclerView(mRealm);
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("RideSearchActivity", "On create fired");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_search);
-        mRealm = Realm.getDefaultInstance();
         recyclerView = findViewById(R.id.ridePosting_list);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             startActivity(new Intent(getApplicationContext(), ChooseListing.class));
         });
+
     }
 
     @Override
     protected  void onDestroy(){
-        super.onDestroy();
         Log.d("RideSearchActivity", "onDestroyFired");
 //        recyclerView.setAdapter(null);
         mRealm.close();
-        user.logOutAsync(result -> {
-            if (result.isSuccess()) {
-            } else {
-            }
-        });
+        super.onDestroy();
     }
     private void setUpRecyclerView(Realm realm){
         Log.d("RideSearchActivity", "setUpRecyclerView: adapter set up");
@@ -90,11 +99,14 @@ public class RideSearchActivity extends AppCompatActivity {
     private void setUpRealm(User user){
         Log.d("RideSearchActivity", "settingUpRealm");
         String partitionValue = "1";
+        if(mRealm != null && mRealm.isClosed() == false){
+            mRealm.close();
+        }
 
         SyncConfiguration config = new SyncConfiguration.Builder(user, partitionValue)
-                .waitForInitialRemoteData()
+                .waitForInitialRemoteData(5, TimeUnit.SECONDS)
+                .compactOnLaunch()
                 .build();
-
         Realm.setDefaultConfiguration(config);
 
         Realm.getInstanceAsync(config, new Realm.Callback() {
@@ -113,7 +125,5 @@ public class RideSearchActivity extends AppCompatActivity {
                 exception.printStackTrace();
             }
         });
-
-
     }
 }

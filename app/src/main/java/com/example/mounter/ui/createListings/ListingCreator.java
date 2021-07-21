@@ -62,10 +62,6 @@ public class ListingCreator extends AppCompatActivity {
         fillDate.setText(getCurrentDate());
 
 
-
-
-
-
         submit.setOnClickListener(view -> {
             CharSequence to = fillTo.getText();
             CharSequence from = fillFrom.getText();

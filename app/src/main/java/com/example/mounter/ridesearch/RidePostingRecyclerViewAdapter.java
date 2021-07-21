@@ -16,8 +16,6 @@ import com.example.mounter.databinding.FragmentItemBinding;
 import com.example.mounter.directions.MyRideActivity;
 import com.example.mounter.profile.UserProfileActivity;
 
-import java.util.Date;
-
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
@@ -82,7 +80,7 @@ public class RidePostingRecyclerViewAdapter extends
             Log.d("ViewHolder", "onClick fired");
             Context context = mIdView.getContext();
             Intent rideDetailsIntent = new Intent(context, MyRideActivity.class);
-            rideDetailsIntent.putExtra("ridePostingId", mItem.get_id());
+            rideDetailsIntent.putExtra("ridePostingId", mItem.getId());
 
             context.startActivity(rideDetailsIntent);
 

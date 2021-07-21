@@ -1,31 +1,21 @@
 package com.example.mounter.ui.login;
 
-import androidx.annotation.Nullable;
 
-/**
- * Authentication result : success (user details) or error message.
- */
-class LoginResult {
-    @Nullable
-    private LoggedInUserView success;
-    @Nullable
-    private Integer error;
+public enum LoginResult {
+    Success,
+    Failure;
 
-    LoginResult(@Nullable Integer error) {
-        this.error = error;
+    private static String ERROR_MESSAGE = "login failed";
+
+    public boolean isSuccess(){
+        return this == Success;
     }
-
-    LoginResult(@Nullable LoggedInUserView success) {
-        this.success = success;
+    public boolean isFailure(){
+        return this == Failure;
     }
+    public String getError(){
+        if(isSuccess()) return null;
 
-    @Nullable
-    LoggedInUserView getSuccess() {
-        return success;
-    }
-
-    @Nullable
-    Integer getError() {
-        return error;
+        return ERROR_MESSAGE;
     }
 }

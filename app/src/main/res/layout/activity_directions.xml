@@ -31,125 +31,192 @@
                 android:layout_height="match_parent"
                 map:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="-31dp"
-                android:background="@color/sfu_dark_red">
+                android:background="@color/sfu_bright_red">
 
-
-                <TextView
-                    android:id="@+id/my_ride_companion_label"
-                    android:layout_width="168dp"
-                    android:layout_height="35dp"
-                    android:text="@string/my_ride_companion_label_text"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    map:layout_constraintBottom_toBottomOf="parent"
-                    map:layout_constraintEnd_toEndOf="parent"
-                    map:layout_constraintHorizontal_bias="1.0"
-                    map:layout_constraintStart_toStartOf="parent"
-                    map:layout_constraintTop_toTopOf="parent"
-                    map:layout_constraintVertical_bias="0.074" />
-
-                <TextView
-                    android:id="@+id/my_scheduled_ride_label"
-                    android:layout_width="228dp"
-                    android:layout_height="34dp"
-                    android:text="@string/my_scheduled_ride_label_text"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    map:layout_constraintBottom_toBottomOf="parent"
-                    map:layout_constraintEnd_toEndOf="parent"
-                    map:layout_constraintHorizontal_bias="0.038"
-                    map:layout_constraintStart_toStartOf="parent"
-                    map:layout_constraintTop_toTopOf="parent"
-                    map:layout_constraintVertical_bias="0.081" />
-
-                <TextView
-                    android:id="@+id/ride_details_origin_address_textView"
-                    android:layout_width="254dp"
-                    android:layout_height="26dp"
-                    android:text="From: "
-                    android:textColor="@color/white"
-                    map:layout_constraintBottom_toBottomOf="parent"
-                    map:layout_constraintEnd_toEndOf="parent"
-                    map:layout_constraintHorizontal_bias="0.025"
-                    map:layout_constraintStart_toStartOf="parent"
-                    map:layout_constraintTop_toTopOf="parent"
-                    map:layout_constraintVertical_bias="0.36" />
-
-                <TextView
-                    android:id="@+id/ride_details_destination_address_textView"
-                    android:layout_width="249dp"
-                    android:layout_height="25dp"
-                    android:layout_marginTop="16dp"
-                    android:text="To: "
-                    android:textColor="@color/white"
-                    map:layout_constraintBottom_toBottomOf="parent"
-                    map:layout_constraintEnd_toEndOf="parent"
-                    map:layout_constraintHorizontal_bias="0.023"
-                    map:layout_constraintStart_toStartOf="parent"
-                    map:layout_constraintTop_toTopOf="parent"
-                    map:layout_constraintVertical_bias="0.455" />
-
-                <TextView
-                    android:id="@+id/ride_details_departure_time"
-                    android:layout_width="199dp"
-                    android:layout_height="27dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Starts: "
-                    android:textColor="@color/white"
-                    map:layout_constraintBottom_toBottomOf="parent"
-                    map:layout_constraintEnd_toEndOf="parent"
-                    map:layout_constraintHorizontal_bias="0.019"
-                    map:layout_constraintStart_toStartOf="parent"
-                    map:layout_constraintTop_toTopOf="parent"
-                    map:layout_constraintVertical_bias="0.623" />
-
-                <TextView
-                    android:id="@+id/ride_details_companion_rating"
-                    android:layout_width="94dp"
-                    android:layout_height="21dp"
-                    android:text="@string/is_in_good_standing"
-                    android:textSize="10dp"
-                    android:textColor="@color/white"
-                    map:layout_constraintBottom_toBottomOf="parent"
-                    map:layout_constraintEnd_toEndOf="parent"
-                    map:layout_constraintHorizontal_bias="0.786"
-                    map:layout_constraintStart_toStartOf="parent"
-                    map:layout_constraintTop_toTopOf="parent"
-                    map:layout_constraintVertical_bias="0.63" />
-
-                <TextView
-                    android:id="@+id/ride_details_companion_name"
-                    android:layout_width="87dp"
+                <LinearLayout
+                    android:id="@+id/directionsLayout1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="@string/john_doe"
-                    android:textSize="12dp"
-                    android:textColor="@color/white"
-                    map:layout_constraintBottom_toBottomOf="parent"
-                    map:layout_constraintEnd_toEndOf="parent"
-                    map:layout_constraintHorizontal_bias="0.782"
-                    map:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="10dp"
                     map:layout_constraintTop_toTopOf="parent"
-                    map:layout_constraintVertical_bias="0.391" />
+                    map:layout_constraintStart_toStartOf="parent"
+                    map:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:id="@+id/my_ride_companion_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_ride_companion_label_text"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/my_scheduled_ride_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_scheduled_ride_label_text"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/directionsLayout2"
+                    android:layout_width="170dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginStart="15dp"
+                    map:layout_constraintTop_toBottomOf="@+id/directionsLayout1"
+                    map:layout_constraintStart_toStartOf="parent"
+                    map:layout_constraintBottom_toBottomOf="parent">
+
+                    <LinearLayout
+                        android:id="@+id/directionsLayout2_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="45dp"
+                            android:layout_height="wrap_content"
+                            android:text="From:"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="left"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:id="@+id/ride_details_origin_address_textView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:layout_gravity="center"
+                            android:gravity="left"
+                            android:singleLine="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:layout_weight="1000"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/directionsLayout2_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="45dp"
+                            android:layout_height="wrap_content"
+                            android:text="To:"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="left"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/ride_details_destination_address_textView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:layout_gravity="center"
+                            android:gravity="left"
+                            android:singleLine="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:layout_weight="1000"/>
+                        </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/directionsLayout2_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="45dp"
+                            android:layout_height="wrap_content"
+                            android:text="Starts:"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center"
+                            android:gravity="left"/>
+                        <TextView
+                            android:id="@+id/ride_details_departure_time"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:layout_gravity="center"
+                            android:gravity="left"
+                            android:singleLine="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:layout_weight="1000"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/directionsLayout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="24dp"
+                    map:layout_constraintTop_toBottomOf="@+id/directionsLayout1"
+                    map:layout_constraintBottom_toBottomOf="parent"
+                    map:layout_constraintStart_toEndOf="@id/directionsLayout2">
+
+                    <TextView
+                        android:id="@+id/ride_details_companion_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/john_doe"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:layout_gravity="center"
+                        android:gravity="bottom"
+                        android:layout_weight="1"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever" />
+
+                    <TextView
+                        android:id="@+id/ride_details_companion_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/is_in_good_standing"
+                        android:layout_gravity="center"
+                        android:gravity="top"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="59dp"
-                    android:layout_height="71dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    map:srcCompat="@drawable/person"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    map:layout_constraintTop_toBottomOf="@+id/directionsLayout1"
+                    map:layout_constraintStart_toEndOf="@+id/directionsLayout3"
                     map:layout_constraintBottom_toBottomOf="parent"
-                    map:layout_constraintEnd_toEndOf="parent"
-                    map:layout_constraintHorizontal_bias="0.1"
-                    map:layout_constraintStart_toEndOf="@+id/ride_details_companion_name"
-                    map:layout_constraintTop_toTopOf="parent"
-                    map:layout_constraintVertical_bias="0.4"
-                    map:srcCompat="@drawable/person" />
-
+                    map:layout_constraintEnd_toEndOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+    <!--Too long sentence roll not working, need to be fixed-->
 </LinearLayout>

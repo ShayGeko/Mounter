@@ -14,11 +14,16 @@ import io.realm.mongodb.User;
 import static com.example.mounter.Mounter.mounter;
 
 public class RidePostingModel extends RealmObject {
-    @PrimaryKey ObjectId _id = new ObjectId();
+    @PrimaryKey
+    ObjectId _id = new ObjectId();
     @Required
     private ObjectId _driverId;
     @Required
     private String _partition = "1";
+
+    @Required
+    private RealmList<ObjectId> passengerIds;
+
     private String originAddress;
     private String destinationAddress;
     private String departureTime;
@@ -87,6 +92,12 @@ public class RidePostingModel extends RealmObject {
         return destinationLatLng;
     }
 
+
+    /**
+     *
+     * @return LatLng object created based on the RealmList stored in the model
+     *
+     */
     public LatLng getDestinationActualLatLng(){
         return RealmConverter.toLatLng(destinationLatLng);
     }

@@ -42,6 +42,8 @@ public class RidePostingRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = getItem(position);
         holder.mIdView.setText(holder.mItem.getDestinationAddress());
+        holder.mDepartureTime.setText(holder.mItem.getDepartureTime());
+        holder.mDepartureTime1.setText(holder.mItem.getDepartureTime());
         String departureDate = holder.mItem.getDepartureTime().toString();
         if(departureDate == null) holder.mContentView.setText("");
         else holder.mContentView.setText(departureDate.toString());
@@ -50,6 +52,8 @@ public class RidePostingRecyclerViewAdapter extends
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView mIdView;
         public final TextView mContentView;
+        public final TextView mDepartureTime;
+        public final TextView mDepartureTime1;
         public RidePostingModel mItem;
 
         public ViewHolder(FragmentItemBinding binding) {
@@ -59,6 +63,8 @@ public class RidePostingRecyclerViewAdapter extends
             mIdView = binding.itemNumber;
 
             mContentView = binding.content;
+            mDepartureTime = binding.departureTime;
+            mDepartureTime1 = binding.departureTime1;
         }
 
         @Override

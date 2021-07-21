@@ -105,10 +105,6 @@ public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallb
         // SFU Surrey as default
         if(destinationLatLng == null) destinationLatLng = new LatLng(49.188680, -122.839940);
 
-
-        Toast toast = Toast.makeText(getApplicationContext(), ridePosting.getDestinationAddress(), Toast.LENGTH_LONG);
-        toast.show();
-
         googleMap.addMarker(new MarkerOptions().position(originLatLng).title("Marker on Burnaby Campus"));
         googleMap.addMarker(new MarkerOptions().position(destinationLatLng).title("Marker on Surrey Campus"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(destinationLatLng));

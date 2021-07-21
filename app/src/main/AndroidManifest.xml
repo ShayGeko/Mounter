@@ -17,29 +17,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MounteR">
         <activity
-            android:name=".ui.LoadingScreen">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".ui.createListings.ListingCreator"
-            android:label="@string/createListing"></activity>
+            android:label="@string/createListing" />
         <activity
             android:name=".ui.createListings.ListingCreatorDriver"
-            android:label="Create Listing"></activity>
+            android:label="Create Listing" />
         <activity
             android:name=".ui.createListings.ChooseListing"
             android:label="@string/chooseTypeOfListing" />
         <activity
+            android:theme="@style/splashScreenTheme"
             android:name=".ridesearch.RideSearchActivity"
-            android:label="@string/title_activity_ride_search"/>
+            android:label="@string/title_activity_ride_search">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

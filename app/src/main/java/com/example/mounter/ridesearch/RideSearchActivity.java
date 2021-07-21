@@ -37,11 +37,8 @@ public class RideSearchActivity extends AppCompatActivity {
     protected void onStart(){
         Log.d("RideSearchActivity", "onStart Fired");
         super.onStart();
-
-
         try {
             user = mounter.currentUser();
-
         }
         catch (IllegalStateException e) {
 
@@ -68,6 +65,13 @@ public class RideSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("RideSearchActivity", "On create fired");
+
+        // initially theme is set to the splash screen
+        // once onCreate is fired <-> activity is loaded
+        // change the theme to the App theme once loaded
+        // idea taken from https://stackoverflow.com/a/38800389/11957322
+        setTheme(R.style.Theme_MounteR);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_search);
         recyclerView = findViewById(R.id.ridePosting_list);
@@ -115,8 +119,6 @@ public class RideSearchActivity extends AppCompatActivity {
                 Log.d("RideSearchActivity", "ui thread realm instance acquired");
                 mRealm = realm;
                 setUpRecyclerView(realm);
-
-
             }
             @Override
             public void onError(@NonNull Throwable exception) {

@@ -34,25 +34,37 @@
         android:id="@+id/fillHourOfDeparture"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Hour of Departure"
         android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="50dp"
+        android:hint="Hour of Departure"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fillFrom"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fillFrom" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/fillDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Description"
         android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="50dp"
+        android:hint="Description"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fillHourOfDeparture"/>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fillHourOfDeparture" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="submit"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fillDate" />
 
     <ImageButton
         android:id="@+id/back"
@@ -66,17 +78,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/fillDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="submit"
-        android:textSize="17sp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        android:text="Select Date"
+        android:onClick="showDatePicker"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fillDescription" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fillDescription"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

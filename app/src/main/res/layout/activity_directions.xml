@@ -45,20 +45,20 @@
                     map:layout_constraintEnd_toEndOf="parent">
 
                     <TextView
-                        android:id="@+id/my_ride_companion_label"
+                        android:id="@+id/my_scheduled_ride_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/my_ride_companion_label_text"
+                        android:text="@string/my_scheduled_ride_label_text"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:layout_gravity="center"
                         android:layout_weight="1"/>
 
                     <TextView
-                        android:id="@+id/my_scheduled_ride_label"
+                        android:id="@+id/my_ride_companion_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/my_scheduled_ride_label_text"
+                        android:text="@string/my_ride_companion_label_text"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:layout_gravity="center"

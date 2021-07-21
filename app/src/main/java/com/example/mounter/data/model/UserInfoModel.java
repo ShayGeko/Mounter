@@ -11,7 +11,7 @@ public class UserInfoModel extends RealmObject {
     @PrimaryKey @Required
     ObjectId _id = new ObjectId();
     @Required
-    ObjectId _userId;
+    String _userId;
     @Required
     private String _partition = "1";
     private String name;
@@ -26,7 +26,7 @@ public class UserInfoModel extends RealmObject {
 
     }
     public UserInfoModel(User user){
-        this._userId = new ObjectId(user.getId());
+        this._userId = user.getId();
     }
 
     public ObjectId getId(){
@@ -37,7 +37,7 @@ public class UserInfoModel extends RealmObject {
      *
      * @return id of the described user
      */
-    public ObjectId getUserId(){
+    public String getUserId(){
         return _userId;
     }
 
@@ -45,7 +45,7 @@ public class UserInfoModel extends RealmObject {
      *
      * @param userId
      */
-    private void setUserId(ObjectId userId){
+    private void setUserId(String userId){
         this._userId = userId;
     }
     /**

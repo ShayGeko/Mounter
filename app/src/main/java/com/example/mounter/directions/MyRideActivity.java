@@ -57,7 +57,7 @@ public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallb
         ObjectId rideId = (ObjectId) getIntent().getSerializableExtra("ridePostingId");
         ridePosting = mRealm.where(RidePostingModel.class).equalTo("_id", rideId).findFirst();
 
-        String driverId = ridePosting.get_driverId().toString();
+        String driverId = ridePosting.getDriverId().toString();
 
         // get the driver user from Realm and display its data
         mRealm.executeTransactionAsync(transactionRealm -> {

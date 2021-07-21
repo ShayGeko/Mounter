@@ -5,8 +5,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 import org.bson.types.ObjectId;
 
-import java.util.Date;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -48,13 +46,13 @@ public class RidePostingModel extends RealmObject {
         _driverId = new ObjectId(user.getId());
     }
 
-    public ObjectId get_id(){
+    public ObjectId getId(){
         return _id;
     }
-    public ObjectId get_driverId(){
+    public ObjectId getDriverId(){
         return  _driverId;
     }
-    public String get_partition() {
+    public String getPartition() {
         return _partition;
     }
 

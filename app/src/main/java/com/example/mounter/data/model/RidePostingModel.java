@@ -24,6 +24,7 @@ public class RidePostingModel extends RealmObject {
     private String originAddress;
     private String destinationAddress;
     private String departureTime;
+    private int departureTimeInDays;
 
 
     public String getEstimatedPrice() {
@@ -81,6 +82,7 @@ public class RidePostingModel extends RealmObject {
 
     public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
+        convertDateToInt(); //Sets departureTimeInDays
     }
 
     public RealmList<Double> getDestinationLatLng() {
@@ -116,5 +118,42 @@ public class RidePostingModel extends RealmObject {
     }
     public void setDescription(String description){
         this.description = description;
+    }
+
+    private void convertDateToInt(){
+        String[] date = getDepartureTime().split(" ");
+        String[] dateValues = date[0].split("/");   //[0] = days, [1] = months, [2] = years
+
+        departureTimeInDays = (Integer.parseInt(dateValues[0]) + getMonthValue(dateValues[1]) + (Integer.parseInt(dateValues[2]) * 365));
+    }
+
+    public int getMonthValue(String month){
+        switch(month){
+            case "Jan":
+                return 31;
+            case "Feb":
+                return 29 + 31;
+            case "Mar":
+                return 31;
+            case "Apr":
+                return 30;
+            case "May":
+                return 31;
+            case "Jun":
+                return 30;
+            case "Jul":
+                return 31;
+            case "Aug":
+                return 31;
+            case "Sep":
+                return 30;
+            case "Oct":
+                return 31;
+            case "Nov":
+                return 30;
+            case "Dec":
+                return 31;
+        }
+        return 31;
     }
 }

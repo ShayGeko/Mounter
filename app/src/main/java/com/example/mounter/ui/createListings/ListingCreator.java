@@ -86,8 +86,7 @@ public class ListingCreator extends AppCompatActivity {
             //Setting all the data into the ridePosting model
             ridePostingModel.setDestinationAddress(to.toString());
             ridePostingModel.setOriginAddress(from.toString());
-            ridePostingModel.setDepartureTime(hourOfDeparture.toString() + " " + date.toString());
-            Log.d("MyApp", hourOfDeparture.toString() + " " + date.toString());
+            ridePostingModel.setDepartureTime(date.toString() + " " + hourOfDeparture.toString());
 
             //Inputs the collected data into the database
             @NotNull
@@ -124,16 +123,6 @@ public class ListingCreator extends AppCompatActivity {
 
     }
 
-    private String getCurrentDate() {
-        Calendar myCalendar = Calendar.getInstance();
-        int day = myCalendar.get(Calendar.DAY_OF_MONTH);
-        int month = myCalendar.get(Calendar.MONTH);
-        month += 1;
-        int year = myCalendar.get(Calendar.YEAR);
-
-        return convertDateToString(day, month, year);
-    }
-
     private void initDatePicker() {
 
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -159,7 +148,17 @@ public class ListingCreator extends AppCompatActivity {
         return "" + day + "/" + convertMonth(month) + "/" + year;
     }
 
-    private String convertMonth(int month) {
+    public String getCurrentDate() {
+        Calendar myCalendar = Calendar.getInstance();
+        int day = myCalendar.get(Calendar.DAY_OF_MONTH);
+        int month = myCalendar.get(Calendar.MONTH);
+        month += 1;
+        int year = myCalendar.get(Calendar.YEAR);
+
+        return convertDateToString(day, month, year);
+    }
+
+    public String convertMonth(int month) {
 
         switch(month){
             case 1:

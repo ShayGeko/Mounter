@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MounteR">
         <activity
+            android:name=".profile.UserProfileActivity"
+            android:label = "@string/user_profile"/>
+        <activity
             android:name=".ui.createListings.ListingCreator"
             android:label="@string/createListing" />
         <activity
@@ -26,11 +29,12 @@
             android:name=".ui.createListings.ChooseListing"
             android:label="@string/chooseTypeOfListing" />
         <activity
-            android:theme="@style/splashScreenTheme"
             android:name=".ridesearch.RideSearchActivity"
-            android:label="@string/title_activity_ride_search">
+            android:label="@string/title_activity_ride_search"
+            android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -8,11 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mounter.data.model.RidePostingModel;
 import com.example.mounter.databinding.FragmentItemBinding;
 import com.example.mounter.directions.MyRideActivity;
+import com.example.mounter.profile.UserProfileActivity;
 
 import java.util.Date;
 
@@ -43,7 +45,13 @@ public class RidePostingRecyclerViewAdapter extends
         holder.mItem = getItem(position);
         holder.mIdView.setText(holder.mItem.getDestinationAddress());
         holder.mDepartureTime.setText(holder.mItem.getDepartureTime());
-        holder.mDepartureTime1.setText(holder.mItem.getDepartureTime());
+        // holder.mDepartureTime1.setText(holder.mItem.getDepartureTime());
+
+        holder.mProfileButton.setOnClickListener(t -> {
+            Context context = holder.mIdView.getContext();
+            Intent intent = new Intent(context, UserProfileActivity.class);
+            context.startActivity(intent);
+        });
         String departureDate = holder.mItem.getDepartureTime().toString();
         if(departureDate == null) holder.mContentView.setText("");
         else holder.mContentView.setText(departureDate.toString());
@@ -53,7 +61,8 @@ public class RidePostingRecyclerViewAdapter extends
         public final TextView mIdView;
         public final TextView mContentView;
         public final TextView mDepartureTime;
-        public final TextView mDepartureTime1;
+        // public final TextView mDepartureTime1;
+        public final Button mProfileButton;
         public RidePostingModel mItem;
 
         public ViewHolder(FragmentItemBinding binding) {
@@ -64,7 +73,8 @@ public class RidePostingRecyclerViewAdapter extends
 
             mContentView = binding.content;
             mDepartureTime = binding.departureTime;
-            mDepartureTime1 = binding.departureTime1;
+            // mDepartureTime1 = binding.departureTime1;
+            mProfileButton = binding.profileBtn;
         }
 
         @Override

@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +17,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mounter.R;
 import com.example.mounter.data.model.RidePostingModel;
+import com.example.mounter.data.model.RideRequestModel;
 import com.example.mounter.data.model.UserInfoModel;
 import com.example.mounter.databinding.ActivityDirectionsBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -57,19 +60,36 @@ public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallb
         ObjectId rideId = (ObjectId) getIntent().getSerializableExtra("ridePostingId");
         ridePosting = mRealm.where(RidePostingModel.class).equalTo("_id", rideId).findFirst();
 
-        String driverId = ridePosting.getDriverId().toString();
+        ObjectId driverId = ridePosting.getDriverId();
+        String driverIdStr = driverId.toString();
 
+        Button requestToJoinRideBtn = findViewById(R.id.requestToJoinRideBtn);
+
+        // if passenger request to join the ride - crete new rideRequest in Realm
+        // send push notification to the driver
+        requestToJoinRideBtn.setOnClickListener(view -> {
+
+            mRealm.executeTransactionAsync(transactionRealm -> {
+                RideRequestModel rideRequestModel = new RideRequestModel(
+                        driverId,
+                        new ObjectId(user.getId()),
+                        rideId);
+
+                transactionRealm.insert(rideRequestModel);
+            });
+        });
         // get the driver user from Realm and display its data
         mRealm.executeTransactionAsync(transactionRealm -> {
             UserInfoModel userInfo = transactionRealm
                     .where(UserInfoModel.class)
-                    .equalTo("_userId", driverId)
+                    .equalTo("_userId", driverIdStr)
                     .findFirst();
 
             displayDriverData(userInfo);
 
             transactionRealm.close();
         });
+
         displayRideData();
 
 

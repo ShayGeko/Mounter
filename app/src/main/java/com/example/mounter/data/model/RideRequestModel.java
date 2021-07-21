@@ -1,20 +1,16 @@
 package com.example.mounter.data.model;
 
-import com.example.mounter.data.RealmConverter;
-import com.google.android.gms.maps.model.LatLng;
 
 import org.bson.types.ObjectId;
 
-import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
-import io.realm.mongodb.User;
-
-import static com.example.mounter.Mounter.mounter;
 
 public class RideRequestModel extends RealmObject {
-    @PrimaryKey ObjectId _id = new ObjectId();
+    @PrimaryKey
+    @Required
+    ObjectId _id = new ObjectId();
     @Required
     private ObjectId _driverId;
     @Required
@@ -26,7 +22,11 @@ public class RideRequestModel extends RealmObject {
 
     public RideRequestModel(){
     }
-
+    public RideRequestModel(ObjectId driverId, ObjectId passengerId, ObjectId ridePostingId){
+        this._driverId = driverId;
+        this._passengerId = passengerId;
+        this._ridePostingId = ridePostingId;
+    }
     public ObjectId getId(){
         return _id;
     }

@@ -22,10 +22,10 @@
     <string name="is_in_good_standing">Is in good standing</string>
     <string name="john_doe">John Doe</string>
     <string name="designed_by_team_4">Designed by team 4</string>
-    <string name="rating">rating:</string>
+    <string name="rating">rating</string>
     <string name="surname">surname</string>
     <string name="name">name</string>
+    <string name="sex">sex</string>
     <string name="request_to_join">request to join</string>
     <string name="success">Success</string>
-
 </resources>

@@ -2,12 +2,19 @@ package com.example.mounter.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.mounter.R;
 import com.example.mounter.data.model.UserInfoModel;
+import com.example.mounter.ui.createListings.ChooseListing;
+
+import org.w3c.dom.Text;
 
 import io.realm.Realm;
 import io.realm.mongodb.User;
@@ -31,19 +38,26 @@ public class UserProfileActivity extends AppCompatActivity {
                     .findFirst();
 
             setUpUserProfile(userInfo);
-
             transactionRealm.close();
         });
 
+        ImageButton back = findViewById(R.id.back);
+        back.setOnClickListener(view -> {
+            finish();
+        });
+
     }
+
+
 
     private void setUpUserProfile(UserInfoModel userInfo){
         TextView nameTextView = findViewById(R.id.user_name);
         TextView surnameTextView = findViewById(R.id.user_surname);
         TextView ratingTextView = findViewById(R.id.rating);
-
+        TextView sexTextView = findViewById(R.id.sex);
         nameTextView.setText(userInfo.getName());
         surnameTextView.setText(userInfo.getSurname());
-        ratingTextView.append(String.valueOf(userInfo.getRating()));
+        ratingTextView.setText(String.valueOf(userInfo.getRating()));
+        sexTextView.setText(userInfo.getSex());
     }
 }

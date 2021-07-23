@@ -5,6 +5,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 import org.bson.types.ObjectId;
 
+import java.util.Date;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -14,11 +16,16 @@ import io.realm.mongodb.User;
 import static com.example.mounter.Mounter.mounter;
 
 public class RidePostingModel extends RealmObject {
-    @PrimaryKey ObjectId _id = new ObjectId();
+    @PrimaryKey
+    ObjectId _id = new ObjectId();
     @Required
     private ObjectId _driverId;
     @Required
     private String _partition = "1";
+
+    @Required
+    private RealmList<ObjectId> passengerIds;
+
     private String originAddress;
     private String destinationAddress;
     private String departureTime;
@@ -83,10 +90,35 @@ public class RidePostingModel extends RealmObject {
         convertDateToInt(); //Sets departureTimeInDays
     }
 
+    public RealmList<ObjectId> getPassengerIds(){
+        return passengerIds;
+    }
+    public void enrollUserOnTheRide(String userId){
+        passengerIds.add(new ObjectId(userId));
+    }
+    public void enrollUserOnTheRide(ObjectId userId){
+        passengerIds.add(userId);
+    }
+    public void kickFromTheRide(String userId){
+        passengerIds.remove(new ObjectId(userId));
+    }
+    public void kickFromTheRide(ObjectId userId){
+        passengerIds.remove(userId);
+    }
     public RealmList<Double> getDestinationLatLng() {
         return destinationLatLng;
     }
 
+    /**
+     *
+     * @return LatLng object created based on the RealmList stored in the model
+     *
+=======
+    /**
+     *
+     * @return LatLng object created based on the RealmList stored in the model
+>>>>>>> master
+     */
     public LatLng getDestinationActualLatLng(){
         return RealmConverter.toLatLng(destinationLatLng);
     }
@@ -125,6 +157,11 @@ public class RidePostingModel extends RealmObject {
         departureTimeInDays = (Integer.parseInt(dateValues[0]) + getMonthValue(dateValues[1]) + (Integer.parseInt(dateValues[2]) * 365));
     }
 
+    /**
+     *
+     * @param month
+     * @return approximate number of days in the specified month
+     */
     public int getMonthValue(String month){
         switch(month){
             case "Jan":

@@ -4,6 +4,10 @@ import com.google.android.gms.maps.model.LatLng;
 
 import io.realm.RealmList;
 
+/**
+ * converter between Realm data types and the "regular" types
+ * currently only needed to c
+ */
 public class RealmConverter {
     public static RealmList<Double> toRealmList(LatLng coords){
         RealmList<Double> realmList = new RealmList<>();

@@ -6,7 +6,7 @@ import io.realm.RealmList;
 
 /**
  * converter between Realm data types and the "regular" types
- * currently only needed to c
+ * currently only needed to convert LatLng to Realm List nad vice versa
  */
 public class RealmConverter {
     public static RealmList<Double> toRealmList(LatLng coords){

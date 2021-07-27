@@ -1,4 +1,5 @@
 <resources>
     <string name="mongodb_realm_url" templateMergeStrategy="preserve" translatable="false">https://realm.mongodb.com</string>
     <string name="mongodb_realm_app_id" templateMergeStrategy="preserve" translatable="false">mounterlocalrealm-ftara</string>
+    <string name = "realm_partition"  templateMergeStrategy="preserve" translatable="false">1</string>
 </resources>

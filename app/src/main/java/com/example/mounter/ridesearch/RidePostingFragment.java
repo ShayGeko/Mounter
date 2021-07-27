@@ -36,16 +36,6 @@ public class RidePostingFragment extends Fragment {
     public RidePostingFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static RidePostingFragment newInstance(int columnCount) {
-        RidePostingFragment fragment = new RidePostingFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

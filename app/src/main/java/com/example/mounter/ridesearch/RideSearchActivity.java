@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.mounter.Mounter;
 import com.example.mounter.R;
 import com.example.mounter.data.model.RidePostingModel;
 import com.example.mounter.ui.createListings.ChooseListing;
@@ -37,6 +38,7 @@ public class RideSearchActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RidePostingRecyclerViewAdapter adapter;
 
+    @Override
     protected void onStart(){
         Log.d("RideSearchActivity", "onStart Fired");
         super.onStart();
@@ -58,6 +60,7 @@ public class RideSearchActivity extends AppCompatActivity {
         }
     }
 
+    @Override
     protected void onResume(){
         super.onResume();
         Log.d("RideSearchActivity", "onResume fired");
@@ -89,26 +92,40 @@ public class RideSearchActivity extends AppCompatActivity {
     @Override
     protected  void onDestroy(){
         Log.d("RideSearchActivity", "onDestroyFired");
-//        recyclerView.setAdapter(null);
+        recyclerView.setAdapter(null);
         mRealm.close();
         super.onDestroy();
     }
+
+    /**
+     * Initializes the {@link RidePostingRecyclerViewAdapter}
+     * Populates it with current (not expired) ride postings from the Realm
+     * Sets up UI for the recyclerView
+     * @param realm
+     */
     private void setUpRecyclerView(Realm realm){
         Log.d("RideSearchActivity", "setUpRecyclerView: adapter set up");
-        Calendar myCalendar = Calendar.getInstance();
-        Date date = new Date();
+
         recyclerView = findViewById(R.id.ridePosting_list);
+
         adapter = new RidePostingRecyclerViewAdapter(realm.where(RidePostingModel.class).greaterThanOrEqualTo
                 ("departureTimeInDays", getCurrentDateInDays()).findAll());
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
+    /**
+     * Creates default configuration for {@link Realm} based on the active user,
+     * Creates the realm for this activity, and starts the init of {@link RidePostingRecyclerViewAdapter}
+     * @param user
+     */
     private void setUpRealm(User user){
         Log.d("RideSearchActivity", "settingUpRealm");
-        String partitionValue = "1";
+        String partitionValue = Mounter.realmPartition;
+
         if(mRealm != null && mRealm.isClosed() == false){
             mRealm.close();
         }
@@ -135,6 +152,10 @@ public class RideSearchActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     * @return an integer representing number of days passed since Epoch (1/1/1970)
+     */
     private int getCurrentDateInDays() {
         Calendar myCalendar = Calendar.getInstance();
         int day = myCalendar.get(Calendar.DAY_OF_MONTH);
@@ -144,7 +165,8 @@ public class RideSearchActivity extends AppCompatActivity {
 
         ListingCreator listingCreator = new ListingCreator();
         RidePostingModel ridePostingModel = new RidePostingModel();
-        int daysInMonth = ridePostingModel.getMonthValue(listingCreator.convertMonth(month));   //Converts the month to the number of days in the given month
+        //Converts the month to the number of days in the given month
+        int daysInMonth = ridePostingModel.getMonthValue(listingCreator.convertMonth(month));
 
         return day + daysInMonth + (year * 365);
     }

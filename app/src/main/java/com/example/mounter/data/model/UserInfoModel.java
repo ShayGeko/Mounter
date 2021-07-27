@@ -1,5 +1,7 @@
 package com.example.mounter.data.model;
 
+import com.example.mounter.Mounter;
+
 import org.bson.types.ObjectId;
 
 import io.realm.RealmObject;
@@ -13,7 +15,7 @@ public class UserInfoModel extends RealmObject {
     @Required
     String _userId;
     @Required
-    private String _partition = "1";
+    private String _partition = Mounter.realmPartition;
     private String name;
     private String surname;
     private Integer pfp_id = 0;

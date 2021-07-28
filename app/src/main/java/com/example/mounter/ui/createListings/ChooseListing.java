@@ -30,7 +30,7 @@ public class ChooseListing extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Log.i("MyApp", "Passenger image button is working!");
-                intent = new Intent(getApplicationContext(), ListingCreator.class);
+                intent = new Intent(getApplicationContext(), RidePostingCreator.class);
                 startActivity(intent);
                 finish();
             }
@@ -44,7 +44,7 @@ public class ChooseListing extends AppCompatActivity {
                             "\nbefore making a Driver's listing.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     return;
                 }
-                intent = new Intent(getApplicationContext(), ListingCreatorDriver.class);
+                intent = new Intent(getApplicationContext(), RidePostingCreatorDriver.class);
                 startActivity(intent);
                 finish();
             }

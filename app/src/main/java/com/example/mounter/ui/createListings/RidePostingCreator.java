@@ -30,7 +30,7 @@ import java.util.Locale;
 
 import io.realm.Realm;
 
-public class ListingCreator extends AppCompatActivity {
+public class RidePostingCreator extends AppCompatActivity {
 
     private Intent intent;
     private RidePostingModel ridePostingModel;
@@ -119,7 +119,7 @@ public class ListingCreator extends AppCompatActivity {
 
     }
 
-    private void initDatePicker() {
+    protected void initDatePicker() {
 
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -140,7 +140,7 @@ public class ListingCreator extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
     }
 
-    private String convertDateToString(int day, int month, int year) {
+    protected String convertDateToString(int day, int month, int year) {
         return "" + day + "/" + convertMonth(month) + "/" + year;
     }
 
@@ -189,7 +189,7 @@ public class ListingCreator extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private static void hideKeyboard(Activity activity) {
+    protected static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
         View view = activity.getCurrentFocus();

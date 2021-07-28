@@ -19,6 +19,7 @@ import com.example.mounter.R;
 import com.example.mounter.data.model.RidePostingModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.example.mounter.ui.createListings.RidePostingCreator;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +27,7 @@ import java.util.Calendar;
 
 import io.realm.Realm;
 
-public class ListingCreatorDriver extends AppCompatActivity {
+public class RidePostingCreatorDriver extends RidePostingCreator{
 
     private Intent intent;
     private RidePostingModel ridePostingModel;
@@ -116,87 +117,6 @@ public class ListingCreatorDriver extends AppCompatActivity {
             finish();
         });
 
-    }
-
-    private void initDatePicker() {
-
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month += 1; //By default January is represented as 0, therefore we add 1 so January corresponds to the integer 1.
-                String date = convertDateToString(day, month, year);
-                fillDate.setText(date);
-
-            }
-        };
-        Calendar myCalendar = Calendar.getInstance();
-        int day = myCalendar.get(Calendar.DAY_OF_MONTH);
-        int month = myCalendar.get(Calendar.MONTH);
-        int year = myCalendar.get(Calendar.YEAR);
-        Log.d("MyApp", "" + year);
-
-        datePickerDialog = new DatePickerDialog(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, dateSetListener, year, month, day);
-        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-    }
-
-    private String convertDateToString(int day, int month, int year) {
-        return "" + day + "/" + convertMonth(month) + "/" + year;
-    }
-
-    public String getCurrentDate() {
-        Calendar myCalendar = Calendar.getInstance();
-        int day = myCalendar.get(Calendar.DAY_OF_MONTH);
-        int month = myCalendar.get(Calendar.MONTH);
-        month += 1;
-        int year = myCalendar.get(Calendar.YEAR);
-
-        return convertDateToString(day, month, year);
-    }
-
-    public String convertMonth(int month) {
-
-        switch(month){
-            case 1:
-                return "Jan";
-            case 2:
-                return "Feb";
-            case 3:
-                return "Mar";
-            case 4:
-                return "Apr";
-            case 5:
-                return "May";
-            case 6:
-                return "Jun";
-            case 7:
-                return "Jul";
-            case 8:
-                return "Aug";
-            case 9:
-                return "Sep";
-            case 10:
-                return "Oct";
-            case 11:
-                return "Nov";
-            case 12:
-                return "Dec";
-        }
-        return "Jan";
-    }
-
-    public void showDatePicker(View view){
-        datePickerDialog.show();
-    }
-
-    private static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

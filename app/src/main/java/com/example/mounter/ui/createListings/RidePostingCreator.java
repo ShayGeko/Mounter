@@ -52,14 +52,7 @@ public class RidePostingCreator extends AppCompatActivity {
         ridePostingModel = new RidePostingModel(Mounter.mounter.currentUser());
         initDatePicker();
 
-        fillTo = findViewById(R.id.fillTo);
-        fillFrom = findViewById(R.id.fillFrom);
-        fillHourOfDeparture = findViewById(R.id.fillHourOfDeparture);
-        fillDescription = findViewById(R.id.fillDescription);
-        submit = findViewById(R.id.submit);
-        back = findViewById(R.id.back);
-        fillDate = findViewById(R.id.fillDate);
-        fillDate.setText(getCurrentDate());
+        variablePropertyInit();
 
 
         submit.setOnClickListener(view -> {
@@ -80,32 +73,10 @@ public class RidePostingCreator extends AppCompatActivity {
                 return;
             }
             //Setting all the data into the ridePosting model
-            ridePostingModel.setDestinationAddress(to.toString());
-            ridePostingModel.setOriginAddress(from.toString());
-            ridePostingModel.setDepartureTime(date.toString() + " " + hourOfDeparture.toString());
+            setDataInModel(to, from, hourOfDeparture, date);
 
             //Inputs the collected data into the database
-            @NotNull
-            Realm realm = Realm.getDefaultInstance();
-
-            realm.executeTransactionAsync(new Realm.Transaction() {
-                @Override
-                public void execute(Realm bgRealm) {
-                    bgRealm.insert(ridePostingModel);
-                }
-            }, new Realm.Transaction.OnSuccess(){
-                @Override
-                public void onSuccess() {
-                    realm.close();
-                }
-            }, new Realm.Transaction.OnError(){
-                @Override
-                public void onError(Throwable error){
-                    //TODO: Transaction failed, do something!
-                    realm.close();
-                }
-
-            });
+            sendToRealm();
             finish();
         });
 
@@ -117,6 +88,59 @@ public class RidePostingCreator extends AppCompatActivity {
             finish();
         });
 
+    }
+
+    /**
+     * Sends the collected data to the Database
+     */
+    protected void sendToRealm() {
+        @NotNull
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                bgRealm.insert(ridePostingModel);
+            }
+        }, new Realm.Transaction.OnSuccess(){
+            @Override
+            public void onSuccess() {
+                realm.close();
+            }
+        }, new Realm.Transaction.OnError(){
+            @Override
+            public void onError(Throwable error){
+                realm.close();
+            }
+
+        });
+    }
+
+    /**
+     * Sets all of the given parameters in the RidePosting Model
+     * @param to
+     * @param from
+     * @param hourOfDeparture
+     * @param date
+     */
+    protected void setDataInModel(CharSequence to, CharSequence from, CharSequence hourOfDeparture, CharSequence date) {
+        ridePostingModel.setDestinationAddress(to.toString());
+        ridePostingModel.setOriginAddress(from.toString());
+        ridePostingModel.setDepartureTime(date.toString() + " " + hourOfDeparture.toString());
+    }
+
+    /**
+     * Assigns these variables their corresponding properties from the Activity layout
+     */
+    private void variablePropertyInit() {
+        fillTo = findViewById(R.id.fillTo);
+        fillFrom = findViewById(R.id.fillFrom);
+        fillHourOfDeparture = findViewById(R.id.fillHourOfDeparture);
+        fillDescription = findViewById(R.id.fillDescription);
+        submit = findViewById(R.id.submit);
+        back = findViewById(R.id.back);
+        fillDate = findViewById(R.id.fillDate);
+        fillDate.setText(getCurrentDate());
     }
 
     protected void initDatePicker() {
@@ -189,6 +213,10 @@ public class RidePostingCreator extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    /**
+     * Hides Keyboard
+     * @param activity
+     */
     protected static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.

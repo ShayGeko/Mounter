@@ -11,7 +11,7 @@ import android.os.Bundle;
 import com.example.mounter.R;
 import com.google.android.material.snackbar.Snackbar;
 
-public class ChooseListing extends AppCompatActivity {
+public class ChooseRidePosting extends AppCompatActivity {
 
     private boolean userIsDriver;   //Determines whether user has driving privileges or not.
     private Intent intent;

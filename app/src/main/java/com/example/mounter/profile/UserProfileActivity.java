@@ -2,19 +2,12 @@ package com.example.mounter.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.mounter.R;
 import com.example.mounter.data.model.UserInfoModel;
-import com.example.mounter.ui.createListings.ChooseListing;
-
-import org.w3c.dom.Text;
 
 import io.realm.Realm;
 import io.realm.mongodb.User;

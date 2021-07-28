@@ -1,31 +1,17 @@
 package com.example.mounter.ui.createListings;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mounter.Mounter;
 import com.example.mounter.R;
 import com.example.mounter.data.model.RidePostingModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-import com.example.mounter.ui.createListings.RidePostingCreator;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Calendar;
-
-import io.realm.Realm;
 
 public class RidePostingCreatorDriver extends RidePostingCreator{
 
@@ -66,7 +52,7 @@ public class RidePostingCreatorDriver extends RidePostingCreator{
                 fillHourOfDeparture.setText("");
                 fillEstimatedPrice.setText("");
                 fillDescription.setText("");
-                Snackbar.make(view, "Please make sure to fill in all key components.",
+                Snackbar.make(view, R.string.fill_in_components,
                         Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 return;
             }
@@ -79,7 +65,7 @@ public class RidePostingCreatorDriver extends RidePostingCreator{
         //Changes Activity
         back.setOnClickListener(view -> {
             Log.i("MyApp", "Clicked on BACK");
-            intent = new Intent(getApplicationContext(), ChooseListing.class);
+            intent = new Intent(getApplicationContext(), ChooseRidePosting.class);
             startActivity(intent);
             finish();
         });

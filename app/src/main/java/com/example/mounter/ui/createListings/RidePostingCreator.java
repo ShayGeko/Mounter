@@ -23,10 +23,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 import io.realm.Realm;
 
@@ -68,7 +65,7 @@ public class RidePostingCreator extends AppCompatActivity {
                 fillFrom.setText("");
                 fillHourOfDeparture.setText("");
                 fillDescription.setText("");
-                Snackbar.make(view, "Please make sure to fill in all key components.",
+                Snackbar.make(view, R.string.fill_in_components,
                         Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 return;
             }
@@ -83,7 +80,7 @@ public class RidePostingCreator extends AppCompatActivity {
 
         back.setOnClickListener(view -> {
             Log.i("MyApp", "Clicked on BACK");
-            intent = new Intent(getApplicationContext(), ChooseListing.class);
+            intent = new Intent(getApplicationContext(), ChooseRidePosting.class);
             startActivity(intent);
             finish();
         });
@@ -110,7 +107,7 @@ public class RidePostingCreator extends AppCompatActivity {
         }, new Realm.Transaction.OnError(){
             @Override
             public void onError(Throwable error){
-                Snackbar.make(view, "Oops something went wrong.",
+                Snackbar.make(view, R.string.on_error,
                         Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 realm.close();
             }
@@ -162,7 +159,7 @@ public class RidePostingCreator extends AppCompatActivity {
         int year = myCalendar.get(Calendar.YEAR);
         Log.d("MyApp", "" + year);
 
-        datePickerDialog = new DatePickerDialog(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, dateSetListener, year, month, day);
+        datePickerDialog = new DatePickerDialog(this, 0, dateSetListener, year, month, day);
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
     }
 

@@ -76,7 +76,7 @@ public class RidePostingCreator extends AppCompatActivity {
             setDataInModel(to, from, hourOfDeparture, date);
 
             //Inputs the collected data into the database
-            sendToRealm();
+            sendToRealm(view);
             finish();
         });
 
@@ -93,7 +93,7 @@ public class RidePostingCreator extends AppCompatActivity {
     /**
      * Sends the collected data to the Database
      */
-    protected void sendToRealm() {
+    protected void sendToRealm(View view) {
         @NotNull
         Realm realm = Realm.getDefaultInstance();
 
@@ -110,6 +110,8 @@ public class RidePostingCreator extends AppCompatActivity {
         }, new Realm.Transaction.OnError(){
             @Override
             public void onError(Throwable error){
+                Snackbar.make(view, "Connection Error.",
+                        Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 realm.close();
             }
 

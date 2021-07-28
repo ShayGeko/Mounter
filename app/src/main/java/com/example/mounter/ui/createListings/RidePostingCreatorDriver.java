@@ -72,7 +72,7 @@ public class RidePostingCreatorDriver extends RidePostingCreator{
             }
 
             setDataInModel(to, from, hourOfDeparture, estimatedPrice, date);
-            sendToRealm();
+            sendToRealm(view);
             finish();
         });
 
@@ -100,7 +100,7 @@ public class RidePostingCreatorDriver extends RidePostingCreator{
         fillDate = findViewById(R.id.fillDate);
         fillDate.setText(getCurrentDate());
     }
-    
+
     /**
      * Sets all of the given parameters in the RidePosting Model
      * @param to

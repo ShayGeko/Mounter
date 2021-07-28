@@ -110,7 +110,7 @@ public class RidePostingCreator extends AppCompatActivity {
         }, new Realm.Transaction.OnError(){
             @Override
             public void onError(Throwable error){
-                Snackbar.make(view, "Connection Error.",
+                Snackbar.make(view, "Oops something went wrong.",
                         Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 realm.close();
             }

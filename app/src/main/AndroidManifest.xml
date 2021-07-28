@@ -20,13 +20,13 @@
             android:name=".profile.UserProfileActivity"
             android:label = "@string/user_profile"/>
         <activity
-            android:name=".ui.createListings.ListingCreator"
+            android:name=".ui.createListings.RidePostingCreator"
             android:label="@string/createListing" />
         <activity
-            android:name=".ui.createListings.ListingCreatorDriver"
+            android:name=".ui.createListings.RidePostingCreatorDriver"
             android:label="Create Listing" />
         <activity
-            android:name=".ui.createListings.ChooseListing"
+            android:name=".ui.createListings.ChooseRidePosting"
             android:label="@string/chooseTypeOfListing" />
         <activity
             android:name=".ridesearch.RideSearchActivity"

@@ -30,4 +30,6 @@
     <string name="success">Success</string>
     <string name="origin_location">Origin location</string>
     <string name="destination_location">Destination location</string>
+    <string name="on_error">Oops something went wrong</string>
+    <string name="fill_in_components">Please make sure to fill in all key components</string>
 </resources>

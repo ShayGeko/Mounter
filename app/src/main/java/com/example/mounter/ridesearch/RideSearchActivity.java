@@ -7,8 +7,8 @@ import android.util.Log;
 import com.example.mounter.Mounter;
 import com.example.mounter.R;
 import com.example.mounter.data.model.RidePostingModel;
-import com.example.mounter.ui.createListings.ChooseListing;
-import com.example.mounter.ui.createListings.ListingCreator;
+import com.example.mounter.ui.createListings.ChooseRidePosting;
+import com.example.mounter.ui.createListings.RidePostingCreator;
 import com.example.mounter.ui.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -23,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
@@ -84,7 +83,7 @@ public class RideSearchActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            startActivity(new Intent(getApplicationContext(), ChooseListing.class));
+            startActivity(new Intent(getApplicationContext(), ChooseRidePosting.class));
         });
 
     }
@@ -163,10 +162,10 @@ public class RideSearchActivity extends AppCompatActivity {
         month += 1;
         int year = myCalendar.get(Calendar.YEAR);
 
-        ListingCreator listingCreator = new ListingCreator();
+        RidePostingCreator ridePostingCreator = new RidePostingCreator();
         RidePostingModel ridePostingModel = new RidePostingModel();
         //Converts the month to the number of days in the given month
-        int daysInMonth = ridePostingModel.getMonthValue(listingCreator.convertMonth(month));
+        int daysInMonth = ridePostingModel.getMonthValue(ridePostingCreator.convertMonth(month));
 
         return day + daysInMonth + (year * 365);
     }

@@ -1,6 +1,8 @@
 package com.example.mounter.data.model;
 
 
+import com.example.mounter.Mounter;
+
 import org.bson.types.ObjectId;
 
 import io.realm.RealmObject;
@@ -18,7 +20,7 @@ public class RideRequestModel extends RealmObject {
     @Required
     private ObjectId _ridePostingId;
     @Required
-    private String _partition = "1";
+    private String _partition = Mounter.realmPartition;
 
     public RideRequestModel(){
     }

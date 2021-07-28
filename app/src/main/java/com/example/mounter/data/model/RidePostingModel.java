@@ -1,11 +1,10 @@
 package com.example.mounter.data.model;
 
+import com.example.mounter.Mounter;
 import com.example.mounter.data.RealmConverter;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.bson.types.ObjectId;
-
-import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -21,25 +20,13 @@ public class RidePostingModel extends RealmObject {
     @Required
     private ObjectId _driverId;
     @Required
-    private String _partition = "1";
-
+    private String _partition = Mounter.realmPartition;
     @Required
     private RealmList<ObjectId> passengerIds;
-
     private String originAddress;
     private String destinationAddress;
     private String departureTime;
     private int departureTimeInDays;
-
-
-    public String getEstimatedPrice() {
-        return estimatedPrice;
-    }
-
-    public void setEstimatedPrice(String estimatedPrice) {
-        this.estimatedPrice = estimatedPrice;
-    }
-
     private String estimatedPrice;
     @Required
     private RealmList<Double> destinationLatLng = new RealmList<>();
@@ -90,6 +77,21 @@ public class RidePostingModel extends RealmObject {
         convertDateToInt(); //Sets departureTimeInDays
     }
 
+    /**
+     *
+     * @return a string representing price estimation for this {@link RidePostingModel}
+     */
+    public String getEstimatedPrice() {
+        return estimatedPrice;
+    }
+
+    /**
+     * sets the estimated price for this {@link RidePostingModel}
+     * @param estimatedPrice
+     */
+    public void setEstimatedPrice(String estimatedPrice) {
+        this.estimatedPrice = estimatedPrice;
+    }
     public RealmList<ObjectId> getPassengerIds(){
         return passengerIds;
     }
@@ -109,15 +111,10 @@ public class RidePostingModel extends RealmObject {
         return destinationLatLng;
     }
 
+
     /**
      *
      * @return LatLng object created based on the RealmList stored in the model
-     *
-=======
-    /**
-     *
-     * @return LatLng object created based on the RealmList stored in the model
->>>>>>> master
      */
     public LatLng getDestinationActualLatLng(){
         return RealmConverter.toLatLng(destinationLatLng);
@@ -165,29 +162,20 @@ public class RidePostingModel extends RealmObject {
     public int getMonthValue(String month){
         switch(month){
             case "Jan":
-                return 31;
-            case "Feb":
-                return 29 + 31;
             case "Mar":
-                return 31;
-            case "Apr":
-                return 30;
             case "May":
-                return 31;
-            case "Jun":
-                return 30;
             case "Jul":
-                return 31;
             case "Aug":
-                return 31;
-            case "Sep":
-                return 30;
             case "Oct":
-                return 31;
-            case "Nov":
-                return 30;
             case "Dec":
                 return 31;
+            case "Feb":
+                return 29;
+            case "Apr":
+            case "Jun":
+            case "Sep":
+            case "Nov":
+                return 30;
         }
         return 31;
     }

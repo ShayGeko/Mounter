@@ -28,4 +28,6 @@
     <string name="sex">sex</string>
     <string name="request_to_join">request to join</string>
     <string name="success">Success</string>
+    <string name="origin_location">Origin location</string>
+    <string name="destination_location">Destination location</string>
 </resources>

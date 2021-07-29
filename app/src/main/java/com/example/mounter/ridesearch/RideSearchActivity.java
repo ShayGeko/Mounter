@@ -11,6 +11,7 @@ import com.example.mounter.ui.createListings.ChooseRidePosting;
 import com.example.mounter.ui.createListings.RidePostingCreator;
 import com.example.mounter.ui.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,11 +28,13 @@ import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 import io.realm.mongodb.User;
+import io.realm.mongodb.push.Push;
 import io.realm.mongodb.sync.SyncConfiguration;
 
 import static com.example.mounter.Mounter.mounter;
 
 public class RideSearchActivity extends AppCompatActivity {
+    public static final String TAG = "RideSearchActivity";
     private User user;
     private Realm mRealm = null;
     private RecyclerView recyclerView;
@@ -39,7 +42,7 @@ public class RideSearchActivity extends AppCompatActivity {
 
     @Override
     protected void onStart(){
-        Log.d("RideSearchActivity", "onStart Fired");
+        Log.d(TAG, "onStart Fired");
         super.onStart();
         try {
             user = mounter.currentUser();
@@ -48,7 +51,7 @@ public class RideSearchActivity extends AppCompatActivity {
 
         }
         if (user == null) {
-            Log.d("RideSearchActivity", "User not authorized, prompting login");
+            Log.d(TAG, "User not authorized, prompting login");
             // if no user is currently logged in, start the login activity so the user can authenticate
             startActivity(new Intent(this, LoginActivity.class));
         }
@@ -62,14 +65,14 @@ public class RideSearchActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Log.d("RideSearchActivity", "onResume fired");
+        Log.d(TAG, "onResume fired");
         if(mRealm != null){
             setUpRecyclerView(mRealm);
         }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("RideSearchActivity", "On create fired");
+        Log.d(TAG, "On create fired");
 
         // initially theme is set to the splash screen
         // once onCreate is fired <-> activity is loaded
@@ -90,7 +93,7 @@ public class RideSearchActivity extends AppCompatActivity {
 
     @Override
     protected  void onDestroy(){
-        Log.d("RideSearchActivity", "onDestroyFired");
+        Log.d(TAG, "onDestroyFired");
         recyclerView.setAdapter(null);
         mRealm.close();
         super.onDestroy();
@@ -122,15 +125,16 @@ public class RideSearchActivity extends AppCompatActivity {
      * @param user
      */
     private void setUpRealm(User user){
-        Log.d("RideSearchActivity", "settingUpRealm");
+        Log.d(TAG, "settingUpRealm");
         String partitionValue = Mounter.realmPartition;
 
         if(mRealm != null && mRealm.isClosed() == false){
+            Log.d(TAG, "Realm was not closed. Closing");
             mRealm.close();
         }
 
+        Log.d(TAG, Realm.getDefaultConfiguration().toString());
         SyncConfiguration config = new SyncConfiguration.Builder(user, partitionValue)
-                .waitForInitialRemoteData(5, TimeUnit.SECONDS)
                 .compactOnLaunch()
                 .build();
         Realm.setDefaultConfiguration(config);
@@ -138,9 +142,10 @@ public class RideSearchActivity extends AppCompatActivity {
         Realm.getInstanceAsync(config, new Realm.Callback() {
             @Override
             public void onSuccess(@NotNull Realm realm) {
-                Log.d("RideSearchActivity", "ui thread realm instance acquired");
+                Log.d(TAG, "ui thread realm instance acquired");
                 mRealm = realm;
                 setUpRecyclerView(realm);
+                registerDeviceInRealm();
             }
             @Override
             public void onError(@NonNull Throwable exception) {
@@ -149,6 +154,28 @@ public class RideSearchActivity extends AppCompatActivity {
                 exception.printStackTrace();
             }
         });
+    }
+
+    /**
+     * Registers current device to active user in Realm, <br/>
+     * so that push notifications can be sent to this device
+     */
+    private void registerDeviceInRealm() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+                    // Get new FCM registration token
+                    String token = task.getResult();
+
+                   Push p = mounter.currentUser().getPush("gcm");
+                   p.registerDeviceAsync(token, result -> {
+                       Log.d(TAG, "registered device successfully");
+                   });
+                   Log.d(TAG, "after push");
+                });
     }
 
     /**

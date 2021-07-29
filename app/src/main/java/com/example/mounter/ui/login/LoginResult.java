@@ -1,11 +1,12 @@
 package com.example.mounter.ui.login;
 
 
+import com.example.mounter.R;
+
 public enum LoginResult {
     Success,
     Failure;
 
-    private static String ERROR_MESSAGE = "login failed";
 
     public boolean isSuccess(){
         return this == Success;
@@ -16,6 +17,6 @@ public enum LoginResult {
     public String getError(){
         if(isSuccess()) return null;
 
-        return ERROR_MESSAGE;
+        return String.valueOf(R.string.login_failed);
     }
 }

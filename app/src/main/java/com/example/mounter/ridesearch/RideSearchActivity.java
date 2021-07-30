@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.mounter.Mounter;
 import com.example.mounter.R;
 import com.example.mounter.data.model.RidePostingModel;
 import com.example.mounter.ui.createListings.ChooseRidePosting;
 import com.example.mounter.ui.createListings.RidePostingCreator;
 import com.example.mounter.ui.login.LoginActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,14 +22,13 @@ import org.jetbrains.annotations.NotNull;
 
 
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 import io.realm.mongodb.User;
-import io.realm.mongodb.push.Push;
 import io.realm.mongodb.sync.SyncConfiguration;
 
 import static com.example.mounter.Mounter.mounter;
+import static com.example.mounter.Mounter.realmPartition;
 
 public class RideSearchActivity extends AppCompatActivity {
     public static final String TAG = "RideSearchActivity";
@@ -50,14 +47,14 @@ public class RideSearchActivity extends AppCompatActivity {
         catch (IllegalStateException e) {
 
         }
-        if (user == null) {
+        if (user == null || !user.isLoggedIn()) {
             Log.d(TAG, "User not authorized, prompting login");
             // if no user is currently logged in, start the login activity so the user can authenticate
             startActivity(new Intent(this, LoginActivity.class));
         }
         else{
             if(mRealm == null || mRealm.isClosed()) {
-                setUpRealm(user);
+                setUpRealm();
             }
         }
     }
@@ -120,22 +117,19 @@ public class RideSearchActivity extends AppCompatActivity {
     }
 
     /**
-     * Creates default configuration for {@link Realm} based on the active user,
      * Creates the realm for this activity, and starts the init of {@link RidePostingRecyclerViewAdapter}
-     * @param user
      */
-    private void setUpRealm(User user){
-        Log.d(TAG, "settingUpRealm");
-        String partitionValue = Mounter.realmPartition;
+    private void setUpRealm(){
+        Log.d(TAG, "openningMainRealm");
 
         if(mRealm != null && mRealm.isClosed() == false){
             Log.d(TAG, "Realm was not closed. Closing");
             mRealm.close();
         }
 
-        Log.d(TAG, Realm.getDefaultConfiguration().toString());
-        SyncConfiguration config = new SyncConfiguration.Builder(user, partitionValue)
+        SyncConfiguration config = new SyncConfiguration.Builder(user, realmPartition)
                 .compactOnLaunch()
+                .waitForInitialRemoteData()
                 .build();
         Realm.setDefaultConfiguration(config);
 
@@ -145,7 +139,6 @@ public class RideSearchActivity extends AppCompatActivity {
                 Log.d(TAG, "ui thread realm instance acquired");
                 mRealm = realm;
                 setUpRecyclerView(realm);
-                registerDeviceInRealm();
             }
             @Override
             public void onError(@NonNull Throwable exception) {
@@ -154,28 +147,6 @@ public class RideSearchActivity extends AppCompatActivity {
                 exception.printStackTrace();
             }
         });
-    }
-
-    /**
-     * Registers current device to active user in Realm, <br/>
-     * so that push notifications can be sent to this device
-     */
-    private void registerDeviceInRealm() {
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                        return;
-                    }
-                    // Get new FCM registration token
-                    String token = task.getResult();
-
-                   Push p = mounter.currentUser().getPush("gcm");
-                   p.registerDeviceAsync(token, result -> {
-                       Log.d(TAG, "registered device successfully");
-                   });
-                   Log.d(TAG, "after push");
-                });
     }
 
     /**

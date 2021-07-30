@@ -20,7 +20,7 @@ import androidx.core.content.res.ResourcesCompat;
 
 
 // Created by closely following the official firebase guidelines from:
-//
+// https://github.com/firebase/quickstart-android/blob/25505d40f1625f0c92a335c5cb21c771bbaa5e5a/messaging/app/src/main/java/com/google/firebase/quickstart/fcm/java/MyFirebaseMessagingService.java
 public class MounterMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MounterMessagingService";
@@ -84,7 +84,7 @@ public class MounterMessagingService extends FirebaseMessagingService {
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId,
-                    "Channel human readable title",
+                    getString(R.string.new_ride_requests_channel_name),
                     NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }

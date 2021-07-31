@@ -92,4 +92,10 @@ public class MounterDateUtil {
 
         return convertDateToString(day, month, year);
     }
+    public static int getNumberOfDaysSinceEpoch(String datetime){
+        String date = datetime.split(" ")[0];
+        String[] dateValues = date.split("/");   //[0] = days, [1] = months, [2] = years
+
+        return (Integer.parseInt(dateValues[0]) + getMonthValue(dateValues[1]) + (Integer.parseInt(dateValues[2]) * 365));
+    }
 }

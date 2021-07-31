@@ -1,13 +1,10 @@
-package com.example.mounter.ui.login;
+package com.example.mounter.login;
 
 import android.app.Activity;
-
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
@@ -20,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.mounter.R;
 import com.example.mounter.databinding.ActivityLoginBinding;
 import com.example.mounter.ridesearch.RideSearchActivity;
 

@@ -14,6 +14,7 @@ import io.realm.mongodb.User;
 
 import static com.example.mounter.Mounter.mounter;
 import static com.example.mounter.common.MounterDateUtil.getMonthValue;
+import static com.example.mounter.common.MounterDateUtil.getNumberOfDaysSinceEpoch;
 
 public class RidePostingModel extends RealmObject {
     @PrimaryKey
@@ -40,6 +41,46 @@ public class RidePostingModel extends RealmObject {
     }
     public RidePostingModel(User user){
         _driverId = new ObjectId(user.getId());
+    }
+
+    private RidePostingModel(String originAddress, String destinationAddress, String departureTime, String description){
+        this.originAddress = originAddress;
+        this.destinationAddress = destinationAddress;
+        setDepartureTime(departureTime);
+        this.description = description;
+        // TODO departureDate
+    }
+    public static RidePostingModel createByPassenger(User user,
+                                                     String originAddress,
+                                                     String destinationAddress,
+                                                     String departureTime,
+                                                     String description) {
+
+        RidePostingModel ridePosting = new RidePostingModel(
+                originAddress,
+                destinationAddress,
+                departureTime,
+                description);
+
+        // TODO: add to passengerIds instead
+        ridePosting._driverId = new ObjectId(user.getId());
+        return ridePosting;
+    }
+    public static RidePostingModel createByDriver(User user,
+                                                  String originAddress,
+                                                  String destinationAddress,
+                                                  String departureTime,
+                                                  String description,
+                                                  String estimatedPrice){
+        RidePostingModel ridePosting = new RidePostingModel(
+                originAddress,
+                destinationAddress,
+                departureTime,
+                description);
+        ridePosting.estimatedPrice = estimatedPrice;
+        ridePosting._driverId = new ObjectId(user.getId());
+
+        return ridePosting;
     }
 
     public ObjectId getId(){
@@ -75,7 +116,7 @@ public class RidePostingModel extends RealmObject {
 
     public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
-        convertDateToInt(); //Sets departureTimeInDays
+        this.departureTimeInDays = getNumberOfDaysSinceEpoch(departureTime); //Sets departureTimeInDays
     }
 
     /**
@@ -146,12 +187,5 @@ public class RidePostingModel extends RealmObject {
     }
     public void setDescription(String description){
         this.description = description;
-    }
-
-    private void convertDateToInt(){
-        String[] date = getDepartureTime().split(" ");
-        String[] dateValues = date[0].split("/");   //[0] = days, [1] = months, [2] = years
-
-        departureTimeInDays = (Integer.parseInt(dateValues[0]) + getMonthValue(dateValues[1]) + (Integer.parseInt(dateValues[2]) * 365));
     }
 }

@@ -1,7 +1,5 @@
 package com.example.mounter.ridePostingCreator;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -13,120 +11,88 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 
-import com.example.mounter.Mounter;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.mounter.MounterBaseActivity;
 import com.example.mounter.data.model.RidePostingModel;
 
 import com.example.mounter.R;
+import com.example.mounter.databinding.ActivityListingCreatorBinding;
+import com.example.mounter.ridesearch.RideSearchViewModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Calendar;
 
-import io.realm.Realm;
+import static com.example.mounter.Mounter.mounter;
+import static com.example.mounter.common.MounterDateUtil.convertDateToString;
+import static com.example.mounter.common.MounterDateUtil.getCurrentDate;
 
-public class RidePostingCreator extends AppCompatActivity {
+public class RidePostingCreatorActivity extends MounterBaseActivity {
 
-    private Intent intent;
-    private RidePostingModel ridePostingModel;
-    private DatePickerDialog datePickerDialog;
-    private TextInputEditText fillTo;
-    private TextInputEditText fillFrom;
-    private TextInputEditText fillHourOfDeparture;
-    private TextInputEditText fillDescription;
-    private Button submit;
-    private Button fillDate;
-    private ImageButton back;
-    private Calendar cal;
+    protected DatePickerDialog datePickerDialog;
+    protected TextInputEditText fillTo;
+    protected TextInputEditText fillFrom;
+    protected TextInputEditText fillHourOfDeparture;
+    protected TextInputEditText fillDescription;
+    protected Button submit;
+    protected Button fillDate;
+    protected ImageButton back;
 
+
+    protected RidePostingCreatorViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listing_creator);
-        ridePostingModel = new RidePostingModel(Mounter.mounter.currentUser());
-        initDatePicker();
 
+        initDatePicker();
         variablePropertyInit();
 
 
         submit.setOnClickListener(view -> {
-            CharSequence to = fillTo.getText();
-            CharSequence from = fillFrom.getText();
-            CharSequence hourOfDeparture = fillHourOfDeparture.getText();
-            CharSequence date = fillDate.getText();
-            CharSequence description = fillDescription.getText();
+            String to = fillTo.getText().toString();
+            String from = fillFrom.getText().toString();
+            String hourOfDeparture = fillHourOfDeparture.getText().toString();
+            String date = fillDate.getText().toString();
+            String description = fillDescription.getText().toString();
+
+
             if(to.length() == 0 || from.length() == 0 || fillHourOfDeparture.length() == 0){    //Checks if all key components have been filled up by the user
-                hideKeyboard(this);
+                hideKeyboard();
                 Log.i("MyApp", "Key details are not filled in!");
-                fillTo.setText("");
-                fillFrom.setText("");
-                fillHourOfDeparture.setText("");
-                fillDescription.setText("");
                 Snackbar.make(view, R.string.fill_in_components,
                         Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 return;
             }
+
+            viewModel = new ViewModelProvider(this).get(RidePostingCreatorViewModel.class);
             //Setting all the data into the ridePosting model
-            setDataInModel(to, from, hourOfDeparture, date);
+            viewModel.createPassengerRidePosting(to, from, hourOfDeparture, date, description);
 
-            //Inputs the collected data into the database
-            sendToRealm(view);
-            finish();
+
+            viewModel.getResult().observe(this, result->{
+                if(result.isSuccess()){
+                    finish();
+                }
+                else{
+                    Snackbar.make(view, R.string.something_went_wrong,
+                            Snackbar.LENGTH_SHORT).show();
+                }
+            });
         });
-
 
         back.setOnClickListener(view -> {
             Log.i("MyApp", "Clicked on BACK");
-            intent = new Intent(getApplicationContext(), ChooseRidePosting.class);
+            Intent intent = new Intent(getApplicationContext(), ChooseRidePosting.class);
             startActivity(intent);
+
             finish();
         });
 
     }
-
-    /**
-     * Sends the collected data to the Database
-     */
-    protected void sendToRealm(View view) {
-        @NotNull
-        Realm realm = Realm.getDefaultInstance();
-
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                bgRealm.insert(ridePostingModel);
-            }
-        }, new Realm.Transaction.OnSuccess(){
-            @Override
-            public void onSuccess() {
-                realm.close();
-            }
-        }, new Realm.Transaction.OnError(){
-            @Override
-            public void onError(Throwable error){
-                Snackbar.make(view, R.string.on_error,
-                        Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-                realm.close();
-            }
-
-        });
-    }
-
-    /**
-     * Sets all of the given parameters in the RidePosting Model
-     * @param to
-     * @param from
-     * @param hourOfDeparture
-     * @param date
-     */
-    protected void setDataInModel(CharSequence to, CharSequence from, CharSequence hourOfDeparture, CharSequence date) {
-        ridePostingModel.setDestinationAddress(to.toString());
-        ridePostingModel.setOriginAddress(from.toString());
-        ridePostingModel.setDepartureTime(date.toString() + " " + hourOfDeparture.toString());
-    }
-
     /**
      * Assigns these variables their corresponding properties from the Activity layout
      */
@@ -143,15 +109,12 @@ public class RidePostingCreator extends AppCompatActivity {
 
     protected void initDatePicker() {
 
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month += 1; //By default January is represented as 0, therefore we add 1 so January corresponds to the integer 1.
-                String date = convertDateToString(day, month, year);
-                fillDate.setText(date);
-
-            }
+        DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
+            month += 1; //By default January is represented as 0, therefore we add 1 so January corresponds to the integer 1.
+            String date = convertDateToString(day, month, year);
+            fillDate.setText(date);
         };
+
         Calendar myCalendar = Calendar.getInstance();
         int day = myCalendar.get(Calendar.DAY_OF_MONTH);
         int month = myCalendar.get(Calendar.MONTH);
@@ -162,66 +125,20 @@ public class RidePostingCreator extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
     }
 
-    protected String convertDateToString(int day, int month, int year) {
-        return "" + day + "/" + convertMonth(month) + "/" + year;
-    }
-
-    public String getCurrentDate() {
-        Calendar myCalendar = Calendar.getInstance();
-        int day = myCalendar.get(Calendar.DAY_OF_MONTH);
-        int month = myCalendar.get(Calendar.MONTH);
-        month += 1;
-        int year = myCalendar.get(Calendar.YEAR);
-
-        return convertDateToString(day, month, year);
-    }
-
-    public String convertMonth(int month) {
-
-        switch(month){
-            case 1:
-                return "Jan";
-            case 2:
-                return "Feb";
-            case 3:
-                return "Mar";
-            case 4:
-                return "Apr";
-            case 5:
-                return "May";
-            case 6:
-                return "Jun";
-            case 7:
-                return "Jul";
-            case 8:
-                return "Aug";
-            case 9:
-                return "Sep";
-            case 10:
-                return "Oct";
-            case 11:
-                return "Nov";
-            case 12:
-                return "Dec";
-        }
-        return "Jan";
-    }
-
     public void showDatePicker(View view){
         datePickerDialog.show();
     }
 
     /**
      * Hides Keyboard
-     * @param activity
      */
-    protected static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+    protected void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
+        View view = this.getCurrentFocus();
         //If no view currently has focus, create a new one, just so we can grab a window token from it
         if (view == null) {
-            view = new View(activity);
+            view = new View(this);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }

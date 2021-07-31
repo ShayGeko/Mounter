@@ -1,4 +1,4 @@
-package com.example.mounter.ui.createListings;
+package com.example.mounter.ridePostingCreator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,7 +30,7 @@ public class ChooseRidePosting extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Log.i("MyApp", "Passenger image button is working!");
-                intent = new Intent(getApplicationContext(), RidePostingCreator.class);
+                intent = new Intent(getApplicationContext(), RidePostingCreatorActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -42,7 +42,7 @@ public class ChooseRidePosting extends AppCompatActivity {
                         "\nbefore making a Driver's listing.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 return;
             }
-            intent = new Intent(getApplicationContext(), RidePostingCreatorDriver.class);
+            intent = new Intent(getApplicationContext(), RidePostingCreatorDriverActivity.class);
             startActivity(intent);
             finish();
         });

@@ -1,4 +1,4 @@
-package com.example.mounter.ui.login;
+package com.example.mounter.login;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModel;
 import android.util.Patterns;
 
 import com.example.mounter.R;
-
-import java.util.concurrent.atomic.AtomicReference;
+import com.example.mounter.data.Result;
 
 import io.realm.mongodb.Credentials;
-import io.realm.mongodb.User;
 
 import static com.example.mounter.Mounter.mounter;
 
@@ -24,7 +22,7 @@ import static com.example.mounter.Mounter.mounter;
 public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+    private MutableLiveData<Result> loginResult = new MutableLiveData<>();
 
     public LoginViewModel() { }
 
@@ -40,7 +38,7 @@ public class LoginViewModel extends ViewModel {
      *
      * @return LiveData<LoginResult>
      */
-    LiveData<LoginResult> getLoginResult() {
+    LiveData<Result> getLoginResult() {
         return loginResult;
     }
 
@@ -57,14 +55,15 @@ public class LoginViewModel extends ViewModel {
             // and can be used by other activities
             mounter.loginAsync(emailPasswordCredentials, it -> {
                 if (it.isSuccess()) {
-                    loginResult.setValue(LoginResult.Success);
+                    // updateRealmConfig();
+                    loginResult.setValue(Result.Success);
                 } else {
-                    loginResult.setValue(LoginResult.Failure);
+                    loginResult.setValue(Result.Failure);
                 }
             });
 
         } catch (Exception e) {
-            loginResult.setValue(LoginResult.Failure);
+            loginResult.setValue(Result.Failure);
         }
     }
 

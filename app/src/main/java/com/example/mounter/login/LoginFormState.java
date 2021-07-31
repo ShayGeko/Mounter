@@ -1,4 +1,4 @@
-package com.example.mounter.ui.login;
+package com.example.mounter.login;
 
 import androidx.annotation.Nullable;
 

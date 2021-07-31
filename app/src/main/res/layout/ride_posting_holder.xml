@@ -17,7 +17,7 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/item_number"
+                    android:id="@+id/destination_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
@@ -44,7 +44,7 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/content"
+                    android:id="@+id/origin_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"

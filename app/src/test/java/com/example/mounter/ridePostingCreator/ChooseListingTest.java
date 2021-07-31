@@ -1,8 +1,6 @@
-package com.example.mounter.ui.createListings;
+package com.example.mounter.ridePostingCreator;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ChooseListingTest {
 

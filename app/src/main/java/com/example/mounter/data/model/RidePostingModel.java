@@ -13,6 +13,7 @@ import io.realm.annotations.Required;
 import io.realm.mongodb.User;
 
 import static com.example.mounter.Mounter.mounter;
+import static com.example.mounter.common.MounterDateUtil.getMonthValue;
 
 public class RidePostingModel extends RealmObject {
     @PrimaryKey
@@ -152,31 +153,5 @@ public class RidePostingModel extends RealmObject {
         String[] dateValues = date[0].split("/");   //[0] = days, [1] = months, [2] = years
 
         departureTimeInDays = (Integer.parseInt(dateValues[0]) + getMonthValue(dateValues[1]) + (Integer.parseInt(dateValues[2]) * 365));
-    }
-
-    /**
-     *
-     * @param month
-     * @return approximate number of days in the specified month
-     */
-    public int getMonthValue(String month){
-        switch(month){
-            case "Jan":
-            case "Mar":
-            case "May":
-            case "Jul":
-            case "Aug":
-            case "Oct":
-            case "Dec":
-                return 31;
-            case "Feb":
-                return 29;
-            case "Apr":
-            case "Jun":
-            case "Sep":
-            case "Nov":
-                return 30;
-        }
-        return 31;
     }
 }

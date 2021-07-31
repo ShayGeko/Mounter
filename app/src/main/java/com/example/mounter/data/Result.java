@@ -1,7 +1,7 @@
-package com.example.mounter.ui.login;
+package com.example.mounter.data;
 
 
-public enum LoginResult {
+public enum Result {
     Success,
     Failure;
 

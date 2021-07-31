@@ -55,7 +55,7 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
 @PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "android.*"})
 @SuppressStaticInitializationFor("io.realm.internal.Util")
 @PrepareForTest({Realm.class, RealmConfiguration.class, RealmQuery.class, RealmResults.class, RealmCore.class, RealmLog.class})
-class MyRideActivityTest {
+class RideDetailsActivityTest {
     @Rule
     public PowerMockRule rule = new PowerMockRule();
 

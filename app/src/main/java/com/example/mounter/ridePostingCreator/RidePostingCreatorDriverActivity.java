@@ -1,4 +1,4 @@
-package com.example.mounter.ui.createListings;
+package com.example.mounter.ridePostingCreator;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import com.example.mounter.data.model.RidePostingModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class RidePostingCreatorDriver extends RidePostingCreator{
+public class RidePostingCreatorDriver extends RidePostingCreatorActivity {
 
     private Intent intent;
     private RidePostingModel ridePostingModel;

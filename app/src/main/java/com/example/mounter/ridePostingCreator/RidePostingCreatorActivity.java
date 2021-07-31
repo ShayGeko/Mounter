@@ -1,9 +1,8 @@
-package com.example.mounter.ui.createListings;
+package com.example.mounter.ridePostingCreator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;

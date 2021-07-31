@@ -42,7 +42,7 @@ import io.realm.mongodb.User;
 
 import static com.example.mounter.Mounter.mounter;
 
-public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class RideDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
     public static final String DRIVING = "driving";
     public static final String RIDE_POSTING_ID = "ridePostingId";
     private User user;
@@ -246,7 +246,7 @@ public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallb
     String buildDirectionsUrl(LatLng origin, LatLng destination) {
         String originStr = "origin=" + origin.latitude + "," + origin.longitude;
         String destinationStr = "destination=" + destination.latitude + "," + destination.longitude;
-        String mode = "mode=" + MyRideActivity.DRIVING;
+        String mode = "mode=" + RideDetailsActivity.DRIVING;
         String parameters = originStr + "&" + destinationStr + "&" + mode;
         String output = "json";
 

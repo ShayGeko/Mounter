@@ -36,18 +36,15 @@ public class ChooseRidePosting extends AppCompatActivity {
             }
         });
 
-        driver.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v){
-                if(!userIsDriver){
-                    Snackbar.make(v, "Please make sure to fill our Driver's form " +
-                            "\nbefore making a Driver's listing.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                    return;
-                }
-                intent = new Intent(getApplicationContext(), RidePostingCreatorDriver.class);
-                startActivity(intent);
-                finish();
+        driver.setOnClickListener(v -> {
+            if(!userIsDriver){
+                Snackbar.make(v, "Please make sure to fill our Driver's form " +
+                        "\nbefore making a Driver's listing.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                return;
             }
+            intent = new Intent(getApplicationContext(), RidePostingCreatorDriver.class);
+            startActivity(intent);
+            finish();
         });
     }
 

@@ -75,4 +75,10 @@ public class RidePostingCreatorViewModel extends ViewModel {
                 () -> creationResult.setValue(Result.Success),
                 error -> creationResult.setValue(Result.Failure));
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        mRealm.close();
+    }
 }

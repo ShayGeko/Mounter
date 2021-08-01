@@ -53,11 +53,6 @@ public class RideSearchViewModel extends ViewModel {
                 .greaterThanOrEqualTo(DEPARTURE_TIME_IN_DAYS, getCurrentDateInDays())
                 .findAll();
     }
-    @Override
-    protected void onCleared(){
-        mRealm.close();
-        super.onCleared();
-    }
 
     private void configureRealm() {
         SyncConfiguration config = new SyncConfiguration.Builder(mounter.currentUser(), realmPartition)
@@ -66,4 +61,10 @@ public class RideSearchViewModel extends ViewModel {
         Realm.setDefaultConfiguration(config);
         mRealm = Realm.getInstance(config);
     }
+    @Override
+    protected void onCleared(){
+        mRealm.close();
+        super.onCleared();
+    }
+
 }

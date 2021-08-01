@@ -5,7 +5,6 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.mounter.BuildConfig;
-import com.example.mounter.R;
 import com.example.mounter.api.GoogleMapsApiClient;
 import com.example.mounter.data.model.Directions;
 import com.example.mounter.data.model.OverviewPolyline;

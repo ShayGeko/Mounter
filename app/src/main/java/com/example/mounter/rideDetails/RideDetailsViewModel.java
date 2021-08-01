@@ -98,4 +98,9 @@ public class RideDetailsViewModel extends ViewModel {
                         .equalTo("ridePostings._id", rideId)
                         .findFirstAsync());
     }
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        mRealm.close();
+    }
 }

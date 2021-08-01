@@ -1,8 +1,5 @@
 package com.example.mounter.common;
 
-import com.example.mounter.data.model.RidePostingModel;
-import com.example.mounter.ridePostingCreator.RidePostingCreatorActivity;
-
 import java.util.Calendar;
 
 public class MounterDateUtil {

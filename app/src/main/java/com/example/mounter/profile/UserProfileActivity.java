@@ -7,7 +7,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.mounter.R;
-import com.example.mounter.data.model.UserInfoModel;
+import com.example.mounter.data.realmModels.UserInfoModel;
 
 import io.realm.Realm;
 import io.realm.mongodb.User;

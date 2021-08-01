@@ -5,13 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mounter.data.Result;
-import com.example.mounter.data.model.RidePostingModel;
-import com.example.mounter.ridePostingCreator.model.RidePostingCreatorFormState;
-
-import org.jetbrains.annotations.NotNull;
+import com.example.mounter.data.realmModels.RidePostingModel;
+import com.example.mounter.data.realmModels.UserInfoModel;
 
 import io.realm.Realm;
-import io.realm.mongodb.User;
 
 import static com.example.mounter.Mounter.mounter;
 
@@ -37,13 +34,18 @@ public class RidePostingCreatorViewModel extends ViewModel {
                                            String departureDate,
                                            String description) {
         mRealm.executeTransactionAsync(
-                bgRealm -> bgRealm.insert(RidePostingModel.createByPassenger(
-                        mounter.currentUser(),
-                        originAddress,
-                        destinationAddress,
-                        departureDate + " " +  departureTime,
-                        description
-                )),
+                bgRealm -> {
+                    RidePostingModel ridePosting = RidePostingModel.createByPassenger(
+                            mounter.currentUser(),
+                            originAddress,
+                            destinationAddress,
+                            departureDate + " " +  departureTime,
+                            description);
+                    bgRealm.copyToRealm(ridePosting);
+                    UserInfoModel user = bgRealm.where(UserInfoModel.class)
+                            .equalTo("_userId", ridePosting.getDriverId().toString()).findFirst();
+                    user.addRidePosting(ridePosting);
+                    },
                 () -> creationResult.setValue(Result.Success),
                 error -> creationResult.setValue(Result.Failure));
     }
@@ -57,15 +59,19 @@ public class RidePostingCreatorViewModel extends ViewModel {
                                         String description,
                                         String estimatedPrice) {
         mRealm.executeTransactionAsync(
-                bgRealm -> bgRealm.insert(RidePostingModel.createByDriver(
-                        mounter.currentUser(),
-                        originAddress,
-                        destinationAddress,
-
-                        departureDate + " " +  departureTime,
-                        description,
-                        estimatedPrice
-                        )),
+                bgRealm -> {
+                    RidePostingModel ridePosting = RidePostingModel.createByDriver(
+                            mounter.currentUser(),
+                            originAddress,
+                            destinationAddress,
+                            departureDate + " " + departureTime,
+                            description,
+                            estimatedPrice);
+                    bgRealm.copyToRealm(ridePosting);
+                    UserInfoModel user = bgRealm.where(UserInfoModel.class)
+                            .equalTo("_userId", ridePosting.getDriverId().toString()).findFirst();
+                    user.addRidePosting(ridePosting);
+                },
                 () -> creationResult.setValue(Result.Success),
                 error -> creationResult.setValue(Result.Failure));
     }

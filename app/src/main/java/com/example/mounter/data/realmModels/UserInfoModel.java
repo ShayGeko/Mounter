@@ -1,10 +1,12 @@
-package com.example.mounter.data.model;
+package com.example.mounter.data.realmModels;
 
 import com.example.mounter.Mounter;
 
 import org.bson.types.ObjectId;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 import io.realm.mongodb.User;
@@ -23,6 +25,10 @@ public class UserInfoModel extends RealmObject {
     private Integer numberOfRatings = 0;
     private String sex;
 
+    private RealmList<RidePostingModel> ridePostings;
+
+    private RealmList<RideRequestModel> sentRideRequests;
+    private RealmList<RideRequestModel> pendingRideRequests;
 
     public UserInfoModel(){
 
@@ -133,5 +139,9 @@ public class UserInfoModel extends RealmObject {
      */
     public void setSex(String sex){
         this.sex = sex;
+    }
+
+    public void addRidePosting(RidePostingModel ridePosting){
+        ridePostings.add(ridePosting);
     }
 }

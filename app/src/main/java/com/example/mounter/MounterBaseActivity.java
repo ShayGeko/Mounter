@@ -14,13 +14,16 @@ import static com.example.mounter.Mounter.mounter;
 public abstract class MounterBaseActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         User user = mounter.currentUser();
         if(user == null || !user.isLoggedIn()){
             Intent intent = new Intent(this, LoginActivity.class);
 
-            finish();
             startActivity(intent);
+            finish();
+            return;
+        }
+        else{
+            super.onCreate(savedInstanceState);
         }
     }
 }

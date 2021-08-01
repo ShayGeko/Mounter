@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.mounter.data.model.RidePostingModel;
+import com.example.mounter.data.realmModels.RidePostingModel;
 import com.example.mounter.databinding.RidePostingHolderBinding;
-import com.example.mounter.directions.RideDetailsActivity;
+import com.example.mounter.rideDetails.RideDetailsActivity;
 import com.example.mounter.profile.UserProfileActivity;
 
 import io.realm.OrderedRealmCollection;

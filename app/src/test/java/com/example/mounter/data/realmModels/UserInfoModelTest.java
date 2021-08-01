@@ -1,8 +1,6 @@
-package com.example.mounter.data.model;
+package com.example.mounter.data.realmModels;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class UserInfoModelTest {
 

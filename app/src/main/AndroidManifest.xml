@@ -54,7 +54,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".directions.RideDetailsActivity"
+            android:name=".rideDetails.RideDetailsActivity"
             android:label="@string/title_activity_directions" />
     </application>
 

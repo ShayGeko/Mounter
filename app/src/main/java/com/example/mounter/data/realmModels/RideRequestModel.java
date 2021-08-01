@@ -1,4 +1,4 @@
-package com.example.mounter.data.model;
+package com.example.mounter.data.realmModels;
 
 
 import com.example.mounter.Mounter;

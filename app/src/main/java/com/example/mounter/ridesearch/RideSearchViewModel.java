@@ -3,7 +3,7 @@ package com.example.mounter.ridesearch;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mounter.data.RealmLiveData;
-import com.example.mounter.data.model.RidePostingModel;
+import com.example.mounter.data.realmModels.RidePostingModel;
 
 import io.realm.Realm;
 import io.realm.RealmResults;

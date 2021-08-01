@@ -1,4 +1,4 @@
-package com.example.mounter.data.model;
+package com.example.mounter.data.realmModels;
 
 import com.example.mounter.Mounter;
 import com.example.mounter.data.RealmConverter;
@@ -8,12 +8,13 @@ import org.bson.types.ObjectId;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
+import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 import io.realm.mongodb.User;
 
 import static com.example.mounter.Mounter.mounter;
-import static com.example.mounter.common.MounterDateUtil.getMonthValue;
 import static com.example.mounter.common.MounterDateUtil.getNumberOfDaysSinceEpoch;
 
 public class RidePostingModel extends RealmObject {
@@ -35,6 +36,9 @@ public class RidePostingModel extends RealmObject {
     @Required
     private RealmList<Double> originLatLng = new RealmList<>();
     private String description;
+
+    @LinkingObjects("ridePostings")
+    private final RealmResults<UserInfoModel> driver = null;
 
     public RidePostingModel(){
         _driverId = new ObjectId(mounter.currentUser().getId());

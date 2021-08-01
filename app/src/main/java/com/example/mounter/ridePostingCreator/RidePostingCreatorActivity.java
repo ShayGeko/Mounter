@@ -8,24 +8,18 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mounter.MounterBaseActivity;
-import com.example.mounter.data.model.RidePostingModel;
 
 import com.example.mounter.R;
-import com.example.mounter.databinding.ActivityListingCreatorBinding;
-import com.example.mounter.ridesearch.RideSearchViewModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
 
-import static com.example.mounter.Mounter.mounter;
 import static com.example.mounter.common.MounterDateUtil.convertDateToString;
 import static com.example.mounter.common.MounterDateUtil.getCurrentDate;
 

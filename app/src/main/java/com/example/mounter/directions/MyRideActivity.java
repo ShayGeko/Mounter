@@ -67,7 +67,6 @@ public class MyRideActivity extends AppCompatActivity implements OnMapReadyCallb
         Button requestToJoinRideBtn = findViewById(R.id.requestToJoinRideBtn);
 
         // if passenger request to join the ride - crete new rideRequest in Realm
-        // TODO send push notification to the driver
         requestToJoinRideBtn.setOnClickListener(view ->
                 createRideRequest(rideId, driverId)
         );

@@ -32,4 +32,8 @@
     <string name="destination_location">Destination location</string>
     <string name="on_error">Oops something went wrong</string>
     <string name="fill_in_components">Please make sure to fill in all key components</string>
+    <string name="default_notification_channel_id">MounteR</string>
+    <string name="new_ride_request">New ride request!</string>
+    <string name="fcm_token_fmt">FCM registration Token: %s</string>
+    <string name="new_ride_requests_channel_name">new ride requests</string>
 </resources>

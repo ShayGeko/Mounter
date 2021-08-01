@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.mounter.Mounter;
 import com.example.mounter.R;
 import com.example.mounter.data.model.RidePostingModel;
 import com.example.mounter.ui.createListings.ChooseRidePosting;
@@ -23,15 +22,16 @@ import org.jetbrains.annotations.NotNull;
 
 
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 import io.realm.mongodb.User;
 import io.realm.mongodb.sync.SyncConfiguration;
 
 import static com.example.mounter.Mounter.mounter;
+import static com.example.mounter.Mounter.realmPartition;
 
 public class RideSearchActivity extends AppCompatActivity {
+    public static final String TAG = "RideSearchActivity";
     private User user;
     private Realm mRealm = null;
     private RecyclerView recyclerView;
@@ -39,7 +39,7 @@ public class RideSearchActivity extends AppCompatActivity {
 
     @Override
     protected void onStart(){
-        Log.d("RideSearchActivity", "onStart Fired");
+        Log.d(TAG, "onStart Fired");
         super.onStart();
         try {
             user = mounter.currentUser();
@@ -47,14 +47,14 @@ public class RideSearchActivity extends AppCompatActivity {
         catch (IllegalStateException e) {
 
         }
-        if (user == null) {
-            Log.d("RideSearchActivity", "User not authorized, prompting login");
+        if (user == null || !user.isLoggedIn()) {
+            Log.d(TAG, "User not authorized, prompting login");
             // if no user is currently logged in, start the login activity so the user can authenticate
             startActivity(new Intent(this, LoginActivity.class));
         }
         else{
             if(mRealm == null || mRealm.isClosed()) {
-                setUpRealm(user);
+                setUpRealm();
             }
         }
     }
@@ -62,14 +62,14 @@ public class RideSearchActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        Log.d("RideSearchActivity", "onResume fired");
+        Log.d(TAG, "onResume fired");
         if(mRealm != null){
             setUpRecyclerView(mRealm);
         }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("RideSearchActivity", "On create fired");
+        Log.d(TAG, "On create fired");
 
         // initially theme is set to the splash screen
         // once onCreate is fired <-> activity is loaded
@@ -90,7 +90,7 @@ public class RideSearchActivity extends AppCompatActivity {
 
     @Override
     protected  void onDestroy(){
-        Log.d("RideSearchActivity", "onDestroyFired");
+        Log.d(TAG, "onDestroyFired");
         recyclerView.setAdapter(null);
         mRealm.close();
         super.onDestroy();
@@ -117,28 +117,26 @@ public class RideSearchActivity extends AppCompatActivity {
     }
 
     /**
-     * Creates default configuration for {@link Realm} based on the active user,
      * Creates the realm for this activity, and starts the init of {@link RidePostingRecyclerViewAdapter}
-     * @param user
      */
-    private void setUpRealm(User user){
-        Log.d("RideSearchActivity", "settingUpRealm");
-        String partitionValue = Mounter.realmPartition;
+    private void setUpRealm(){
+        Log.d(TAG, "openningMainRealm");
 
         if(mRealm != null && mRealm.isClosed() == false){
+            Log.d(TAG, "Realm was not closed. Closing");
             mRealm.close();
         }
 
-        SyncConfiguration config = new SyncConfiguration.Builder(user, partitionValue)
-                .waitForInitialRemoteData(5, TimeUnit.SECONDS)
+        SyncConfiguration config = new SyncConfiguration.Builder(user, realmPartition)
                 .compactOnLaunch()
+                .waitForInitialRemoteData()
                 .build();
         Realm.setDefaultConfiguration(config);
 
         Realm.getInstanceAsync(config, new Realm.Callback() {
             @Override
             public void onSuccess(@NotNull Realm realm) {
-                Log.d("RideSearchActivity", "ui thread realm instance acquired");
+                Log.d(TAG, "ui thread realm instance acquired");
                 mRealm = realm;
                 setUpRecyclerView(realm);
             }

@@ -56,6 +56,21 @@
         <activity
             android:name=".rideDetails.RideDetailsActivity"
             android:label="@string/title_activity_directions" />
+
+        <service
+            android:name=".services.fcm.MounterMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/sfu_red" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_stat_person_add" />
     </application>
 
 </manifest>

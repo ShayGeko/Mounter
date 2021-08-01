@@ -16,13 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 public class RideSearchActivity extends MounterBaseActivity {
+    private String TAG = "rideSearchActivity";
     private RecyclerView recyclerView;
     private RidePostingRecyclerViewAdapter adapter;
     private RideSearchViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("RideSearchActivity", "On create fired");
+        Log.d(TAG, "On create fired");
 
         // initially theme is set to the splash screen
         // once onCreate is fired <-> activity is loaded

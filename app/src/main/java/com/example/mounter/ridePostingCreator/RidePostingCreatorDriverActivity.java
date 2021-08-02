@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.mounter.Mounter;
 import com.example.mounter.R;
 import com.example.mounter.databinding.ActivityListingCreatorBinding;
 import com.example.mounter.databinding.ActivityListingCreatorDriverBinding;
@@ -27,6 +28,8 @@ public class RidePostingCreatorDriverActivity extends RidePostingCreatorActivity
         initDatePicker();
         passengerVariablesPropertyInit();
         fillEstimatedPrice = findViewById(R.id.fillEstimatedPrice);
+        viewModel = new ViewModelProvider(this, new RidePostingCreatorViewModelFactory((Mounter)getApplicationContext()))
+                .get(RidePostingCreatorViewModel.class);
 
         //Retrieves data from the layout and checks if it is acceptable
         submit.setOnClickListener(view -> {
@@ -44,20 +47,12 @@ public class RidePostingCreatorDriverActivity extends RidePostingCreatorActivity
                 return;
             }
 
-            viewModel = new ViewModelProvider(this).get(RidePostingCreatorViewModel.class);
+
             //Setting all the data into the ridePosting model
             viewModel.createDriverRidePosting(to, from, hourOfDeparture, date, description, estimatedPrice);
 
 
-            viewModel.getResult().observe(this, result->{
-                if(result.isSuccess()){
-                    finish();
-                }
-                else{
-                    Snackbar.make(view, R.string.something_went_wrong,
-                            Snackbar.LENGTH_SHORT).show();
-                }
-            });
+            observeRidePostingCreation(view);
         });
 
         //Changes Activity

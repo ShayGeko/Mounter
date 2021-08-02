@@ -13,4 +13,10 @@ public interface GoogleMapsApi {
             @Query("destination") String destinationLatLng,
             @Query("mode") String drivingMode,
             @Query("key") String ApiKey);
+
+    @GET("/maps/api/geocode/json")
+    Call<ResponseBody> getLatLng(
+            @Query("address") String address,
+            @Query("region") String region,
+            @Query("key") String apiKey);
 }

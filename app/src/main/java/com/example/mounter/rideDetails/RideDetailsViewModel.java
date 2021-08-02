@@ -1,11 +1,9 @@
 package com.example.mounter.rideDetails;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import com.example.mounter.data.GoogleMapsRepository;
+import com.example.mounter.data.repositories.DirectionsRepository;
 import com.example.mounter.data.RealmLiveObject;
 import com.example.mounter.data.model.Directions;
 import com.example.mounter.data.realmModels.RidePostingModel;
@@ -17,7 +15,6 @@ import com.google.maps.android.PolyUtil;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.realm.Realm;
 
@@ -25,14 +22,14 @@ import static com.example.mounter.Mounter.mounter;
 
 public class RideDetailsViewModel extends ViewModel {
     private Realm mRealm;
-    private final GoogleMapsRepository repository;
+    private final DirectionsRepository repository;
     private RealmLiveObject<RidePostingModel> ridePosting;
     private RealmLiveObject<UserInfoModel> driverInfo;
 
 
     public RideDetailsViewModel(ObjectId rideId){
         mRealm = Realm.getDefaultInstance();
-        repository = new GoogleMapsRepository();
+        repository = new DirectionsRepository();
         ridePosting = loadRidePosting(rideId);
         driverInfo = loadDriverInfo(rideId);
 

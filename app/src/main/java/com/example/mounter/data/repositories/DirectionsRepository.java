@@ -1,4 +1,4 @@
-package com.example.mounter.data;
+package com.example.mounter.data.repositories;
 
 import android.util.Log;
 
@@ -22,11 +22,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GoogleMapsRepository {
-    private static final String TAG = "GoogleMapsRepository";
+public class DirectionsRepository {
+    private static final String TAG = "DirectionsRepository";
     private final MutableLiveData<Directions> directions;
 
-    public GoogleMapsRepository(){
+    public DirectionsRepository(){
         directions = new MutableLiveData<>();
     }
 

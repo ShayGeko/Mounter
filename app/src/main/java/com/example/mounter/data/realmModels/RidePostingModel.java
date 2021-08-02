@@ -192,4 +192,10 @@ public class RidePostingModel extends RealmObject {
     public void setDescription(String description){
         this.description = description;
     }
+
+    public boolean hasDestinationLatLng(){
+        return this.destinationLatLng.size() == 2;
+    }public boolean hasOriginLatLng(){
+        return this.originLatLng.size() == 2;
+    }
 }

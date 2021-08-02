@@ -6,6 +6,11 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
 apply plugin: 'com.google.gms.google-services'
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -16,7 +21,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        buildConfigField("String", "GOOGLE_MAPS_API_KEY", apikeyProperties['GOOGLE_MAPS_API_KEY'])
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -26,10 +31,12 @@ android {
         debug {
             buildConfigField "String", "MONGODB_REALM_URL", "\"${mongodbRealmUrl}\""
             buildConfigField "String", "MONGODB_REALM_APP_ID", "\"${appId}\""
+            buildConfigField("String", "GOOGLE_MAPS_API_KEY", apikeyProperties['GOOGLE_MAPS_API_KEY'])
         }
         release {
             buildConfigField "String", "MONGODB_REALM_URL", "\"${mongodbRealmUrl}\""
             buildConfigField "String", "MONGODB_REALM_APP_ID", "\"${appId}\""
+            buildConfigField("String", "GOOGLE_MAPS_API_KEY", apikeyProperties['GOOGLE_MAPS_API_KEY'])
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -43,6 +50,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
     dataBinding{
         enabled=true
@@ -54,7 +62,7 @@ realm {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.annotation:annotation:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -70,9 +78,13 @@ dependencies {
     implementation("com.android.volley:volley:1.2.0")
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation "androidx.fragment:fragment-ktx:1.3.5"
+    implementation "androidx.fragment:fragment-ktx:1.3.6"
     implementation "io.realm:android-adapters:4.0.0"
 
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
     implementation platform('com.google.firebase:firebase-bom:28.3.0')
     implementation 'com.google.firebase:firebase-messaging'
 

@@ -1,56 +1,52 @@
 package com.example.mounter.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.mounter.MounterBaseActivity;
 import com.example.mounter.R;
-import com.example.mounter.data.model.UserInfoModel;
+import com.example.mounter.data.realmModels.UserInfoModel;
+import com.example.mounter.databinding.ActivityLoginBinding;
+import com.example.mounter.databinding.ActivityUserProfileBinding;
 
 import io.realm.Realm;
 import io.realm.mongodb.User;
 
 import static com.example.mounter.Mounter.mounter;
 
-public class UserProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends MounterBaseActivity {
+    private UserProfileViewModel viewModel;
 
+    private ActivityUserProfileBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
 
-        User user = mounter.currentUser();
-        Realm realm = Realm.getDefaultInstance();
+        binding = ActivityUserProfileBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        realm.executeTransactionAsync(transactionRealm -> {
-            UserInfoModel userInfo = transactionRealm
-                    .where(UserInfoModel.class)
-                    .equalTo("_userId", user.getId())
-                    .findFirst();
-
-            setUpUserProfile(userInfo);
-            transactionRealm.close();
+        viewModel = new ViewModelProvider(this).get(UserProfileViewModel.class);
+        viewModel.getUserInfo().observe(this, userInfo -> {
+            if(userInfo.isLoaded()){
+                setUpUserProfile(userInfo);
+            }
         });
 
-        ImageButton back = findViewById(R.id.back);
+        ImageButton back = binding.back;
         back.setOnClickListener(view -> {
             finish();
         });
-
     }
 
-
-
     private void setUpUserProfile(UserInfoModel userInfo){
-        TextView nameTextView = findViewById(R.id.user_name);
-        TextView surnameTextView = findViewById(R.id.user_surname);
-        TextView ratingTextView = findViewById(R.id.rating);
-        TextView sexTextView = findViewById(R.id.sex);
-        nameTextView.setText(userInfo.getName());
-        surnameTextView.setText(userInfo.getSurname());
-        ratingTextView.setText(String.valueOf(userInfo.getRating()));
-        sexTextView.setText(userInfo.getSex());
+        binding.userName.setText(userInfo.getName());
+        binding.userSurname.setText(userInfo.getSurname());
+        binding.rating.setText(""+userInfo.getRating());
+        binding.sex.setText(userInfo.getSex());
     }
 }

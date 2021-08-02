@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 import android.util.Patterns;
 
 import com.example.mounter.R;
-import com.example.mounter.data.Result;
+import com.example.mounter.data.model.Result;
 
 import io.realm.mongodb.Credentials;
 

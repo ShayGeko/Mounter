@@ -1,12 +1,16 @@
-package com.example.mounter.data;
+package com.example.mounter.data.model;
 
 
 public enum Result {
+    Pending,
     Success,
     Failure;
 
     private static String ERROR_MESSAGE = "login failed";
 
+    public boolean isPending(){
+        return this == Pending;
+    }
     public boolean isSuccess(){
         return this == Success;
     }
@@ -14,7 +18,7 @@ public enum Result {
         return this == Failure;
     }
     public String getError(){
-        if(isSuccess()) return null;
+        if(!isFailure()) return null;
 
         return ERROR_MESSAGE;
     }

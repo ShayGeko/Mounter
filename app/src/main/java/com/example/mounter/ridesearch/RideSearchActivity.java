@@ -32,6 +32,7 @@ public class RideSearchActivity extends MounterBaseActivity {
         setTheme(R.style.Theme_MounteR);
 
         super.onCreate(savedInstanceState);
+        if(userNotLoggedIn) return;
         setContentView(R.layout.activity_ride_search);
 
         FloatingActionButton fab = findViewById(R.id.fab);

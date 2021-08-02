@@ -9,12 +9,15 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.mounter.Mounter;
 import com.example.mounter.MounterBaseActivity;
 
 import com.example.mounter.R;
+import com.example.mounter.databinding.ActivityListingCreatorBinding;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -33,6 +36,9 @@ public class RidePostingCreatorActivity extends MounterBaseActivity {
     protected Button submit;
     protected Button fillDate;
     protected ImageButton back;
+    protected ProgressBar loadingProgressBar;
+
+    private ActivityListingCreatorBinding binding;
 
 
     protected RidePostingCreatorViewModel viewModel;
@@ -40,13 +46,21 @@ public class RidePostingCreatorActivity extends MounterBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listing_creator);
+        binding =  ActivityListingCreatorBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         initDatePicker();
         variablePropertyInit();
+        viewModel = new ViewModelProvider(this, new RidePostingCreatorViewModelFactory((Mounter)getApplicationContext()))
+                .get(RidePostingCreatorViewModel.class);
 
 
+
+        loadingProgressBar = binding.loading;
         submit.setOnClickListener(view -> {
+            loadingProgressBar.setVisibility(View.VISIBLE);
+
+
             String to = fillTo.getText().toString();
             String from = fillFrom.getText().toString();
             String hourOfDeparture = fillHourOfDeparture.getText().toString();
@@ -62,20 +76,11 @@ public class RidePostingCreatorActivity extends MounterBaseActivity {
                 return;
             }
 
-            viewModel = new ViewModelProvider(this).get(RidePostingCreatorViewModel.class);
             //Setting all the data into the ridePosting model
             viewModel.createPassengerRidePosting(to, from, hourOfDeparture, date, description);
 
 
-            viewModel.getResult().observe(this, result->{
-                if(result.isSuccess()){
-                    finish();
-                }
-                else{
-                    Snackbar.make(view, R.string.something_went_wrong,
-                            Snackbar.LENGTH_SHORT).show();
-                }
-            });
+            observeRidePostingCreation(view);
         });
 
         back.setOnClickListener(view -> {
@@ -87,6 +92,23 @@ public class RidePostingCreatorActivity extends MounterBaseActivity {
         });
 
     }
+
+    protected void observeRidePostingCreation(View view) {
+        viewModel.getResult().observe(this, result -> {
+            if(result == null) return;
+            if(!result.isPending()){
+                loadingProgressBar.setVisibility(View.GONE);
+            }
+            if(result.isSuccess()){
+                finish();
+            }
+            else if(result.isFailure()){
+                Snackbar.make(view, R.string.address_not_recognized,
+                        Snackbar.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     /**
      * Assigns these variables their corresponding properties from the Activity layout
      */

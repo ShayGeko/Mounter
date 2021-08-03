@@ -19,13 +19,14 @@ import static com.example.mounter.common.MounterDateUtil.getNumberOfDaysSinceEpo
 
 public class RidePostingModel extends RealmObject {
     @PrimaryKey
-    ObjectId _id = new ObjectId();
     @Required
+    ObjectId _id = new ObjectId();
     private ObjectId _driverId;
+    private ObjectId _creatorId;
     @Required
     private String _partition = Mounter.realmPartition;
     @Required
-    private RealmList<ObjectId> passengerIds;
+    private RealmList<ObjectId> passengerIds = new RealmList<>();
     private String originAddress;
     private String destinationAddress;
     private String departureTime;
@@ -37,12 +38,15 @@ public class RidePostingModel extends RealmObject {
     private RealmList<Double> originLatLng = new RealmList<>();
     private String description;
 
-    private RealmList<UserInfoModel> passengers;
+    private RealmList<UserInfoModel> passengers = new RealmList<>();
 
-    private RealmList<RideRequestModel> rideRequests;
+    private RealmList<RideRequestModel> rideRequests  = new RealmList<>();
 
     @LinkingObjects("ridePostings")
     private final RealmResults<UserInfoModel> driver = null;
+
+    @LinkingObjects("myRidePostings")
+    private final RealmResults<UserInfoModel> creator = null;
 
     public RidePostingModel(){
         _driverId = new ObjectId(mounter.currentUser().getId());
@@ -70,8 +74,8 @@ public class RidePostingModel extends RealmObject {
                 departureTime,
                 description);
 
-        // TODO: add to passengerIds instead
-        ridePosting._driverId = new ObjectId(user.getId());
+        ridePosting.passengerIds.add(new ObjectId(user.getId()));
+        ridePosting._creatorId = new ObjectId(user.getId());
         return ridePosting;
     }
     public static RidePostingModel createByDriver(User user,
@@ -87,6 +91,7 @@ public class RidePostingModel extends RealmObject {
                 description);
         ridePosting.estimatedPrice = estimatedPrice;
         ridePosting._driverId = new ObjectId(user.getId());
+        ridePosting._creatorId = new ObjectId(user.getId());
 
         return ridePosting;
     }
@@ -209,5 +214,20 @@ public class RidePostingModel extends RealmObject {
     }
     public void addPassenger(UserInfoModel passenger){
         passengers.add(passenger);
+    }
+
+
+    public UserInfoModel getCreator(){
+        if(creator.isEmpty()) return null;
+
+        return creator.first();
+    }
+
+    public boolean needsAdriver() {
+        return this.driver.isEmpty();
+    }
+
+    public ObjectId getCreatorId() {
+        return _creatorId;
     }
 }

@@ -28,8 +28,6 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.Realm;
-
 public class RideDetailsActivity extends MounterBaseActivity implements OnMapReadyCallback {
     private RideDetailsViewModel viewModel;
 
@@ -49,14 +47,20 @@ public class RideDetailsActivity extends MounterBaseActivity implements OnMapRea
         viewModel = new ViewModelProvider(this, new RideDetailsViewModelFactory(rideId))
                 .get(RideDetailsViewModel.class);
 
+
+        Button requestToDriveBtn = findViewById(R.id.requestToDriveRideBtn);
+
+        // requestToDriveBtn.setEnabled(false);
         viewModel.getRidePosting().observe(this, ridePosting -> {
             if(ridePosting.isLoaded()){
+                if(ridePosting.needsAdriver()){
+                    addRequestToDriveBtn();
+                }
                 displayRideData(ridePosting);
             }
         });
-
         viewModel.getDriverInfo().observe(this, driverInfo ->{
-            if(driverInfo.isLoaded()){
+            if(driverInfo.isLoaded() && driverInfo.isValid()){
                 displayDriverData(driverInfo);
             }
         });
@@ -65,10 +69,18 @@ public class RideDetailsActivity extends MounterBaseActivity implements OnMapRea
         // if passenger request to join the ride - crete new rideRequest in Realm
         // TODO send push notification to the driver
         requestToJoinRideBtn.setOnClickListener(view ->
-                viewModel.createRideRequest()
+                viewModel.createPassengerRideRequest()
         );
 
         SetUpMap();
+    }
+
+    private void addRequestToDriveBtn() {
+        Button requestToDriveBtn = findViewById(R.id.requestToDriveRideBtn);
+        requestToDriveBtn.setVisibility(View.VISIBLE);
+        requestToDriveBtn.setOnClickListener(view -> {
+            viewModel.createDriverRideRequest();
+        });
     }
 
     /**

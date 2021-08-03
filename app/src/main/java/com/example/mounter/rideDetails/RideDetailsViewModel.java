@@ -69,18 +69,26 @@ public class RideDetailsViewModel extends ViewModel {
     /**
      * creates a {@link RideRequestModel} and stores it into the {@link Realm}
      */
-    public void createRideRequest() {
-        RideRequestModel rideRequest = new RideRequestModel(
-                ridePosting.getValue().getDriverId(),
+    public void createPassengerRideRequest() {
+        RideRequestModel rideRequest = RideRequestModel.newPassengerRequest(
+                ridePosting.getValue().getCreatorId(),
                 new ObjectId(mounter.currentUser().getId()),
                 ridePosting.getValue().getId());
         mRealm.executeTransactionAsync(transactionRealm -> {
+
             transactionRealm.copyToRealm(rideRequest);
 
-            UserInfoModel driver = transactionRealm.where(UserInfoModel.class)
-                    .equalTo("_userId", rideRequest.getDriverId().toString()).findFirst();
-            driver.addPendingRideRequest(rideRequest);
 
+            if(rideRequest.getDriverId() != null) {
+                UserInfoModel driver = transactionRealm.where(UserInfoModel.class)
+                    .equalTo("_userId", rideRequest.getDriverId().toString()).findFirst();
+                driver.addPendingRideRequest(rideRequest);
+            }
+            else{
+                UserInfoModel creator = transactionRealm.where(UserInfoModel.class)
+                        .equalTo("_userId", rideRequest.getCreatorId().toString()).findFirst();
+                creator.addPendingRideRequest(rideRequest);
+            }
             UserInfoModel passenger = transactionRealm.where(UserInfoModel.class)
                     .equalTo("_userId", rideRequest.getPassengerId().toString()).findFirst();
             passenger.addSentRideRequest(rideRequest);
@@ -90,7 +98,34 @@ public class RideDetailsViewModel extends ViewModel {
             ridePosting.addRideRequest(rideRequest);
         });
     }
+    /**
+     * creates a {@link RideRequestModel} and stores it into the {@link Realm}
+     */
+    public void createDriverRideRequest() {
+        RideRequestModel rideRequest = RideRequestModel.newDriverRequest(
+                ridePosting.getValue().getCreatorId(),
+                new ObjectId(mounter.currentUser().getId()),
+                ridePosting.getValue().getId());
+        mRealm.executeTransactionAsync(transactionRealm -> {
+            transactionRealm.copyToRealm(rideRequest);
 
+            RidePostingModel ridePosting = transactionRealm.where(RidePostingModel.class)
+                    .equalTo("_id", rideRequest.getRidePostingId()).findFirst();
+
+
+            UserInfoModel creator = transactionRealm.where(UserInfoModel.class)
+                    .equalTo("_userId", rideRequest.getCreatorId().toString()).findFirst();
+
+            creator.addPendingRideRequest(rideRequest);
+
+            UserInfoModel driver = transactionRealm.where(UserInfoModel.class)
+                    .equalTo("_userId", mounter.currentUser().getId()).findFirst();
+            driver.addSentRideRequest(rideRequest);
+
+
+            ridePosting.addRideRequest(rideRequest);
+        });
+    }
     private RealmLiveObject<RidePostingModel> loadRidePosting(ObjectId rideId) {
         return new RealmLiveObject<>(
                 mRealm.where(RidePostingModel.class).equalTo("_id", rideId)

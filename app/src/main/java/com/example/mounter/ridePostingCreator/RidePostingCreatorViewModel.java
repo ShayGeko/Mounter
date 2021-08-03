@@ -55,8 +55,7 @@ public class RidePostingCreatorViewModel extends ViewModel {
                 destinationAddress,
                 departureDate + " " +  departureTime,
                 description);
-        //TODO treat passenger ridePosting differently
-        computeCoordinatesAndAddToRealm(ridePosting);
+        computeCoordinatesAndAddToRealm(ridePosting, false);
     }
 
 
@@ -77,11 +76,11 @@ public class RidePostingCreatorViewModel extends ViewModel {
                 departureDate + " " + departureTime,
                 description,
                 estimatedPrice);
-        computeCoordinatesAndAddToRealm(ridePosting);
+        computeCoordinatesAndAddToRealm(ridePosting, true);
     }
 
 
-    private void computeCoordinatesAndAddToRealm(RidePostingModel ridePosting) {
+    private void computeCoordinatesAndAddToRealm(RidePostingModel ridePosting, Boolean shouldCreateAsADriver) {
         disposables.add(
                 repository.getLatLngPair(ridePosting.getOriginAddress(), ridePosting.getDestinationAddress())
                         .subscribeOn(Schedulers.io())
@@ -89,7 +88,7 @@ public class RidePostingCreatorViewModel extends ViewModel {
                                 latLngPair -> {
                                     ridePosting.setOriginLatLng(latLngPair.first);
                                     ridePosting.setDestinationLatLng(latLngPair.second);
-                                    addToRealm(ridePosting);
+                                    addToRealm(ridePosting, shouldCreateAsADriver);
                                     },
                                 throwable -> {
                                     Log.e(TAG, throwable.getMessage());
@@ -97,15 +96,21 @@ public class RidePostingCreatorViewModel extends ViewModel {
                                 }));
     }
 
-    private void addToRealm(RidePostingModel ridePosting) {
+    private void addToRealm(RidePostingModel ridePosting, Boolean createAsADriver) {
         // not in the main thread - need to create a new instance for realm
         try (Realm realm = Realm.getDefaultInstance()) {
             realm.executeTransaction(
                     workRealm -> {
                         workRealm.copyToRealm(ridePosting);
                         UserInfoModel user = workRealm.where(UserInfoModel.class)
-                                .equalTo("_userId", ridePosting.getDriverId().toString()).findFirst();
-                        user.addRidePosting(ridePosting);
+                                .equalTo("_userId", mounter.currentUser().getId()).findFirst();
+                        user.addToMyRidePostings(ridePosting);
+                        if(createAsADriver) {
+                            user.addRidePosting(ridePosting);
+                        }
+                        else{
+                            ridePosting.addPassenger(user);
+                        }
                     });
             creationResult.postValue(Result.Success);
         }

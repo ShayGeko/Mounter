@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+
 import androidx.core.app.NotificationCompat;
+
 import android.util.Log;
 
 import com.example.mounter.R;
@@ -37,9 +39,10 @@ public class MounterMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-            sendNotification(remoteMessage.getNotification().getBody());
+            sendNotification(remoteMessage.getNotification());
         }
     }
+
     /**
      * There are two scenarios when onNewToken is called:
      * 1) When a new token is generated on initial app startup
@@ -56,9 +59,9 @@ public class MounterMessagingService extends FirebaseMessagingService {
     /**
      * Create and show a simple notification containing the received FCM message.
      *
-     * @param messageBody FCM message body received.
+     * @param notification FCM message body received.
      */
-    private void sendNotification(String messageBody) {
+    private void sendNotification(RemoteMessage.Notification notification) {
         Log.d(TAG, "sending the notification");
         // TODO: open myRideRequests activity
         Intent intent = new Intent(this, RideSearchActivity.class);
@@ -72,8 +75,8 @@ public class MounterMessagingService extends FirebaseMessagingService {
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.mipmap.ic_stat_person_add)
                         .setColor(ResourcesCompat.getColor(getResources(), R.color.sfu_red, null))
-                        .setContentTitle(getString(R.string.new_ride_request))
-                        .setContentText(messageBody)
+                        .setContentTitle(notification.getTitle())
+                        .setContentText(notification.getBody())
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);

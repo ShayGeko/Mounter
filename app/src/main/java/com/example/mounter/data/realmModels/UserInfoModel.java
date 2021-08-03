@@ -25,20 +25,30 @@ public class UserInfoModel extends RealmObject {
     private Double rating;
     private Integer numberOfRatings = 0;
     private String sex;
+    private Boolean isADriver;
 
     /**
      * rides where this user is listed as a driver
      */
     private RealmList<RidePostingModel> ridePostings;
+
+    /**
+     * ride postings created by this user <br/>
+     * both as a passenger or as a driver
+     */
+    private RealmList<RidePostingModel> myRidePostings = new RealmList<>();
     /**
      *  this user's requests to join other rides
      */
-    private RealmList<RideRequestModel> sentRideRequests;
+    private RealmList<RideRequestModel> sentRideRequests = new RealmList<>();
     /**
      * incoming requests to join the rides created by this user
      */
-    private RealmList<RideRequestModel> pendingRideRequests;
+    private RealmList<RideRequestModel> pendingRideRequests = new RealmList<>();
 
+    /**
+     * ride postings where this user is listed as a passenger
+     */
     @LinkingObjects("passengers")
     private final RealmResults<RidePostingModel> ridePostingsAsAPassenger = null;
 
@@ -160,5 +170,14 @@ public class UserInfoModel extends RealmObject {
         pendingRideRequests.add(rideRequest);
     } public void addSentRideRequest(RideRequestModel rideRequest){
         sentRideRequests.add(rideRequest);
+    }
+
+    public boolean isADriver() {
+        return isADriver;
+    }
+
+    public void addToMyRidePostings(RidePostingModel ridePosting) {
+        if(myRidePostings == null) myRidePostings = new RealmList<>();
+        myRidePostings.add(ridePosting);
     }
 }

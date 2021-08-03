@@ -16,14 +16,15 @@ public class RideRequestModel extends RealmObject {
     @PrimaryKey
     @Required
     ObjectId _id = new ObjectId();
-    @Required
+    private ObjectId _postingCreatorId;
     private ObjectId _driverId;
-    @Required
     private ObjectId _passengerId;
     @Required
     private ObjectId _ridePostingId;
     @Required
     private String _partition = Mounter.realmPartition;
+
+    private Boolean isDriverRequest = false;
 
     @LinkingObjects("pendingRideRequests")
     private final RealmResults<UserInfoModel> driver = null;
@@ -40,6 +41,23 @@ public class RideRequestModel extends RealmObject {
         this._driverId = driverId;
         this._passengerId = passengerId;
         this._ridePostingId = ridePostingId;
+    }
+    public static RideRequestModel newPassengerRequest(ObjectId postingCreatorId, ObjectId passengerId, ObjectId ridePostingId){
+        RideRequestModel request = new RideRequestModel();
+        request._postingCreatorId = postingCreatorId;
+        request._passengerId = passengerId;
+        request._ridePostingId = ridePostingId;
+
+        return request;
+    }
+    public static RideRequestModel newDriverRequest(ObjectId postingCreatorId, ObjectId _driverId, ObjectId ridePostingId){
+        RideRequestModel request = new RideRequestModel();
+        request._postingCreatorId = postingCreatorId;
+        request._driverId = _driverId;
+        request._ridePostingId = ridePostingId;
+        request.isDriverRequest = true;
+
+        return request;
     }
     public ObjectId getId(){
         return _id;
@@ -67,5 +85,9 @@ public class RideRequestModel extends RealmObject {
         return passenger;
     }public RealmResults<RidePostingModel> getRidePosting(){
         return ridePosting;
+    }
+
+    public ObjectId getCreatorId() {
+        return _postingCreatorId;
     }
 }

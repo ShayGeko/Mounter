@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.mounter.data.repositories.DirectionsRepository;
-import com.example.mounter.data.RealmLiveObject;
+import com.example.mounter.data.model.RealmLiveObject;
 import com.example.mounter.data.model.Directions;
 import com.example.mounter.data.realmModels.RidePostingModel;
 import com.example.mounter.data.realmModels.RideRequestModel;

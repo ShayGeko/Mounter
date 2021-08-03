@@ -2,10 +2,8 @@ package com.example.mounter.profile;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.mounter.data.RealmLiveObject;
+import com.example.mounter.data.model.RealmLiveObject;
 import com.example.mounter.data.realmModels.UserInfoModel;
-
-import org.bson.types.ObjectId;
 
 import io.realm.Realm;
 

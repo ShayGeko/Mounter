@@ -2,8 +2,8 @@ package com.example.mounter.pendingRideRequests;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.mounter.data.RealmLiveData;
-import com.example.mounter.data.RealmLiveObject;
+import com.example.mounter.data.model.RealmLiveData;
+import com.example.mounter.data.model.RealmLiveObject;
 import com.example.mounter.data.realmModels.RidePostingModel;
 import com.example.mounter.data.realmModels.RideRequestModel;
 import com.example.mounter.data.realmModels.UserInfoModel;

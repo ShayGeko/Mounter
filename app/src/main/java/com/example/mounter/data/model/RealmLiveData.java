@@ -1,13 +1,14 @@
-package com.example.mounter.data;
+package com.example.mounter.data.model;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import io.realm.RealmChangeListener;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
 
 // as suggested by https://medium.com/@eric.maxwell/how-to-use-livedata-with-realm-3e57958b5aa1
-public class RealmLiveData<T extends RealmModel> extends LiveData<RealmResults<T>> {
+public class RealmLiveData<T extends RealmModel> extends MutableLiveData<RealmResults<T>> {
 
     private RealmResults<T> results;
     private final RealmChangeListener<RealmResults<T>> listener =

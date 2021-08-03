@@ -2,7 +2,10 @@ package com.example.mounter.ridesearch;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.example.mounter.MounterBaseActivity;
 import com.example.mounter.R;
@@ -42,10 +45,34 @@ public class RideSearchActivity extends MounterBaseActivity {
 
         viewModel = new ViewModelProvider(this).get(RideSearchViewModel.class);
         setUpRecyclerView();
+
+        EditText destinationAddressFilter = findViewById(R.id.destination_address_search_filter);
+
+        destinationAddressFilter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                viewModel.updateDestinationAddressFilter(s.toString());
+            }
+        });
     }
 
     private void setUpRecyclerView() {
         adapter = new RidePostingRecyclerViewAdapter(viewModel.getAllCurrentRidePostings());
+
+
+        viewModel.getRidePostings().observe(this, results ->{
+                adapter.updateData(results);
+        });
 
         recyclerView = findViewById(R.id.ridePosting_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
+import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 import io.realm.mongodb.User;
@@ -25,10 +26,21 @@ public class UserInfoModel extends RealmObject {
     private Integer numberOfRatings = 0;
     private String sex;
 
+    /**
+     * rides where this user is listed as a driver
+     */
     private RealmList<RidePostingModel> ridePostings;
-
+    /**
+     *  this user's requests to join other rides
+     */
     private RealmList<RideRequestModel> sentRideRequests;
+    /**
+     * incoming requests to join the rides created by this user
+     */
     private RealmList<RideRequestModel> pendingRideRequests;
+
+    @LinkingObjects("passengers")
+    private final RealmResults<RidePostingModel> ridePostingsAsAPassenger = null;
 
     public UserInfoModel(){
 
@@ -143,5 +155,10 @@ public class UserInfoModel extends RealmObject {
 
     public void addRidePosting(RidePostingModel ridePosting){
         ridePostings.add(ridePosting);
+    }
+    public void addPendingRideRequest(RideRequestModel rideRequest){
+        pendingRideRequests.add(rideRequest);
+    } public void addSentRideRequest(RideRequestModel rideRequest){
+        sentRideRequests.add(rideRequest);
     }
 }

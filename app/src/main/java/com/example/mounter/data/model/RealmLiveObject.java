@@ -1,4 +1,4 @@
-package com.example.mounter.data;
+package com.example.mounter.data.model;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

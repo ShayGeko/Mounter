@@ -5,7 +5,10 @@ import com.example.mounter.Mounter;
 
 import org.bson.types.ObjectId;
 
+import io.realm.Realm;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
+import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -21,6 +24,15 @@ public class RideRequestModel extends RealmObject {
     private ObjectId _ridePostingId;
     @Required
     private String _partition = Mounter.realmPartition;
+
+    @LinkingObjects("pendingRideRequests")
+    private final RealmResults<UserInfoModel> driver = null;
+
+    @LinkingObjects("sentRideRequests")
+    private final RealmResults<UserInfoModel> passenger = null;
+
+    @LinkingObjects("rideRequests")
+    private final RealmResults<RidePostingModel> ridePosting = null;
 
     public RideRequestModel(){
     }
@@ -49,5 +61,11 @@ public class RideRequestModel extends RealmObject {
     }
     public void setRidePostingId(ObjectId ridePostingId){
         this._ridePostingId = ridePostingId;
+    }
+
+    public RealmResults<UserInfoModel> getPassenger(){
+        return passenger;
+    }public RealmResults<RidePostingModel> getRidePosting(){
+        return ridePosting;
     }
 }

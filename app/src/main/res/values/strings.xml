@@ -14,6 +14,7 @@
     <string name="chooseTypeOfListing">Choose Type of Listing</string>
     <string name="createListing">Create Listing</string>
     <string name="title_activity_login">MounteR Login</string>
+    <string name="title_activity_pending_ride_requests">Pending ride requests</string>
     <string name="title_activity_ride_search">Available rides</string>
     <string name = "user_profile">User Profile</string>
     <string name="action_settings">Settings</string>
@@ -42,4 +43,7 @@
     <string name="new_ride_request">New ride request!</string>
     <string name="fcm_token_fmt">FCM registration Token: %s</string>
     <string name="new_ride_requests_channel_name">new ride requests</string>
+    <string name="accept_ride_request_btn_text">accept</string>
+    <string name="decline_ride_request_btn_text">decline</string>
+    <string name="username">username</string>
 </resources>

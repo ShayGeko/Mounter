@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.mounter.data.realmModels.RidePostingModel;
 import com.example.mounter.databinding.RidePostingHolderBinding;
+import com.example.mounter.pendingRideRequests.PendingRideRequestsActivity;
 import com.example.mounter.rideDetails.RideDetailsActivity;
 import com.example.mounter.profile.UserProfileActivity;
 
@@ -48,7 +49,7 @@ public class RidePostingRecyclerViewAdapter extends
 
         holder.mProfileButton.setOnClickListener(t -> {
             Context context = holder.mDestinationAddress.getContext();
-            Intent intent = new Intent(context, UserProfileActivity.class);
+            Intent intent = new Intent(context, PendingRideRequestsActivity.class);
             context.startActivity(intent);
         });
     }

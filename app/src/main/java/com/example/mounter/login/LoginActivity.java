@@ -79,17 +79,18 @@ public class LoginActivity extends AppCompatActivity {
             if (loginResult.isFailure()) {
                 showLoginFailed(loginResult.getError());
             }
+            else {
+                configureAppForNewUser();
 
-            configureAppForNewUser();
+                setResult(Activity.RESULT_OK);
 
-            setResult(Activity.RESULT_OK);
+                //Complete and destroy login activity once successful
+                finish();
 
-            //Complete and destroy login activity once successful
-            finish();
+                Intent intent = new Intent(this, RideSearchActivity.class);
 
-            Intent intent = new Intent(this, RideSearchActivity.class);
-
-            startActivity(intent);
+                startActivity(intent);
+            }
         });
 
         TextWatcher afterTextChangedListener = new TextWatcher() {

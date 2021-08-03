@@ -70,13 +70,24 @@ public class RideDetailsViewModel extends ViewModel {
      * creates a {@link RideRequestModel} and stores it into the {@link Realm}
      */
     public void createRideRequest() {
+        RideRequestModel rideRequest = new RideRequestModel(
+                ridePosting.getValue().getDriverId(),
+                new ObjectId(mounter.currentUser().getId()),
+                ridePosting.getValue().getId());
         mRealm.executeTransactionAsync(transactionRealm -> {
-            RideRequestModel rideRequestModel = new RideRequestModel(
-                    ridePosting.getValue().getDriverId(),
-                    new ObjectId(mounter.currentUser().getId()),
-                    ridePosting.getValue().getId());
+            transactionRealm.copyToRealm(rideRequest);
 
-            transactionRealm.insert(rideRequestModel);
+            UserInfoModel driver = transactionRealm.where(UserInfoModel.class)
+                    .equalTo("_userId", rideRequest.getDriverId().toString()).findFirst();
+            driver.addPendingRideRequest(rideRequest);
+
+            UserInfoModel passenger = transactionRealm.where(UserInfoModel.class)
+                    .equalTo("_userId", rideRequest.getPassengerId().toString()).findFirst();
+            passenger.addSentRideRequest(rideRequest);
+
+            RidePostingModel ridePosting = transactionRealm.where(RidePostingModel.class)
+                    .equalTo("_id", rideRequest.getRidePostingId()).findFirst();
+            ridePosting.addRideRequest(rideRequest);
         });
     }
 

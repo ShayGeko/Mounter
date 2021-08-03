@@ -37,6 +37,10 @@ public class RidePostingModel extends RealmObject {
     private RealmList<Double> originLatLng = new RealmList<>();
     private String description;
 
+    private RealmList<UserInfoModel> passengers;
+
+    private RealmList<RideRequestModel> rideRequests;
+
     @LinkingObjects("ridePostings")
     private final RealmResults<UserInfoModel> driver = null;
 
@@ -195,7 +199,15 @@ public class RidePostingModel extends RealmObject {
 
     public boolean hasDestinationLatLng(){
         return this.destinationLatLng.size() == 2;
-    }public boolean hasOriginLatLng(){
+    }
+    public boolean hasOriginLatLng(){
         return this.originLatLng.size() == 2;
+    }
+
+    public void addRideRequest(RideRequestModel rideRequest){
+        rideRequests.add(rideRequest);
+    }
+    public void addPassenger(UserInfoModel passenger){
+        passengers.add(passenger);
     }
 }

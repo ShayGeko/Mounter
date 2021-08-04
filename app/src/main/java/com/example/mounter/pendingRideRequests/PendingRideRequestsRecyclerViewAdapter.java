@@ -1,10 +1,12 @@
 package com.example.mounter.pendingRideRequests;
 
 import android.graphics.Color;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -76,8 +78,8 @@ public class PendingRideRequestsRecyclerViewAdapter extends
         public final TextView mUserName;
         public final TextView mDestinationAddress;
         public final TextView mRating;
-        public final Button mAcceptBtn;
-        public final Button mDeclineBtn;
+        public final ImageButton mAcceptBtn;
+        public final ImageButton mDeclineBtn;
         public final View mView;
 
         public RideRequestModel mItem;

@@ -1,5 +1,6 @@
 package com.example.mounter.ridesearch;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.mounter.R;
 import com.example.mounter.data.realmModels.RidePostingModel;
 import com.example.mounter.databinding.RidePostingHolderBinding;
 import com.example.mounter.pendingRideRequests.PendingRideRequestsActivity;
@@ -43,6 +45,12 @@ public class RidePostingRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final RidePostingViewHolder holder, int position) {
         holder.mItem = getItem(position);
+
+        if(holder.mItem.needsAdriver()){
+            holder.mView.setBackgroundColor(
+                    ContextCompat.getColor(holder.itemView.getContext(), R.color.light_accent_pink));
+        }
+
         holder.mDestinationAddress.setText(holder.mItem.getDestinationAddress());
         holder.mOriginAddress.setText(holder.mItem.getOriginAddress());
         holder.mDepartureTime.setText(holder.mItem.getDepartureTime());
@@ -59,6 +67,7 @@ public class RidePostingRecyclerViewAdapter extends
         public final TextView mOriginAddress;
         public final TextView mDepartureTime;
         public final Button mProfileButton;
+        public final View mView;
 
         public RidePostingModel mItem;
 
@@ -71,6 +80,7 @@ public class RidePostingRecyclerViewAdapter extends
             mOriginAddress = binding.originAddress;
             mDepartureTime = binding.departureTime;
             mProfileButton = binding.profileBtn;
+            mView = binding.getRoot();
         }
 
         @Override

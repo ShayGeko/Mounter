@@ -119,6 +119,10 @@ public class RideDetailsActivity extends MounterBaseActivity implements OnMapRea
 
         String driverFullName = userInfo.getName() + " " + userInfo.getSurname();
         driverName.setText(driverFullName);
+
+        TextView rating = findViewById(R.id.ride_details_companion_rating);
+
+        rating.setText(getString(R.string.rating) + ": " + userInfo.getRating());
     }
 
     /**

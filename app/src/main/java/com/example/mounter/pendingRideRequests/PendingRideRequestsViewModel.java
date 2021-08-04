@@ -56,8 +56,20 @@ public class PendingRideRequestsViewModel extends ViewModel {
                     .equalTo("_id", rideRequestId).findFirst();
 
             RidePostingModel ridePosting = rideRequestModel.getRidePosting().first();
-            UserInfoModel passenger = rideRequestModel.getPassenger().first();
-            ridePosting.addPassenger(passenger);
+
+            if(rideRequestModel.isADriverRequest()){
+                UserInfoModel driver = bgRealm
+                        .where(UserInfoModel.class)
+                        .equalTo("_userId", rideRequestModel.getDriverId().toString()).findFirst();
+
+                driver.addRidePosting(ridePosting);
+                ridePosting.setDriverId(new ObjectId(driver.getUserId()));
+            }
+            else {
+                UserInfoModel passenger = rideRequestModel.getPassenger().first();
+                ridePosting.addPassenger(passenger);
+            }
+
             rideRequestModel.deleteFromRealm();
         });
     }

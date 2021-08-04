@@ -30,6 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:visibility="gone"
                     android:text="@string/request_to_drive" />
 
                 <Button
@@ -73,7 +74,7 @@
                         android:id="@+id/my_scheduled_ride_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/my_scheduled_ride_label_text"
+                        android:text="@string/ride_details_label_text"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:layout_gravity="center"
@@ -83,7 +84,7 @@
                         android:id="@+id/my_ride_companion_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/my_ride_companion_label_text"
+                        android:text="@string/driver_label_text"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:layout_gravity="center"
@@ -206,7 +207,7 @@
                         android:id="@+id/ride_details_companion_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/john_doe"
+                        android:text="@string/no_driver"
                         android:textColor="@color/white"
                         android:textSize="15sp"
                         android:layout_gravity="center"
@@ -219,10 +220,10 @@
                         android:id="@+id/ride_details_companion_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/is_in_good_standing"
                         android:layout_gravity="center"
                         android:gravity="top"
                         android:layout_weight="1"
+                        android:text=""
                         android:textColor="@color/white"
                         android:textSize="10sp" />
                 </LinearLayout>

@@ -14,6 +14,7 @@ import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.mounter.R;
+import com.example.mounter.pendingRideRequests.PendingRideRequestsActivity;
 import com.example.mounter.ridesearch.RideSearchActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -64,7 +65,7 @@ public class MounterMessagingService extends FirebaseMessagingService {
     private void sendNotification(RemoteMessage.Notification notification) {
         Log.d(TAG, "sending the notification");
         // TODO: open myRideRequests activity
-        Intent intent = new Intent(this, RideSearchActivity.class);
+        Intent intent = new Intent(this, PendingRideRequestsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);

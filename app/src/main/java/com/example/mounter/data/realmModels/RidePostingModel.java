@@ -102,6 +102,9 @@ public class RidePostingModel extends RealmObject {
     public ObjectId getDriverId(){
         return  _driverId;
     }
+    public void setDriverId(ObjectId id){
+        _driverId = id;
+    }
     public String getPartition() {
         return _partition;
     }
@@ -224,7 +227,7 @@ public class RidePostingModel extends RealmObject {
     }
 
     public boolean needsAdriver() {
-        return this.driver.isEmpty();
+        return this._driverId == null;
     }
 
     public ObjectId getCreatorId() {

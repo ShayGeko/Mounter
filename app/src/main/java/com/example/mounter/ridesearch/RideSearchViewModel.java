@@ -23,6 +23,7 @@ public class RideSearchViewModel extends ViewModel {
     private Realm mRealm;
     private RealmLiveData<RidePostingModel> mRidePostingsResult;
     private RealmQuery<RidePostingModel> currentRidePostings;
+    private String filter;
 
     public RideSearchViewModel(){
         configureRealm();
@@ -83,7 +84,7 @@ public class RideSearchViewModel extends ViewModel {
                         .greaterThanOrEqualTo(DEPARTURE_TIME_IN_DAYS, getCurrentDateInDays())
                         .and()
                         .contains("destinationAddress", destinationAddress, Case.INSENSITIVE)
-                        .sort("destinationAddress")
+                        .sort("departureTime")
                         .findAllAsync()
         );
     }

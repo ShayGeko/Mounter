@@ -1,12 +1,16 @@
 package com.example.mounter.pendingRideRequests;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mounter.R;
 import com.example.mounter.data.realmModels.RidePostingModel;
 import com.example.mounter.data.realmModels.RideRequestModel;
 import com.example.mounter.data.realmModels.UserInfoModel;
@@ -40,6 +44,10 @@ public class PendingRideRequestsRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final RideRequestViewHolder holder, int position) {
         holder.mItem = getItem(position);
+        if(holder.mItem.isADriverRequest()){
+            holder.mView.setBackgroundColor(
+                    ContextCompat.getColor(holder.itemView.getContext(), R.color.golden));
+        }
         RealmResults<UserInfoModel> users = holder.mItem.getPassenger();
         if(users.size() > 0) {
             UserInfoModel user = users.first();
@@ -70,6 +78,7 @@ public class PendingRideRequestsRecyclerViewAdapter extends
         public final TextView mRating;
         public final Button mAcceptBtn;
         public final Button mDeclineBtn;
+        public final View mView;
 
         public RideRequestModel mItem;
 
@@ -81,6 +90,7 @@ public class PendingRideRequestsRecyclerViewAdapter extends
             mRating = binding.rating;
             mAcceptBtn = binding.acceptBtn;
             mDeclineBtn = binding.declineBtn;
+            mView = binding.getRoot();
         }
         @Override
         public String toString() {

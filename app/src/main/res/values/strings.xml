@@ -18,10 +18,10 @@
     <string name="title_activity_ride_search">Available rides</string>
     <string name = "user_profile">User Profile</string>
     <string name="action_settings">Settings</string>
-    <string name="my_ride_companion_label_text">My ride companion:</string>
-    <string name="my_scheduled_ride_label_text">My scheduled ride:</string>
+    <string name="driver_label_text">Driver:</string>
+    <string name="ride_details_label_text">Ride details:</string>
     <string name="is_in_good_standing">Is in good standing</string>
-    <string name="john_doe">John Doe</string>
+    <string name="no_driver">No driver yet</string>
     <string name="designed_by_team_4">Designed by team 4</string>
     <string name="rating">rating</string>
     <string name="surname">surname</string>
@@ -47,4 +47,6 @@
     <string name="decline_ride_request_btn_text">decline</string>
     <string name="username">username</string>
     <string name="request_to_drive">request to drive</string>
+    <string name="search">Search:</string>
+    <string name="destination_address">destination address</string>
 </resources>

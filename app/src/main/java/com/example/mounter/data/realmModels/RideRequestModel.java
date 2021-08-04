@@ -5,6 +5,8 @@ import com.example.mounter.Mounter;
 
 import org.bson.types.ObjectId;
 
+import java.util.SortedSet;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
@@ -83,11 +85,21 @@ public class RideRequestModel extends RealmObject {
 
     public RealmResults<UserInfoModel> getPassenger(){
         return passenger;
-    }public RealmResults<RidePostingModel> getRidePosting(){
+    }
+    public RealmResults<UserInfoModel> getDriver() {
+        return driver;
+    }
+    public RealmResults<RidePostingModel> getRidePosting(){
         return ridePosting;
     }
 
     public ObjectId getCreatorId() {
         return _postingCreatorId;
     }
+
+    public boolean isADriverRequest(){
+        return isDriverRequest;
+    }
+
+
 }

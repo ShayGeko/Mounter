@@ -14,8 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="147dp"
-            android:layout_weight="1"
+            android:layout_height="120dp"
             android:background="@drawable/borderbottom"
             android:orientation="vertical">
 
@@ -26,7 +25,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:padding="10dp"
-                android:text="Search:"
+                android:text="@string/search"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -40,7 +39,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:hint="destination address"
+                android:hint="@string/destination_address"
                 android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +58,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ridePosting_list"
                 android:layout_width="match_parent"
-                android:layout_height="773dp"
+                android:layout_height="match_parent"
                 android:background="@null" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton

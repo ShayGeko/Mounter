@@ -17,8 +17,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MounteR">
         <activity
+            android:name=".main.MainActivity"
+            android:label="Mounter"
+            android:theme="@style/Theme.Design.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".profile.UserProfileActivity"
-            android:label = "@string/user_profile"/>
+            android:label="@string/user_profile" />
         <activity
             android:name=".ridePostingCreator.RidePostingCreatorActivity"
             android:label="@string/createListing" />
@@ -32,11 +43,6 @@
             android:name=".ridesearch.RideSearchActivity"
             android:label="@string/title_activity_ride_search"
             android:theme="@style/splashScreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".login.LoginActivity"
@@ -67,10 +73,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/sfu_red" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_stat_person_add" />

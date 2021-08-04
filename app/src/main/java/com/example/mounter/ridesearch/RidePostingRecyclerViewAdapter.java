@@ -54,19 +54,12 @@ public class RidePostingRecyclerViewAdapter extends
         holder.mDestinationAddress.setText(holder.mItem.getDestinationAddress());
         holder.mOriginAddress.setText(holder.mItem.getOriginAddress());
         holder.mDepartureTime.setText(holder.mItem.getDepartureTime());
-
-        holder.mProfileButton.setOnClickListener(t -> {
-            Context context = holder.mDestinationAddress.getContext();
-            Intent intent = new Intent(context, PendingRideRequestsActivity.class);
-            context.startActivity(intent);
-        });
     }
 
     public class RidePostingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView mDestinationAddress;
         public final TextView mOriginAddress;
         public final TextView mDepartureTime;
-        public final Button mProfileButton;
         public final View mView;
 
         public RidePostingModel mItem;
@@ -79,7 +72,6 @@ public class RidePostingRecyclerViewAdapter extends
             mDestinationAddress = binding.destinationAddress;
             mOriginAddress = binding.originAddress;
             mDepartureTime = binding.departureTime;
-            mProfileButton = binding.profileBtn;
             mView = binding.getRoot();
         }
 
@@ -91,7 +83,6 @@ public class RidePostingRecyclerViewAdapter extends
             rideDetailsIntent.putExtra("ridePostingId", mItem.getId());
 
             context.startActivity(rideDetailsIntent);
-
         }
         @Override
         public String toString() {

@@ -38,7 +38,7 @@
         android:layout_height="75dp"
         android:layout_marginBottom="24dp"
         android:contentDescription="@string/up_arrow"
-        android:foregroundTint="#000000"
+        android:foregroundTint="#FFFFFF"
         android:foregroundTintMode="add"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/map"

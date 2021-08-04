@@ -26,7 +26,7 @@ public class RidePostingModel extends RealmObject {
     @Required
     private String _partition = Mounter.realmPartition;
     @Required
-    private RealmList<ObjectId> passengerIds = new RealmList<>();
+    private RealmList<String> passengerIds = new RealmList<>();
     private String originAddress;
     private String destinationAddress;
     private String departureTime;
@@ -74,7 +74,7 @@ public class RidePostingModel extends RealmObject {
                 departureTime,
                 description);
 
-        ridePosting.passengerIds.add(new ObjectId(user.getId()));
+        ridePosting.passengerIds.add(user.getId());
         ridePosting._creatorId = new ObjectId(user.getId());
         return ridePosting;
     }
@@ -150,20 +150,20 @@ public class RidePostingModel extends RealmObject {
     public void setEstimatedPrice(String estimatedPrice) {
         this.estimatedPrice = estimatedPrice;
     }
-    public RealmList<ObjectId> getPassengerIds(){
+    public RealmList<String> getPassengerIds(){
         return passengerIds;
     }
     public void enrollUserOnTheRide(String userId){
-        passengerIds.add(new ObjectId(userId));
-    }
-    public void enrollUserOnTheRide(ObjectId userId){
         passengerIds.add(userId);
     }
+    public void enrollUserOnTheRide(ObjectId userId){
+        passengerIds.add(userId.toString());
+    }
     public void kickFromTheRide(String userId){
-        passengerIds.remove(new ObjectId(userId));
+        passengerIds.remove(userId);
     }
     public void kickFromTheRide(ObjectId userId){
-        passengerIds.remove(userId);
+        passengerIds.remove(userId.toString());
     }
     public RealmList<Double> getDestinationLatLng() {
         return destinationLatLng;

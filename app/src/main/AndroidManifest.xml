@@ -19,7 +19,7 @@
         <activity
             android:name=".main.MainActivity"
             android:label="Mounter"
-            android:theme="@style/Theme.Design.NoActionBar">
+            android:theme="@style/splashScreenTheme">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

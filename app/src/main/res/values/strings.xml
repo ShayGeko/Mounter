@@ -10,9 +10,9 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Invalid password</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="title_activity_directions">My scheduled ride</string>
-    <string name="chooseTypeOfListing">Choose Type of Listing</string>
-    <string name="createListing">Create Listing</string>
+    <string name="title_activity_directions">Ride details</string>
+    <string name="chooseTypeOfListing">Choose Type of ride posting</string>
+    <string name="createListing">Create ride posting</string>
     <string name="title_activity_login">MounteR Login</string>
     <string name="title_activity_pending_ride_requests">Pending ride requests</string>
     <string name="title_activity_ride_search">Available rides</string>
@@ -22,7 +22,6 @@
     <string name="ride_details_label_text">Ride details:</string>
     <string name="is_in_good_standing">Is in good standing</string>
     <string name="no_driver">No driver yet</string>
-    <string name="designed_by_team_4">Designed by team 4</string>
     <string name="rating">rating</string>
     <string name="surname">surname</string>
     <string name="name">name</string>
@@ -49,9 +48,12 @@
     <string name="request_to_drive">request to drive</string>
     <string name="search">Search:</string>
     <string name="destination_address">destination address</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="up_arrow">Up Arrow</string>
     <string name="searchRide">Search Ride</string>
     <string name="logout">Log Out</string>
+    <string name="user_profile_edit_btn_text">Edit</string>
+    <string name="name_label_user_profile">Name:</string>
+    <string name="rating_label_user_profile">Rating:</string>
+    <string name="sex_label_user_profile">Sex:</string>
+    <string name="designed_by_team_4">Designed by team 4</string>
 </resources>

@@ -29,7 +29,10 @@ public class MainActivity extends MounterBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        setTheme(R.style.Theme_Design_NoActionBar);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         upArrow = findViewById(R.id.upArrow);

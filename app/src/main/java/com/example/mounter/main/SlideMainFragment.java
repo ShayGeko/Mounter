@@ -85,18 +85,18 @@ public class SlideMainFragment extends Fragment {
         searchRide.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), RideSearchActivity.class);
+                Intent intent = new Intent(getContext(), RideSearchActivity.class);
 //                upArrow.performClick();
-                getActivity().startActivity(intent);
+                startActivity(intent);
             }
         });
 
         userProfile.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), UserProfileActivity.class);
+                Intent intent = new Intent(getContext(), UserProfileActivity.class);
 //                upArrow.performClick();
-                getActivity().startActivity(intent);
+                startActivity(intent);
             }
         });
 

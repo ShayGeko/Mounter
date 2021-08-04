@@ -24,5 +24,8 @@ public abstract class MounterBaseActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+        else{
+            Log.d("BaseActivity", user.getState().toString());
+        }
     }
 }

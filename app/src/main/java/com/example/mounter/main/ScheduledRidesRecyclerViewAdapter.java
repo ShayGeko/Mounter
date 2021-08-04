@@ -1,4 +1,7 @@
-package com.example.mounter.main;
+package com.example.mounter.ridesearch;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,14 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.mounter.R;
 import com.example.mounter.data.realmModels.RidePostingModel;
 import com.example.mounter.databinding.RidePostingHolderBinding;
 import com.example.mounter.pendingRideRequests.PendingRideRequestsActivity;
 import com.example.mounter.rideDetails.RideDetailsActivity;
+import com.example.mounter.profile.UserProfileActivity;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
@@ -53,19 +54,12 @@ public class ScheduledRidesRecyclerViewAdapter extends
         holder.mDestinationAddress.setText(holder.mItem.getDestinationAddress());
         holder.mOriginAddress.setText(holder.mItem.getOriginAddress());
         holder.mDepartureTime.setText(holder.mItem.getDepartureTime());
-
-        holder.mProfileButton.setOnClickListener(t -> {
-            Context context = holder.mDestinationAddress.getContext();
-            Intent intent = new Intent(context, PendingRideRequestsActivity.class);
-            context.startActivity(intent);
-        });
     }
 
     public class RidePostingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView mDestinationAddress;
         public final TextView mOriginAddress;
         public final TextView mDepartureTime;
-        public final Button mProfileButton;
         public final View mView;
 
         public RidePostingModel mItem;
@@ -78,7 +72,6 @@ public class ScheduledRidesRecyclerViewAdapter extends
             mDestinationAddress = binding.destinationAddress;
             mOriginAddress = binding.originAddress;
             mDepartureTime = binding.departureTime;
-            mProfileButton = binding.profileBtn;
             mView = binding.getRoot();
         }
 
@@ -90,7 +83,6 @@ public class ScheduledRidesRecyclerViewAdapter extends
             rideDetailsIntent.putExtra("ridePostingId", mItem.getId());
 
             context.startActivity(rideDetailsIntent);
-
         }
         @Override
         public String toString() {

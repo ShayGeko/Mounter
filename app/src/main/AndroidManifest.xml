@@ -17,17 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MounteR">
         <activity
-            android:name=".main.MainActivity"
-            android:label="Mounter"
-            android:theme="@style/splashScreenTheme">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".profile.UserProfileActivity"
             android:label="@string/user_profile" />
         <activity
@@ -43,6 +32,12 @@
             android:name=".ridesearch.RideSearchActivity"
             android:label="@string/title_activity_ride_search"
             android:theme="@style/splashScreenTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".login.LoginActivity"

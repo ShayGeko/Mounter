@@ -52,6 +52,7 @@
     <string name="searchRide">Search Ride</string>
     <string name="logout">Log Out</string>
     <string name="user_profile_edit_btn_text">Edit</string>
+    <string name="view_user_profile_btn_text">View profile</string>
     <string name="name_label_user_profile">Name:</string>
     <string name="rating_label_user_profile">Rating:</string>
     <string name="sex_label_user_profile">Sex:</string>

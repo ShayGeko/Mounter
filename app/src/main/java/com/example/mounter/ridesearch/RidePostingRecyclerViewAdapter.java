@@ -47,8 +47,16 @@ public class RidePostingRecyclerViewAdapter extends
         holder.mItem = getItem(position);
 
         if(holder.mItem.needsAdriver()){
+            holder.mViewProfileBtn.setEnabled(false);
             holder.mView.setBackgroundColor(
                     ContextCompat.getColor(holder.itemView.getContext(), R.color.light_accent_pink));
+        }
+        else{
+            holder.mViewProfileBtn.setOnClickListener(v -> {
+                Context context = v.getContext();
+                Intent rideDetailsIntent = new Intent(v.getContext(), UserProfileActivity.class);
+                context.startActivity(rideDetailsIntent);
+            });
         }
 
         holder.mDestinationAddress.setText(holder.mItem.getDestinationAddress());
@@ -60,6 +68,7 @@ public class RidePostingRecyclerViewAdapter extends
         public final TextView mDestinationAddress;
         public final TextView mOriginAddress;
         public final TextView mDepartureTime;
+        public final Button mViewProfileBtn;
         public final View mView;
 
         public RidePostingModel mItem;
@@ -72,6 +81,7 @@ public class RidePostingRecyclerViewAdapter extends
             mDestinationAddress = binding.destinationAddress;
             mOriginAddress = binding.originAddress;
             mDepartureTime = binding.departureTime;
+            mViewProfileBtn = binding.viewProfileBtn;
             mView = binding.getRoot();
         }
 

@@ -17,19 +17,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MounteR">
         <activity
-            android:name=".profile.UserProfileActivity"
+            android:name=".ui.profile.UserProfileActivity"
             android:label="@string/user_profile" />
         <activity
-            android:name=".ridePostingCreator.RidePostingCreatorActivity"
+            android:name=".ui.ridePostingCreator.RidePostingCreatorActivity"
             android:label="@string/createListing" />
         <activity
-            android:name=".ridePostingCreator.RidePostingCreatorDriverActivity"
+            android:name=".ui.ridePostingCreator.RidePostingCreatorDriverActivity"
             android:label="Create Listing" />
         <activity
-            android:name=".ridePostingCreator.ChooseRidePosting"
+            android:name=".ui.ridePostingCreator.ChooseRidePosting"
             android:label="@string/chooseTypeOfListing" />
         <activity
-            android:name=".ridesearch.RideSearchActivity"
+            android:name=".ui.ridesearch.RideSearchActivity"
             android:label="@string/title_activity_ride_search"
             android:theme="@style/splashScreenTheme">
 
@@ -40,17 +40,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".pendingRideRequests.PendingRideRequestsActivity"
+            android:name=".ui.pendingRideRequests.PendingRideRequestsActivity"
             android:label="@string/title_activity_pending_ride_requests" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_api_key" />
 
         <activity
-            android:name=".rideDetails.RideDetailsActivity"
+            android:name=".ui.rideDetails.RideDetailsActivity"
             android:label="@string/title_activity_directions" />
 
         <service

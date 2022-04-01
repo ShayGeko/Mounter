@@ -14,8 +14,7 @@ import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.mounter.R;
-import com.example.mounter.pendingRideRequests.PendingRideRequestsActivity;
-import com.example.mounter.ridesearch.RideSearchActivity;
+import com.example.mounter.ui.pendingRideRequests.PendingRideRequestsActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

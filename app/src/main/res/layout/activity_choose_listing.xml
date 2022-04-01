@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ridePostingCreator.ChooseRidePosting">
+    tools:context=".ui.ridePostingCreator.ChooseRidePosting">
 
     <ImageButton
         android:id="@+id/passenger_imgButton"
